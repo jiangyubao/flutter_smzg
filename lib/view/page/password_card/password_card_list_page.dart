@@ -13,7 +13,6 @@ import 'package:flutter_smzg/service/stateless/md_service.dart';
 import 'package:flutter_smzg/view/widget/password_card/password_card_widget.dart';
 import 'package:flutter_smzg/view/widget/user_agreement_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:pie_chart/pie_chart.dart';
 
 class PasswordCardListPage extends StatefulWidget {
   const PasswordCardListPage();
@@ -198,11 +197,6 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
 
   Widget _buildDrawer(BuildContext context, ThemeState themeState,
       PasswordCardListState passwordCardListState) {
-    double totalCurrent =
-        locator.get<PasswordCardListState>().totalCurrent().toDouble();
-    double totalInit =
-        locator.get<PasswordCardListState>().totalInit().toDouble();
-    double totalConsume = totalInit - totalCurrent;
     return InkWell(
       onTap: () {
         Routers().pop(context);
@@ -225,69 +219,6 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
               thickness: 6.h,
               color: Theme.of(context).primaryColorLight,
             ),
-            if (totalInit > 0)
-              Container(
-                height: 200.h,
-                child: PieChart(
-                  colorList: [
-                    Theme.of(context).accentColor,
-                    Theme.of(context).primaryColorLight
-                  ],
-                  dataMap: {
-                    '总剩余': totalCurrent,
-                    '总消费': totalConsume,
-                  },
-                ),
-              ),
-            if (totalInit > 0)
-              Divider(
-                thickness: 2.h,
-                color: Theme.of(context).primaryColorLight,
-              ),
-            if (totalInit > 0)
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32.h, vertical: 8.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "总充值：${totalInit.toStringAsFixed(0)}元",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.5,
-                          fontSize: 26.sp),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Text(
-                      "总剩余：${totalCurrent.toStringAsFixed(0)}元",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.5,
-                          fontSize: 26.sp),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Text(
-                      "总消费：${totalConsume.toStringAsFixed(0)}元",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.5,
-                          fontSize: 26.sp),
-                    ),
-                  ],
-                ),
-              ),
-            if (totalInit > 0)
-              Divider(
-                thickness: 8.h,
-                color: Theme.of(context).primaryColorLight,
-              ),
             ListTile(
               title: const Text("数据备份"),
               onTap: () async {

@@ -18,15 +18,14 @@ class PasswordCardService {
       return false;
     }
     final int result = await DbService().database.rawUpdate(
-        "UPDATE PasswordCard SET name=?,address=?,mobile=?,init=?,current=?,image=?,expiredDate=? WHERE id=?",
+        "UPDATE PasswordCard SET name=?,url=?,folder=?,userName=?,sitePassword=?,notes=? WHERE id=?",
         [
           passwordCard.name,
-          passwordCard.address,
-          passwordCard.mobile,
-          passwordCard.init,
-          passwordCard.current,
-          passwordCard.image,
-          passwordCard.expiredDate,
+          passwordCard.url,
+          passwordCard.folder,
+          passwordCard.userName,
+          passwordCard.sitePassword,
+          passwordCard.notes,
           passwordCard.id,
         ]);
     return result == 1;
@@ -38,15 +37,14 @@ class PasswordCardService {
     if (find == null) {
       Logger.info("insert |  name: ${passwordCard.name}");
       final int id = await DbService().database.rawInsert(
-          "INSERT INTO PasswordCard(name,address,mobile,init,current,image,expiredDate) VALUES(?,?,?,?,?,?,?)",
+          "INSERT INTO PasswordCard(name,url,folder,userName,sitePassword,notes) VALUES(?,?,?,?,?,?)",
           [
             passwordCard.name,
-            passwordCard.address,
-            passwordCard.mobile,
-            passwordCard.init,
-            passwordCard.current,
-            passwordCard.image,
-            passwordCard.expiredDate
+            passwordCard.url,
+            passwordCard.folder,
+            passwordCard.userName,
+            passwordCard.sitePassword,
+            passwordCard.notes
           ]);
       passwordCard.id = id;
 
@@ -70,9 +68,8 @@ class PasswordCardService {
   ///清除
   Future<bool> clear() async {
     Logger.info("clear | ");
-    final int count = await DbService()
-        .database
-        .rawDelete('DELETE FROM PasswordCard', []);
+    final int count =
+        await DbService().database.rawDelete('DELETE FROM PasswordCard', []);
     Logger.info("deletePasswordCard | count: $count");
     return count == 1;
   }

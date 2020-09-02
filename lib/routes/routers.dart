@@ -118,22 +118,6 @@ class Routers {
         return BalanceFormPage(title: title, value: value);
       }),
     );
-
-    _router.define(
-      _imageDisplay,
-      handler: Handler(handlerFunc:
-          (BuildContext context, Map<String, List<String>> parameters) {
-        int id = int.parse(parameters["id"].first);
-        PasswordCard passwordCard = locator
-            .get<PasswordCardListState>()
-            .list
-            .firstWhere((element) => element.id == id);
-        return ImageDisplayPage(
-          title: passwordCard.name,
-          image: passwordCard.image,
-        );
-      }),
-    );
   }
 
   Future goBalanceForm(BuildContext context, String title, int value) {

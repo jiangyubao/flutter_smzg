@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
@@ -25,7 +24,7 @@ class CardBodyWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                '充值额度：${passwordCard.init}元',
+                '充值额度：${passwordCard.userName}元',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
@@ -35,7 +34,7 @@ class CardBodyWidget extends StatelessWidget {
                 height: 32.h,
               ),
               Text(
-                '剩余额度：${passwordCard.current}元',
+                '剩余额度：${passwordCard.sitePassword}元',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
@@ -45,7 +44,7 @@ class CardBodyWidget extends StatelessWidget {
                 height: 32.h,
               ),
               Text(
-                '过期时间：${passwordCard.expiredDate.replaceAll('-', '/')}',
+                '过期时间：${passwordCard.notes.replaceAll('-', '/')}',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
@@ -67,8 +66,6 @@ class CardBodyWidget extends StatelessWidget {
                     if (value == null) {
                       return;
                     }
-                    passwordCard.init += value;
-                    passwordCard.current += value;
                     await locator
                         .get<PasswordCardListState>()
                         .update(passwordCard);
@@ -82,28 +79,13 @@ class CardBodyWidget extends StatelessWidget {
                   if (value == null) {
                     return;
                   }
-                  if (passwordCard.current < value) {
-                    await DialogService()
-                        .nativeAlert("消费金额不能大于当前余额", "请重新输入消费金额", ok: "确定");
-                    return;
-                  }
-                  passwordCard.current -= value;
+
                   await locator
                       .get<PasswordCardListState>()
                       .update(passwordCard);
                 },
               ),
             ],
-          ),
-        ),
-        SizedBox(
-          height: 667.h / 2.5,
-          width: 375.w / 2.5,
-          child: InkWell(
-            onTap: () async {
-              await Routers().goImageDisplay(context, passwordCard.id);
-            },
-            child: Image.memory(passwordCard.image),
           ),
         ),
       ],

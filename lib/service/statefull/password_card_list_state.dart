@@ -39,25 +39,6 @@ class PasswordCardListState extends RefreshListViewState<PasswordCard> {
     await this.initData();
     this.notifyListeners();
   }
-
-  int totalInit() {
-    List<int> sumList = list.map((e) => e.init).toList();
-    int sum = 0;
-    for (int i in sumList) {
-      sum += i;
-    }
-    return sum;
-  }
-
-  int totalCurrent() {
-    List<int> sumList = list.map((e) => e.current).toList();
-    int sum = 0;
-    for (int i in sumList) {
-      sum += i;
-    }
-    return sum;
-  }
-
   ///加载数据
   Future<List<PasswordCard>> loadData({int pageNum}) async {
     return PasswordCardService().find(pageNumber: pageNum, pageSize: 50);

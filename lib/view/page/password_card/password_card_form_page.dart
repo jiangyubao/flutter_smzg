@@ -67,10 +67,10 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
   void initState() {
     super.initState();
     _nameTextEditingController.text = passwordCard.name;
-    _addressTextEditingController.text = passwordCard.address;
-    _expiredDateTextEditingController.text = passwordCard.expiredDate;
-    _mobileTextEditingController.text = passwordCard.mobile;
-    _initTextEditingController.text = "${passwordCard.init}";
+    _addressTextEditingController.text = passwordCard.url;
+    _expiredDateTextEditingController.text = passwordCard.notes;
+    _mobileTextEditingController.text = passwordCard.folder;
+    _initTextEditingController.text = "${passwordCard.userName}";
   }
 
   Future<PickedFile> _selectImage(double maxWidth, double maxHeight) async {
@@ -141,13 +141,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   icon: Icon(Icons.check),
                   onPressed: () async {
                     if (_key.currentState.validate()) {
-                      if (passwordCard.image == null) {
-                        await DialogService()
-                            .nativeAlert("充值卡照不能为空", "请重新选择充值卡照", ok: "确定");
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        return;
-                      }
-                      passwordCard.current = passwordCard.init;
+                      passwordCard.sitePassword = passwordCard.userName;
                       if (passwordCard.id == null) {
                         int id =
                             await passwordCardListState.insert(passwordCard);
@@ -230,7 +224,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                                 Logger.info("location: ${jsonEncode(map)}");
                                 _addressTextEditingController.text =
                                     map['address'];
-                                passwordCard.address = map['address'];
+                                passwordCard.url = map['address'];
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
                               }
@@ -239,7 +233,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                         ),
                         keyboardType: TextInputType.text,
                         onChanged: (String val) {
-                          passwordCard.address = val;
+                          passwordCard.url = val;
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -276,17 +270,17 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                                     .add(Duration(days: 365 * 10)),
                               );
                               if (dt != null) {
-                                passwordCard.expiredDate =
+                                passwordCard.notes =
                                     DateUtil.formatShortDate(dt);
                                 _expiredDateTextEditingController.text =
-                                    passwordCard.expiredDate;
+                                    passwordCard.notes;
                               }
                             },
                           ),
                         ),
                         keyboardType: TextInputType.text,
                         onChanged: (String val) {
-                          passwordCard.expiredDate = val;
+                          passwordCard.notes = val;
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -309,7 +303,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                         ),
                         keyboardType: TextInputType.phone,
                         onChanged: (String val) {
-                          passwordCard.mobile = val;
+                          passwordCard.folder = val;
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -322,65 +316,8 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                           return null;
                         },
                       ),
-                      TextFormField(
-                        maxLength: 8,
-                        maxLengthEnforced: true,
-                        focusNode: _initFocusNode,
-                        controller: _initTextEditingController,
-                        decoration: const InputDecoration(
-                          labelText: '充值金额：',
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (String val) {
-                          passwordCard.init = int.parse(val);
-                        },
-                        onSaved: (String val) {},
-                        validator: (String val) {
-                          if (val.isEmpty) {
-                            return "充值金额不能为空";
-                          }
-                          if (val.length > 8 || val.length < 1) {
-                            return "充值金额长度只能是1到8位";
-                          }
-                          if (int.parse(val) <= 0) {
-                            return "金额只能是正整数";
-                          }
-                          return null;
-                        },
-                      ),
                       SizedBox(
                         height: 16.h,
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          PickedFile file =
-                              await this._selectImage(250 * 2.w, 340 * 2.h);
-                          if (file != null) {
-                            passwordCard.image = await file.readAsBytes();
-                            setState(() {});
-                          }
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 2.w,
-                                color: Theme.of(context).primaryColor),
-                            color: Colors.grey,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.w)),
-                          ),
-                          height: 667.w,
-                          width: 375.h,
-                          child: Center(
-                            child: passwordCard.image != null
-                                ? Image.memory(passwordCard.image)
-                                : Text(
-                                    "充值卡照片",
-                                    style: TextStyle(fontSize: 36.sp),
-                                  ),
-                          ),
-                        ),
                       ),
                     ],
                   ),

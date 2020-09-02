@@ -17,7 +17,7 @@ class CardFooterWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          '联系电话：${passwordCard.mobile}',
+          '联系电话：${passwordCard.folder}',
           style: TextStyle(
               fontWeight: FontWeight.w600, letterSpacing: 0.5, fontSize: 28.sp),
         ),
@@ -25,7 +25,7 @@ class CardFooterWidget extends StatelessWidget {
           height: 16.h,
         ),
         Text(
-          '联系地址：${passwordCard.address}',
+          '联系地址：${passwordCard.url}',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
