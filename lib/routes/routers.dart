@@ -1,47 +1,71 @@
-import 'dart:convert';
-
-import 'package:flutter_smzg/model/password.dart';
-import 'package:flutter_smzg/util/convert_util.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter_smzg/view/page/home_page.dart';
-import 'package:flutter_smzg/view/page/tab_pages/password/password_detail_page.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_fordova/view/page/scan_page.dart';
+import 'package:flutter_smzg/model/recharge_card.dart';
+import 'package:flutter_smzg/service/statefull/recharge_card_list_state.dart';
+import 'package:flutter_smzg/util/convert_util.dart';
+import 'package:flutter_smzg/view/page/recharge_card/balance_form_page.dart';
+import 'package:flutter_smzg/view/page/recharge_card/recharge_card_form_page.dart';
+import 'package:flutter_smzg/view/page/recharge_card/recharge_card_list_page.dart';
+import 'package:flutter_smzg/view/widget/image_display_page.dart';
 
+///路由定义
 class Routers {
   factory Routers() => _instance;
   Routers._();
   static Routers _instance = Routers._();
-  static const kRoot = "/";
-  static const kAddAccount = "/add_account";
-  static const kAccountCard = "/account_card";
-  static const kScan = "/scan";
-  static const kThridPartWebView = "/thrid_part_web_view";
-  static const kAccountDetailPage = "/account_detail_page";
+
+  ///跟路由
+  static const _root = "/";
+
+  ///添加或修改表单
+  static const _balanceForm = "/balance_form";
+
+  ///添加或修改表单
+  static const _imageDisplay = "/image_display";
+
+  ///添加或修改表单
+  static const _rechargeCardForm = "/recharge_card_form";
+  //fordova必须：webview
+  //fordova必须：扫码
+  static const _scan = "/scan";
+  //fordova必须：带导航栏的webview，导航栏包括关闭、前进、后退、刷新按钮
+  static const _thirdPartWebView = "/third_part_web_view";
+
+  ///单例
   Router _router = Router();
   Router get router => _router;
-  void pop(BuildContext context) => _router.pop(context);
+
+  ///路由pop
+  void pop<T extends Object>(BuildContext context, [T result]) {
+    Navigator.of(context).pop<T>(result);
+  }
+
+  ///初始化路由
   void init() {
+    ///路由不存在
     _router.notFoundHandler = Handler(handlerFunc:
         (BuildContext context, Map<String, List<String>> parameters) {
       return Center(
         child: Text("路由不存在"),
       );
     });
+
+    ///跟路由
     _router.define(
-      kRoot,
+      _root,
       handler: Handler(handlerFunc:
           (BuildContext context, Map<String, List<String>> parameters) {
-        return HomePage();
+        return RechargeCardListPage();
       }),
     );
 
     _router.define(
-      kScan,
+      _scan,
       handler: Handler(handlerFunc:
           (BuildContext context, Map<String, List<String>> parameters) {
+        //扫码窗口标题
         String title = parameters["title"].first;
         title = ConvertUtil.cnParamsDecode(title);
         return ScanPage(
@@ -50,10 +74,12 @@ class Routers {
       }),
     );
     _router.define(
-      kThridPartWebView,
+      _thirdPartWebView,
       handler: Handler(handlerFunc:
           (BuildContext context, Map<String, List<String>> parameters) {
+        //url
         String initialUrl = parameters["initialUrl"].first;
+        //是否显示标题栏
         bool showNavigatorBar = parameters["showNavigatorBar"].first == "true";
         initialUrl = ConvertUtil.cnParamsDecode(initialUrl);
         return ThridPartWebViewPage(
@@ -62,51 +88,82 @@ class Routers {
         );
       }),
     );
+
     _router.define(
-      kAccountDetailPage,
+      _rechargeCardForm,
       handler: Handler(handlerFunc:
           (BuildContext context, Map<String, List<String>> parameters) {
-        String userJson = parameters["accountJson"].first;
-        userJson = ConvertUtil.cnParamsDecode(userJson);
-        return AccountDetailPage(Password.fromJson(jsonDecode(userJson)));
+        //id
+        int id = int.parse(parameters["id"].first);
+        RechargeCard rechargeCard = id == -1
+            ? RechargeCard.empty()
+            : locator
+                .get<RechargeCardListState>()
+                .list
+                .firstWhere((element) => element.id == id);
+        //备注：这里必须克隆一个对象，防止修改而未保存时导致provider状态对象发生改变
+        return RechargeCardFormPage(
+            rechargeCard: RechargeCard.clone(rechargeCard));
+      }),
+    );
+
+    _router.define(
+      _balanceForm,
+      handler: Handler(handlerFunc:
+          (BuildContext context, Map<String, List<String>> parameters) {
+        //value
+        int value = int.parse(parameters["value"].first);
+        String title = parameters["title"].first;
+        title = ConvertUtil.cnParamsDecode(title);
+        return BalanceFormPage(title: title, value: value);
+      }),
+    );
+
+    _router.define(
+      _imageDisplay,
+      handler: Handler(handlerFunc:
+          (BuildContext context, Map<String, List<String>> parameters) {
+        int id = int.parse(parameters["id"].first);
+        RechargeCard rechargeCard = locator
+            .get<RechargeCardListState>()
+            .list
+            .firstWhere((element) => element.id == id);
+        return ImageDisplayPage(
+          title: rechargeCard.name,
+          image: rechargeCard.image,
+        );
       }),
     );
   }
 
-  Future goAccountCard(BuildContext context, bool showPrkKey, Password user) {
-    final String userJson =
-        ConvertUtil.cnParamsEncode(jsonEncode(user.toJson()));
+  Future goBalanceForm(BuildContext context, String title, int value) {
+    title = ConvertUtil.cnParamsEncode(title);
     return _router.navigateTo(
-        context, kAccountCard + "?showPrkKey=$showPrkKey&accountJson=$userJson",
-        transition: TransitionType.inFromRight);
+        context, "$_balanceForm?title=$title&value=$value",
+        transition: TransitionType.cupertinoFullScreenDialog);
   }
 
-  Future goAddAccount(BuildContext context) {
-    return _router.navigateTo(context, kAddAccount,
+  Future goImageDisplay(BuildContext context, int id) {
+    return _router.navigateTo(context, "$_imageDisplay?id=$id",
+        transition: TransitionType.cupertinoFullScreenDialog);
+  }
+
+  Future goRechargeCardForm(BuildContext context, int id) {
+    return _router.navigateTo(context, "$_rechargeCardForm?id=$id",
         transition: TransitionType.cupertinoFullScreenDialog);
   }
 
   Future goScan(BuildContext context, String title) {
     title = ConvertUtil.cnParamsEncode(title);
-    return _router.navigateTo(context, kScan + "?title=$title",
+    return _router.navigateTo(context, "$_scan?title=$title",
         transition: TransitionType.inFromRight);
   }
 
   Future goThridPartWebView(BuildContext context, String initialUrl,
       {bool showNavigatorBar = true}) {
     initialUrl = ConvertUtil.cnParamsEncode(initialUrl);
-    return _router.navigateTo(
-        context,
-        kThridPartWebView +
-            "?initialUrl=$initialUrl&showNavigatorBar=showNavigatorBar",
-        transition: TransitionType.inFromRight);
-  }
-
-  Future goAccountDetail(BuildContext context, Password user) {
-    final String userJson =
-        ConvertUtil.cnParamsEncode(jsonEncode(user.toJson()));
-    return _router.navigateTo(
-        context, kAccountDetailPage + "?accountJson=$userJson",
+    return _router.navigateTo(context,
+        "$_thirdPartWebView?initialUrl=$initialUrl&showNavigatorBar=showNavigatorBar",
         transition: TransitionType.inFromRight);
   }
 }

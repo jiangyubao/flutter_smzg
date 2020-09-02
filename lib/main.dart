@@ -1,48 +1,35 @@
 import 'dart:io';
 
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
-import 'package:flutter_fordova/service/stateless/js_function_mapper/permission_mapper.dart';
-import 'package:flutter_hyble/flutter_hyble.dart';
-import 'package:flutter_scc/flutter_scc.dart';
-import 'package:flutter_wechat_plugin/js_function_mapper/wechat_mapper.dart';
-import 'package:flutter_smzg/routes/routers.dart';
-import 'package:flutter_smzg/manager/locator.dart' as fl;
-import 'package:flutter_smzg/manager/provider_manager.dart';
-import 'package:flutter_smzg/manager/statefull/home_state.dart';
-import 'package:flutter_smzg/manager/statefull/password_list_state.dart';
-import 'package:flutter_smzg/view/page/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_fordova/generated/l10n.dart' as FordovaL10n;
-import 'package:flutter_fordova/service/base_locator.dart';
-import 'package:flutter_fordova/service/base_provider_manager.dart';
-import 'package:flutter_fordova/service/statefull/config_state.dart';
-import 'package:flutter_fordova/service/statefull/locale_state.dart';
-import 'package:flutter_fordova/service/statefull/theme_state.dart';
-import 'package:flutter_fordova/service/stateless/js_function_mapper/basic_mapper.dart';
-import 'package:flutter_fordova/service/stateless/js_function_mapper/jverify_mapper.dart';
-import 'package:flutter_fordova/service/stateless/js_function_mapper/progress_hud_mapper.dart';
-import 'package:flutter_fordova/service/stateless/js_function_mapper/umeng_tag_alias_mapper.dart';
-import 'package:flutter_fordova/service/stateless/js_function_service.dart';
-import 'package:flutter_fordova/service/stateless/jverify_service.dart';
-import 'package:flutter_fordova/util/provider/provider_widget.dart';
-import 'package:flutter_fordova/view/page/fdv_web_view_plugin_page.dart';
+import 'package:flutter_fordova/service/stateless/js_function_mapper/permission_mapper.dart';
+import 'package:flutter_hyble/flutter_hyble.dart';
+import 'package:flutter_wechat_plugin/js_function_mapper/wechat_mapper.dart';
+import 'generated/l10n.dart' as L10n;
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_scc/flutter_scc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_umpush/flutter_umpush.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_smzg/routes/routers.dart';
+import 'package:flutter_smzg/service/locator.dart' as FL;
+import 'package:flutter_smzg/service/provider_manager.dart';
+import 'package:flutter_smzg/service/statefull/recharge_card_list_state.dart';
+import 'package:flutter_smzg/view/page/recharge_card/recharge_card_list_page.dart';
 
 String amapKeyIOS = 'b97ddfd6946da974f3b8b1b630428113';
 
 String amapKeyAndroid =
     'de5b3${ET.s}658922c${ET.s}4c187da2${ET.s}fc32708b${ET.s}1b9f';
 // 极光认证key：a3deecd520245cd723a3b4ee
-String jVerifysKeyIOS = 'f07c834085ed3de1020627ca';
+String jVerifyKeyIOS = 'f07c834085ed3de1020627ca';
 String jVerifyKeyAndroid = 'ce5e${ET.s}8c483009${ET.s}cab8b7ab9d32';
 // // 极光认证channel
 String jVerifyChannel = 'qq';
@@ -55,39 +42,41 @@ String openApiUrl =
 
 String openApiBackupUrl =
     'https://ish${ET.s}emant.git${ET.s}hub.i${ET.s}o/md${ET.s}5.js';
+
 main() async {
   Provider.debugCheckInvalidValueType = null;
   try {
     ConfigState.openApiUrl = openApiUrl;
     ConfigState.openApiBackupUrl = openApiBackupUrl;
-    Logger.info("openApiUrl: $openApiUrl");
     WidgetsFlutterBinding.ensureInitialized();
+
     final Directory tmpDir = await getTemporaryDirectory();
-    Logger.init(
-        writeFile: true, logFilePath: "${tmpDir.path}/flutter_smzg.log");
-    Logger.info("开始...");
-    final fl.Locator _locator = fl.Locator();
+    Logger.init(writeFile: true, logFilePath: "${tmpDir.path}/kdkb.log");
+    Logger.info("程序开始启动");
+    final FL.Locator _locator = FL.Locator();
     await _locator.setup();
     await _locator.init();
+    String jverifyAppKey = Platform.isIOS ? jVerifyKeyIOS : jVerifyKeyAndroid;
+    Logger.info("jverifyAppKey: $jverifyAppKey");
+    await JVerifyService().init(jverifyAppKey, jVerifyChannel);
 
-    await JVerifyService().init(
-        Platform.isIOS ? jVerifysKeyIOS : jVerifyKeyAndroid, jVerifyChannel);
     try {
+      // 初始化远程配置
       await locator.get<ConfigState>().init();
     } catch (e, s) {
       Logger.printErrorStack(e, s);
     }
-    int keyLength = locator.get<ConfigState>()?.config?.keyLength ?? 64;
-    if (keyLength == 64) {
-      locator.get<ThemeState>().init(colorIndex: 5);
-    }
     try {
+      //初始化高德定位
       String key = Platform.isAndroid ? amapKeyAndroid : amapKeyIOS;
       await AmapCore.init(key);
     } catch (e, s) {
       Logger.printErrorStack(e, s);
     }
+    //运行MainApp
+
     runApp(const MainApp());
+    //设置状态栏
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -99,39 +88,46 @@ main() async {
   }
 }
 
+//在MainApp中统一设置Locale、MultiProvider框架、MaterialApp、路由
 class MainApp extends StatelessWidget {
   const MainApp();
   @override
   Widget build(BuildContext context) {
+    //使用OKToast
     return MultiProvider(
       providers: [...providers, ...baseProviders],
       child: Consumer2<ThemeState, LocaleState>(
         builder: (context, themeState, localeState, child) {
-          return ProviderWidget3<ConfigState, PasswordListState, HomeState>(
+          return ProviderWidget2<ConfigState, RechargeCardListState>(
+            //ConfigState是单例，方便locator查找
             state1: locator.get<ConfigState>(),
-            state2: PasswordListState(),
-            state3: HomeState(),
-            onStateReady: (configState, accountListState, homeState) {
-              Logger.info("APP onStateReady");
-              homeState.init();
-              accountListState.init();
+            //RechargeCardListState是单例，方便locator查找
+            state2: locator.get<RechargeCardListState>(),
+            onStateReady: (configState, rechargeCardListState) {
+              if (configState.keyLength != null &&
+                  configState.keyLength == 64) {
+                Logger.info("APP onStateReady");
+                rechargeCardListState.init();
+              }
             },
-            builder:
-                (context, configState, accountListState, homeState, child) {
+            builder: (context, configState, rechargeCardListState, child) {
               Logger.info("keyLength: ${configState.keyLength}");
+              //设置MaterialApp
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                theme: themeState.themeData(),
-                darkTheme: themeState.themeData(platformDarkMode: true),
+                theme: themeState.themeData(), //主题
+                darkTheme: themeState.themeData(platformDarkMode: true), //暗黑主题
                 locale: const Locale("zh", "CN"),
                 localizationsDelegates: const [
+                  L10n.S.delegate,
                   FordovaL10n.S.delegate,
                   RefreshLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate
                 ],
-                supportedLocales: S.delegate.supportedLocales,
+                supportedLocales: L10n.S.delegate.supportedLocales,
+                //使用fluro路由框架
                 onGenerateRoute: Routers().router.generator,
                 home: MainPage(configState),
               );
@@ -143,6 +139,7 @@ class MainApp extends StatelessWidget {
   }
 }
 
+///在MainPage统一设置ScreenUtil.init(context, width: 750, height: 1334)和resume
 class MainPage extends StatefulWidget {
   final ConfigState configState;
   const MainPage(this.configState);
@@ -170,7 +167,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       //触发onResume函数
       //Logger.info("onWebViewCreated ChcpState.chcpCheckUpdate");
-      Logger.info("_HomePageState resume");
+      Logger.info("_HomePageState resume ");
       await widget.configState.init();
     } else if (state == AppLifecycleState.inactive) {
       //ignore
@@ -211,9 +208,9 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
             },
           )
         : keyLength == 64
-            ? const HomePage()
+            ? const RechargeCardListPage()
             : keyLength == 2048
                 ? const FdvWebViewPluginPage()
-                : const HomePage();
+                : const RechargeCardListPage();
   }
 }

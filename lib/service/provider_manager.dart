@@ -13,4 +13,7 @@ List<SingleChildWidget> independentServices = [];
 List<SingleChildWidget> dependentServices = [];
 
 List<SingleChildWidget> uiConsumableProviders = [
+//  StreamProvider<User>(
+//    builder: (context) => Provider.of<AuthenticationService>(context, listen: false).user,
+//  )
 ];
