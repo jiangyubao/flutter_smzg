@@ -2,12 +2,12 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_fordova/view/page/scan_page.dart';
-import 'package:flutter_smzg/model/recharge_card.dart';
-import 'package:flutter_smzg/service/statefull/recharge_card_list_state.dart';
+import 'package:flutter_smzg/model/password_card.dart';
+import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/util/convert_util.dart';
-import 'package:flutter_smzg/view/page/recharge_card/balance_form_page.dart';
-import 'package:flutter_smzg/view/page/recharge_card/recharge_card_form_page.dart';
-import 'package:flutter_smzg/view/page/recharge_card/recharge_card_list_page.dart';
+import 'package:flutter_smzg/view/page/password_card/balance_form_page.dart';
+import 'package:flutter_smzg/view/page/password_card/password_card_form_page.dart';
+import 'package:flutter_smzg/view/page/password_card/password_card_list_page.dart';
 import 'package:flutter_smzg/view/widget/image_display_page.dart';
 
 ///路由定义
@@ -26,7 +26,7 @@ class Routers {
   static const _imageDisplay = "/image_display";
 
   ///添加或修改表单
-  static const _rechargeCardForm = "/recharge_card_form";
+  static const _passwordCardForm = "/password_card_form";
   //fordova必须：webview
   //fordova必须：扫码
   static const _scan = "/scan";
@@ -57,7 +57,7 @@ class Routers {
       _root,
       handler: Handler(handlerFunc:
           (BuildContext context, Map<String, List<String>> parameters) {
-        return RechargeCardListPage();
+        return PasswordCardListPage();
       }),
     );
 
@@ -90,20 +90,20 @@ class Routers {
     );
 
     _router.define(
-      _rechargeCardForm,
+      _passwordCardForm,
       handler: Handler(handlerFunc:
           (BuildContext context, Map<String, List<String>> parameters) {
         //id
         int id = int.parse(parameters["id"].first);
-        RechargeCard rechargeCard = id == -1
-            ? RechargeCard.empty()
+        PasswordCard passwordCard = id == -1
+            ? PasswordCard.empty()
             : locator
-                .get<RechargeCardListState>()
+                .get<PasswordCardListState>()
                 .list
                 .firstWhere((element) => element.id == id);
         //备注：这里必须克隆一个对象，防止修改而未保存时导致provider状态对象发生改变
-        return RechargeCardFormPage(
-            rechargeCard: RechargeCard.clone(rechargeCard));
+        return PasswordCardFormPage(
+            passwordCard: PasswordCard.clone(passwordCard));
       }),
     );
 
@@ -124,13 +124,13 @@ class Routers {
       handler: Handler(handlerFunc:
           (BuildContext context, Map<String, List<String>> parameters) {
         int id = int.parse(parameters["id"].first);
-        RechargeCard rechargeCard = locator
-            .get<RechargeCardListState>()
+        PasswordCard passwordCard = locator
+            .get<PasswordCardListState>()
             .list
             .firstWhere((element) => element.id == id);
         return ImageDisplayPage(
-          title: rechargeCard.name,
-          image: rechargeCard.image,
+          title: passwordCard.name,
+          image: passwordCard.image,
         );
       }),
     );
@@ -148,8 +148,8 @@ class Routers {
         transition: TransitionType.cupertinoFullScreenDialog);
   }
 
-  Future goRechargeCardForm(BuildContext context, int id) {
-    return _router.navigateTo(context, "$_rechargeCardForm?id=$id",
+  Future goPasswordCardForm(BuildContext context, int id) {
+    return _router.navigateTo(context, "$_passwordCardForm?id=$id",
         transition: TransitionType.cupertinoFullScreenDialog);
   }
 

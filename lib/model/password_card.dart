@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_smzg/util/date_util.dart';
 
 ///充值卡
-class RechargeCard {
+class PasswordCard {
   int id = 0;
 
   ///店铺名
@@ -29,7 +29,7 @@ class RechargeCard {
   String expiredDate;
 
   ///默认构造函数
-  RechargeCard({
+  PasswordCard({
     this.name,
     this.address,
     this.mobile,
@@ -40,7 +40,7 @@ class RechargeCard {
   });
 
   ///jsonMap转换为对象：sqlite数据库查询结果集转换为对象时需要
-  RechargeCard.fromJson(Map<String, dynamic> json)
+  PasswordCard.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
         address = json['address'],
@@ -51,7 +51,7 @@ class RechargeCard {
         expiredDate = json['expiredDate'];
 
   ///新建空对象：新建充值卡需要
-  RechargeCard.empty()
+  PasswordCard.empty()
       : id = null,
         name = '',
         address = '',
@@ -63,25 +63,25 @@ class RechargeCard {
             DateUtil.formatShortDate(DateTime.now().add(Duration(days: 365)));
 
   ///克隆一个对象：编辑表单时，需要克隆表单对象，防止修改而未保存时就已经修改到provider状态对象
-  RechargeCard.clone(RechargeCard rechargeCard)
-      : id = rechargeCard.id,
-        name = rechargeCard.name,
-        address = rechargeCard.address,
-        mobile = rechargeCard.mobile,
-        init = rechargeCard.init,
-        current = rechargeCard.current,
-        image = rechargeCard.image,
-        expiredDate = rechargeCard.expiredDate;
+  PasswordCard.clone(PasswordCard passwordCard)
+      : id = passwordCard.id,
+        name = passwordCard.name,
+        address = passwordCard.address,
+        mobile = passwordCard.mobile,
+        init = passwordCard.init,
+        current = passwordCard.current,
+        image = passwordCard.image,
+        expiredDate = passwordCard.expiredDate;
 
   ///拷贝一个对象：更新充值卡成功后需要改写provider状态对象
-  void copy(RechargeCard rechargeCard) {
-    this.name = rechargeCard.name;
-    this.address = rechargeCard.address;
-    this.mobile = rechargeCard.mobile;
-    this.init = rechargeCard.init;
-    this.current = rechargeCard.current;
-    this.image = rechargeCard.image;
-    this.expiredDate = rechargeCard.expiredDate;
+  void copy(PasswordCard passwordCard) {
+    this.name = passwordCard.name;
+    this.address = passwordCard.address;
+    this.mobile = passwordCard.mobile;
+    this.init = passwordCard.init;
+    this.current = passwordCard.current;
+    this.image = passwordCard.image;
+    this.expiredDate = passwordCard.expiredDate;
   }
 
   Map<String, dynamic> toBase64Json() => {
@@ -95,7 +95,7 @@ class RechargeCard {
         'expiredDate': expiredDate,
       };
 
-  RechargeCard.fromBase64Json(Map<String, dynamic> json)
+  PasswordCard.fromBase64Json(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
         address = json['address'],

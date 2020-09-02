@@ -14,7 +14,7 @@ class DatabaseService {
 
   ///DDL
   static const _ddl = '''
-      CREATE TABLE IF NOT EXISTS RechargeCard (
+      CREATE TABLE IF NOT EXISTS PasswordCard (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name VARCHAR (16) UNIQUE,
         address VARCHAR (128),

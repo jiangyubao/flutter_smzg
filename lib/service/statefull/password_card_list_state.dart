@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
-import 'package:flutter_smzg/model/recharge_card.dart';
-import 'package:flutter_smzg/service/stateless/recharge_card_service.dart';
+import 'package:flutter_smzg/model/password_card.dart';
+import 'package:flutter_smzg/service/stateless/password_card_service.dart';
 
 ///provider状态对象
-class RechargeCardListState extends RefreshListViewState<RechargeCard> {
-  RechargeCardListState();
+class PasswordCardListState extends RefreshListViewState<PasswordCard> {
+  PasswordCardListState();
 
   ///是否显示隐私协议、用户条款对话框
   bool _showUserAgreement = false;
@@ -59,13 +59,13 @@ class RechargeCardListState extends RefreshListViewState<RechargeCard> {
   }
 
   ///加载数据
-  Future<List<RechargeCard>> loadData({int pageNum}) async {
-    return RechargeCardService().find(pageNumber: pageNum, pageSize: 50);
+  Future<List<PasswordCard>> loadData({int pageNum}) async {
+    return PasswordCardService().find(pageNumber: pageNum, pageSize: 50);
   }
 
   ///删除
   Future<bool> delete(int id) async {
-    bool result = await RechargeCardService().delete(id);
+    bool result = await PasswordCardService().delete(id);
     if (result) {
       this.list.removeWhere((u) => u.id == id);
     }
@@ -74,10 +74,10 @@ class RechargeCardListState extends RefreshListViewState<RechargeCard> {
   }
 
   ///添加
-  Future<int> insert(RechargeCard rechargeCard) async {
-    int id = await RechargeCardService().insert(rechargeCard);
+  Future<int> insert(PasswordCard passwordCard) async {
+    int id = await PasswordCardService().insert(passwordCard);
     if (id >= 0) {
-      list.add(rechargeCard);
+      list.add(passwordCard);
       this.setIdle();
       this.notifyListeners();
     }
@@ -85,12 +85,12 @@ class RechargeCardListState extends RefreshListViewState<RechargeCard> {
   }
 
   ///修改
-  Future<bool> update(RechargeCard rechargeCard) async {
-    bool result = await RechargeCardService().update(rechargeCard);
+  Future<bool> update(PasswordCard passwordCard) async {
+    bool result = await PasswordCardService().update(passwordCard);
     if (result) {
       list
-          .firstWhere((element) => element.id == rechargeCard.id)
-          .copy(rechargeCard);
+          .firstWhere((element) => element.id == passwordCard.id)
+          .copy(passwordCard);
       this.notifyListeners();
     }
     return result;
@@ -106,12 +106,12 @@ class RechargeCardListState extends RefreshListViewState<RechargeCard> {
   ///从base64的json中还原
   Future<bool> fromBase64Json(String json) async {
     try {
-      await RechargeCardService().clear();
+      await PasswordCardService().clear();
       this.list.clear();
       List<dynamic> array = jsonDecode(json);
       array.forEach((element) {
-        RechargeCard rechargeCard = RechargeCard.fromBase64Json(element);
-        this.insert(rechargeCard);
+        PasswordCard passwordCard = PasswordCard.fromBase64Json(element);
+        this.insert(passwordCard);
       });
       this.notifyListeners();
       return true;

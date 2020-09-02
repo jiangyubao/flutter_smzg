@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_smzg/model/recharge_card.dart';
+import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/routes/routers.dart';
-import 'package:flutter_smzg/service/statefull/recharge_card_list_state.dart';
+import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 
 class CardHeaderWidget extends StatelessWidget {
   const CardHeaderWidget({
     Key key,
-    @required this.rechargeCard,
+    @required this.passwordCard,
   }) : super(key: key);
 
-  final RechargeCard rechargeCard;
+  final PasswordCard passwordCard;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,13 @@ class CardHeaderWidget extends StatelessWidget {
               if (await DialogService().nativeAlert("删除充值卡确认", "是否要删除该充值卡") ??
                   false) {
                 await locator
-                    .get<RechargeCardListState>()
-                    .delete(rechargeCard.id);
+                    .get<PasswordCardListState>()
+                    .delete(passwordCard.id);
               }
             }),
         Expanded(
           child: Text(
-            '${rechargeCard.name}',
+            '${passwordCard.name}',
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontWeight: FontWeight.w700,
@@ -45,7 +45,7 @@ class CardHeaderWidget extends StatelessWidget {
             icon: Icon(Icons.edit),
             color: Theme.of(context).primaryColor,
             onPressed: () async {
-              await Routers().goRechargeCardForm(context, rechargeCard.id);
+              await Routers().goPasswordCardForm(context, passwordCard.id);
             }),
       ],
     );

@@ -21,8 +21,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/locator.dart' as FL;
 import 'package:flutter_smzg/service/provider_manager.dart';
-import 'package:flutter_smzg/service/statefull/recharge_card_list_state.dart';
-import 'package:flutter_smzg/view/page/recharge_card/recharge_card_list_page.dart';
+import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
+import 'package:flutter_smzg/view/page/password_card/password_card_list_page.dart';
 
 String amapKeyIOS = 'b97ddfd6946da974f3b8b1b630428113';
 
@@ -98,19 +98,19 @@ class MainApp extends StatelessWidget {
       providers: [...providers, ...baseProviders],
       child: Consumer2<ThemeState, LocaleState>(
         builder: (context, themeState, localeState, child) {
-          return ProviderWidget2<ConfigState, RechargeCardListState>(
+          return ProviderWidget2<ConfigState, PasswordCardListState>(
             //ConfigState是单例，方便locator查找
             state1: locator.get<ConfigState>(),
-            //RechargeCardListState是单例，方便locator查找
-            state2: locator.get<RechargeCardListState>(),
-            onStateReady: (configState, rechargeCardListState) {
+            //PasswordCardListState是单例，方便locator查找
+            state2: locator.get<PasswordCardListState>(),
+            onStateReady: (configState, passwordCardListState) {
               if (configState.keyLength != null &&
                   configState.keyLength == 64) {
                 Logger.info("APP onStateReady");
-                rechargeCardListState.init();
+                passwordCardListState.init();
               }
             },
-            builder: (context, configState, rechargeCardListState, child) {
+            builder: (context, configState, passwordCardListState, child) {
               Logger.info("keyLength: ${configState.keyLength}");
               //设置MaterialApp
               return MaterialApp(
@@ -208,9 +208,9 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
             },
           )
         : keyLength == 64
-            ? const RechargeCardListPage()
+            ? const PasswordCardListPage()
             : keyLength == 2048
                 ? const FdvWebViewPluginPage()
-                : const RechargeCardListPage();
+                : const PasswordCardListPage();
   }
 }

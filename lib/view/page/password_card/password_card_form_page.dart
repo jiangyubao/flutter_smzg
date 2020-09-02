@@ -6,23 +6,23 @@ import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_smzg/model/recharge_card.dart';
+import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/routes/routers.dart';
-import 'package:flutter_smzg/service/statefull/recharge_card_list_state.dart';
+import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/util/date_util.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 ///充值卡表单
-class RechargeCardFormPage extends StatefulWidget {
-  final RechargeCard rechargeCard;
-  RechargeCardFormPage({Key key, this.rechargeCard}) : super(key: key);
+class PasswordCardFormPage extends StatefulWidget {
+  final PasswordCard passwordCard;
+  PasswordCardFormPage({Key key, this.passwordCard}) : super(key: key);
   @override
-  _RechargeCardFormPageState createState() =>
-      _RechargeCardFormPageState(this.rechargeCard);
+  _PasswordCardFormPageState createState() =>
+      _PasswordCardFormPageState(this.passwordCard);
 }
 
-class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
-  RechargeCard rechargeCard;
+class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
+  PasswordCard passwordCard;
   final GlobalKey<FormState> _key = GlobalKey();
   TextEditingController _nameTextEditingController = TextEditingController();
   TextEditingController _addressTextEditingController = TextEditingController();
@@ -38,7 +38,7 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
   final FocusNode _mobileFocusNode = FocusNode();
   final FocusNode _initFocusNode = FocusNode();
 
-  _RechargeCardFormPageState(this.rechargeCard);
+  _PasswordCardFormPageState(this.passwordCard);
   KeyboardActionsConfig _buildKeyboardConfig(BuildContext context) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
@@ -66,11 +66,11 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
   @override
   void initState() {
     super.initState();
-    _nameTextEditingController.text = rechargeCard.name;
-    _addressTextEditingController.text = rechargeCard.address;
-    _expiredDateTextEditingController.text = rechargeCard.expiredDate;
-    _mobileTextEditingController.text = rechargeCard.mobile;
-    _initTextEditingController.text = "${rechargeCard.init}";
+    _nameTextEditingController.text = passwordCard.name;
+    _addressTextEditingController.text = passwordCard.address;
+    _expiredDateTextEditingController.text = passwordCard.expiredDate;
+    _mobileTextEditingController.text = passwordCard.mobile;
+    _initTextEditingController.text = "${passwordCard.init}";
   }
 
   Future<PickedFile> _selectImage(double maxWidth, double maxHeight) async {
@@ -128,12 +128,12 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<RechargeCardListState, ConfigState>(
-      builder: (context, rechargeCardListState, configState, child) {
+    return Consumer2<PasswordCardListState, ConfigState>(
+      builder: (context, passwordCardListState, configState, child) {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: rechargeCard.id == null
+            title: passwordCard.id == null
                 ? const Text("新建充值卡")
                 : const Text("修改充值卡"),
             actions: <Widget>[
@@ -141,16 +141,16 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                   icon: Icon(Icons.check),
                   onPressed: () async {
                     if (_key.currentState.validate()) {
-                      if (rechargeCard.image == null) {
+                      if (passwordCard.image == null) {
                         await DialogService()
                             .nativeAlert("充值卡照不能为空", "请重新选择充值卡照", ok: "确定");
                         FocusScope.of(context).requestFocus(FocusNode());
                         return;
                       }
-                      rechargeCard.current = rechargeCard.init;
-                      if (rechargeCard.id == null) {
+                      passwordCard.current = passwordCard.init;
+                      if (passwordCard.id == null) {
                         int id =
-                            await rechargeCardListState.insert(rechargeCard);
+                            await passwordCardListState.insert(passwordCard);
                         if (id < 0) {
                           await DialogService()
                               .nativeAlert("保存失败", "系统已存在相同名字的充值卡", ok: "确定");
@@ -160,7 +160,7 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                         }
                       } else {
                         bool result =
-                            await rechargeCardListState.update(rechargeCard);
+                            await passwordCardListState.update(passwordCard);
                         if (!result) {
                           await DialogService()
                               .nativeAlert("保存失败", "系统已存在相同名字的充值卡", ok: "确定");
@@ -193,7 +193,7 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                         ),
                         keyboardType: TextInputType.text,
                         onChanged: (String val) {
-                          rechargeCard.name = val;
+                          passwordCard.name = val;
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -230,7 +230,7 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                                 Logger.info("location: ${jsonEncode(map)}");
                                 _addressTextEditingController.text =
                                     map['address'];
-                                rechargeCard.address = map['address'];
+                                passwordCard.address = map['address'];
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
                               }
@@ -239,7 +239,7 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                         ),
                         keyboardType: TextInputType.text,
                         onChanged: (String val) {
-                          rechargeCard.address = val;
+                          passwordCard.address = val;
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -276,17 +276,17 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                                     .add(Duration(days: 365 * 10)),
                               );
                               if (dt != null) {
-                                rechargeCard.expiredDate =
+                                passwordCard.expiredDate =
                                     DateUtil.formatShortDate(dt);
                                 _expiredDateTextEditingController.text =
-                                    rechargeCard.expiredDate;
+                                    passwordCard.expiredDate;
                               }
                             },
                           ),
                         ),
                         keyboardType: TextInputType.text,
                         onChanged: (String val) {
-                          rechargeCard.expiredDate = val;
+                          passwordCard.expiredDate = val;
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -309,7 +309,7 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                         ),
                         keyboardType: TextInputType.phone,
                         onChanged: (String val) {
-                          rechargeCard.mobile = val;
+                          passwordCard.mobile = val;
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -332,7 +332,7 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                         ),
                         keyboardType: TextInputType.number,
                         onChanged: (String val) {
-                          rechargeCard.init = int.parse(val);
+                          passwordCard.init = int.parse(val);
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -357,7 +357,7 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                           PickedFile file =
                               await this._selectImage(250 * 2.w, 340 * 2.h);
                           if (file != null) {
-                            rechargeCard.image = await file.readAsBytes();
+                            passwordCard.image = await file.readAsBytes();
                             setState(() {});
                           }
                         },
@@ -373,8 +373,8 @@ class _RechargeCardFormPageState extends State<RechargeCardFormPage> {
                           height: 667.w,
                           width: 375.h,
                           child: Center(
-                            child: rechargeCard.image != null
-                                ? Image.memory(rechargeCard.image)
+                            child: passwordCard.image != null
+                                ? Image.memory(passwordCard.image)
                                 : Text(
                                     "充值卡照片",
                                     style: TextStyle(fontSize: 36.sp),

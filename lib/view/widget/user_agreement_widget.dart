@@ -7,7 +7,7 @@ import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/routes/routers.dart';
-import 'package:flutter_smzg/service/statefull/recharge_card_list_state.dart';
+import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/service/stateless/markdown_service.dart';
 
 //用户条款和隐私协议对话框
@@ -100,7 +100,7 @@ class _UserAgreementWidgetState extends State<UserAgreementWidget> {
                             ? null
                             : () async {
                                 await locator
-                                    .get<RechargeCardListState>()
+                                    .get<PasswordCardListState>()
                                     .updateShowUserAgreement(false);
                               }),
                   ],

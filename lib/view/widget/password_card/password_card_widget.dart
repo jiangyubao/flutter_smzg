@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_smzg/model/recharge_card.dart';
-import 'package:flutter_smzg/view/widget/recharge_card/card_body_widget.dart';
-import 'package:flutter_smzg/view/widget/recharge_card/card_footer_widget.dart';
-import 'package:flutter_smzg/view/widget/recharge_card/card_header_widget.dart';
+import 'package:flutter_smzg/model/password_card.dart';
+import 'package:flutter_smzg/view/widget/password_card/card_body_widget.dart';
+import 'package:flutter_smzg/view/widget/password_card/card_footer_widget.dart';
+import 'package:flutter_smzg/view/widget/password_card/card_header_widget.dart';
 
 ///充值卡控件
-class RechargeCardWidget extends StatelessWidget {
-  final RechargeCard rechargeCard;
-  const RechargeCardWidget({
+class PasswordCardWidget extends StatelessWidget {
+  final PasswordCard passwordCard;
+  const PasswordCardWidget({
     Key key,
-    @required this.rechargeCard,
+    @required this.passwordCard,
   }) : super(key: key);
 
   @override
@@ -33,11 +33,11 @@ class RechargeCardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CardHeaderWidget(rechargeCard: rechargeCard),
+              CardHeaderWidget(passwordCard: passwordCard),
               Divider(),
-              CardBodyWidget(rechargeCard: rechargeCard),
+              CardBodyWidget(passwordCard: passwordCard),
               Divider(),
-              CardFooterWidget(rechargeCard: rechargeCard)
+              CardFooterWidget(passwordCard: passwordCard)
             ],
           ),
         ),

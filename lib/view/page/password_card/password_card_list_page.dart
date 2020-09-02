@@ -8,20 +8,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_smzg/routes/routers.dart';
-import 'package:flutter_smzg/service/statefull/recharge_card_list_state.dart';
+import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/service/stateless/markdown_service.dart';
-import 'package:flutter_smzg/view/widget/recharge_card/recharge_card_widget.dart';
+import 'package:flutter_smzg/view/widget/password_card/password_card_widget.dart';
 import 'package:flutter_smzg/view/widget/user_agreement_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class RechargeCardListPage extends StatefulWidget {
-  const RechargeCardListPage();
+class PasswordCardListPage extends StatefulWidget {
+  const PasswordCardListPage();
   @override
-  _RechargeCardListPageState createState() => _RechargeCardListPageState();
+  _PasswordCardListPageState createState() => _PasswordCardListPageState();
 }
 
-class _RechargeCardListPageState extends State<RechargeCardListPage> {
+class _PasswordCardListPageState extends State<PasswordCardListPage> {
   void _switchDarkMode(BuildContext context, ThemeState themeState) {
     if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
       //showToast("检测到系统为暗黑模式,已为你自动切换", position: ToastPosition.bottom);
@@ -40,9 +40,9 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
   @override
   Widget build(BuildContext context) {
     return ProgressHUD(
-      child: Consumer2<RechargeCardListState, ThemeState>(
-        builder: (context, rechargeCardListState, themeState, child) {
-          return rechargeCardListState.showUserAgreement
+      child: Consumer2<PasswordCardListState, ThemeState>(
+        builder: (context, passwordCardListState, themeState, child) {
+          return passwordCardListState.showUserAgreement
               ? UserAgreementWidget()
               : Scaffold(
                   appBar: AppBar(
@@ -53,7 +53,7 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
                           icon: Icon(Icons.add),
                           onPressed: () async {
                             try {
-                              await Routers().goRechargeCardForm(context, -1);
+                              await Routers().goPasswordCardForm(context, -1);
                             } catch (e, s) {
                               Logger.printErrorStack(e, s);
                             }
@@ -61,15 +61,15 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
                     ],
                   ),
                   drawer: this
-                      ._buildDrawer(context, themeState, rechargeCardListState),
+                      ._buildDrawer(context, themeState, passwordCardListState),
                   body: WillPopScope(
                     onWillPop: () async {
-                      if (rechargeCardListState.lastPressed == null ||
+                      if (passwordCardListState.lastPressed == null ||
                           DateTime.now().difference(
-                                  rechargeCardListState.lastPressed) >
+                                  passwordCardListState.lastPressed) >
                               Duration(seconds: 1)) {
                         //两次点击间隔超过1秒则重新计时
-                        rechargeCardListState.lastPressed = DateTime.now();
+                        passwordCardListState.lastPressed = DateTime.now();
                         return false;
                       }
                       return true;
@@ -79,18 +79,18 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
                         Expanded(
                           child: Builder(
                             builder: (context) {
-                              if (rechargeCardListState.busy) {
+                              if (passwordCardListState.busy) {
                                 return SkeletonList(
                                   builder: (context, index) => SkeletonItem(),
                                 );
                               }
-                              if (rechargeCardListState.error &&
-                                  rechargeCardListState.list.isEmpty) {
+                              if (passwordCardListState.error &&
+                                  passwordCardListState.list.isEmpty) {
                                 return ViewStateErrorWidget(
-                                    error: rechargeCardListState.pageStateError,
-                                    onPressed: rechargeCardListState.initData);
+                                    error: passwordCardListState.pageStateError,
+                                    onPressed: passwordCardListState.initData);
                               }
-                              if (rechargeCardListState.empty) {
+                              if (passwordCardListState.empty) {
                                 return ViewStateEmptyWidget(
                                     image: Padding(
                                       padding: EdgeInsets.all(16.w),
@@ -118,7 +118,7 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
                                     onPressed: () async {
                                       try {
                                         await Routers()
-                                            .goRechargeCardForm(context, -1);
+                                            .goPasswordCardForm(context, -1);
                                       } catch (e, s) {
                                         Logger.printErrorStack(e, s);
                                       }
@@ -126,23 +126,23 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
                               }
                               return SmartRefresher(
                                 controller:
-                                    rechargeCardListState.refreshController,
+                                    passwordCardListState.refreshController,
                                 header: const WaterDropHeader(),
                                 footer: const ClassicFooter(),
                                 onRefresh: () async {
-                                  await rechargeCardListState.refresh(
+                                  await passwordCardListState.refresh(
                                       init: true);
                                 },
                                 onLoading: () async {
-                                  await rechargeCardListState.loadMore();
+                                  await passwordCardListState.loadMore();
                                 },
                                 enablePullUp: true,
                                 child: ListView.builder(
-                                  itemCount: rechargeCardListState.list.length,
+                                  itemCount: passwordCardListState.list.length,
                                   itemBuilder: (context, index) {
-                                    return RechargeCardWidget(
-                                      rechargeCard:
-                                          rechargeCardListState.list[index],
+                                    return PasswordCardWidget(
+                                      passwordCard:
+                                          passwordCardListState.list[index],
                                     );
                                   },
                                 ),
@@ -197,11 +197,11 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
   }
 
   Widget _buildDrawer(BuildContext context, ThemeState themeState,
-      RechargeCardListState rechargeCardListState) {
+      PasswordCardListState passwordCardListState) {
     double totalCurrent =
-        locator.get<RechargeCardListState>().totalCurrent().toDouble();
+        locator.get<PasswordCardListState>().totalCurrent().toDouble();
     double totalInit =
-        locator.get<RechargeCardListState>().totalInit().toDouble();
+        locator.get<PasswordCardListState>().totalInit().toDouble();
     double totalConsume = totalInit - totalCurrent;
     return InkWell(
       onTap: () {
@@ -312,7 +312,7 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
                   if (token != null) {
                     ProgressHUD.of(context).show();
                     bool result = await JssService()
-                        .save(token, rechargeCardListState.toBase64Json());
+                        .save(token, passwordCardListState.toBase64Json());
                     ProgressHUD.of(context).dismiss();
                     if (result) {
                       await DialogService().nativeAlert("操作成功", "数据备份成功");
@@ -351,7 +351,7 @@ class _RechargeCardListPageState extends State<RechargeCardListPage> {
                     String body = await JssService().load(token);
                     ProgressHUD.of(context).dismiss();
                     if (body != null) {
-                      await rechargeCardListState.fromBase64Json(body);
+                      await passwordCardListState.fromBase64Json(body);
                       await DialogService().nativeAlert("操作成功", "数据恢复成功");
                     } else {
                       await DialogService().nativeAlert("操作失败", "数据恢复失败");
