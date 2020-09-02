@@ -1,0 +1,10 @@
+-dontoptimize
+-dontpreverify
+-dontwarn cn.**
+-keep class cn.** { *; }
+-dontwarn com.**
+-keep class com.** { *; }
+-dontwarn org.**
+-keep class org.** { *; }
+-dontwarn io.**
+-keep class io.** { *; }

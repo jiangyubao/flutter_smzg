@@ -1,0 +1,67 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.itou.yun.cordova.koudai">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:name="com.itou.yun.cordova.koudai.UmengApplication" android:label="口袋好店" android:icon="@mipmap/launcher_icon">
+        <activity android:name="com.itou.yun.cordova.koudai.wxapi.WXEntryActivity" android:label="口袋好店" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wx8105104e0f47ab92"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.itou.yun.cordova.koudai.wxapi.WXPayEntryActivity" android:label="口袋好店" android:exported="true" android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wx8105104e0f47ab92"/>
+            </intent-filter>
+        </activity>
+        <provider android:name="com.github.fordova.update.UpdateFileProvider" android:authorities="${applicationId}.updatefileprovider" android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/update_cache_path"/>
+        </provider>
+        <meta-data android:name="wechatappid" android:value="wx8105104e0f47ab92"></meta-data>
+        <meta-data android:name="UMENG_APPKEY" android:value="5c9457bd0cafb23cdc0014fd"></meta-data>
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="03ba3dfc7d65f0e20c96e8b527e889f9"></meta-data>
+        <meta-data android:name="UMENG_CHANNEL" android:value="qq" />
+        <meta-data android:name="MZ_APP_ID" android:value="119551\0"></meta-data>
+        <meta-data android:name="MZ_APP_KEY" android:value="2d16df53580d4e64ab276417c0e2b7ec"></meta-data>
+        <meta-data android:name="XM_APP_ID" android:value="2882303761518059730\0"></meta-data>
+        <meta-data android:name="XM_APP_KEY" android:value="5901805956730\0"></meta-data>
+        <!-- 离线唤醒，使用URL_SCHEME，例如 myproject_url://xxxxxx?order_id=123455554 -->
+        <meta-data android:name="URL_SCHEME" android:value="koudai"></meta-data>
+        <activity android:name="com.itou.yun.cordova.koudai.UmengOtherPushActivity" android:launchMode="singleTask" android:exported="true" />
+        <receiver android:name="com.itou.yun.cordova.koudai.MeizuTestReceiver">
+            <intent-filter>
+                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
+                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
+                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+                <category android:name="com.itou.yun.cordova.koudai"></category>
+            </intent-filter>
+        </receiver>
+        <activity android:name=".MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
+            <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
+            <meta-data android:name="io.flutter.app.android.SplashScreenUntilFirstFrame" android:value="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 响应URL唤醒-->
+                <data android:scheme="koudai" />
+            </intent-filter>
+        </activity>
+        <meta-data android:name="flutterEmbedding" android:value="2" />
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="971194a123633721790dcf5696016198" />
+    </application>
+</manifest>
