@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
-import 'package:flutter_smzg/service/stateless/markdown_service.dart';
+import 'package:flutter_smzg/service/stateless/md_service.dart';
 import 'package:flutter_smzg/view/widget/password_card/password_card_widget.dart';
 import 'package:flutter_smzg/view/widget/user_agreement_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -384,7 +384,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
               onTap: () async {
                 await Routers().goThridPartWebView(
                     context,
-                    await MarkdownService()
+                    await MdService()
                         .buildMarkdownFileUrl(context, "assets/users/pp.md"));
               },
             ),
@@ -394,7 +394,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
               onTap: () async {
                 await Routers().goThridPartWebView(
                     context,
-                    await MarkdownService()
+                    await MdService()
                         .buildMarkdownFileUrl(context, "assets/users/ua.md"));
               },
             ),

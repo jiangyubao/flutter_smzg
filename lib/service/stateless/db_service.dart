@@ -6,10 +6,10 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 ///sqlite数据库服务
-class DatabaseService {
-  factory DatabaseService() => _instance;
-  DatabaseService._();
-  static DatabaseService _instance = DatabaseService._();
+class DbService {
+  factory DbService() => _instance;
+  DbService._();
+  static DbService _instance = DbService._();
   static const _databaseName = "card.db";
 
   ///DDL

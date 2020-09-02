@@ -2,7 +2,7 @@ import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/service/base_locator.dart';
-import 'package:flutter_smzg/service/stateless/database_service.dart';
+import 'package:flutter_smzg/service/stateless/db_service.dart';
 
 ///Locator
 class Locator extends BaseLocator {
@@ -17,7 +17,7 @@ class Locator extends BaseLocator {
     try {
       await super.init();
       Routers().init();
-      await DatabaseService().init();
+      await DbService().init();
     } catch (e, s) {
       Logger.printErrorStack(e, s);
     }

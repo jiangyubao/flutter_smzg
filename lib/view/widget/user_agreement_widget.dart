@@ -8,7 +8,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
-import 'package:flutter_smzg/service/stateless/markdown_service.dart';
+import 'package:flutter_smzg/service/stateless/md_service.dart';
 
 //用户条款和隐私协议对话框
 class UserAgreementWidget extends StatefulWidget {
@@ -61,13 +61,13 @@ class _UserAgreementWidgetState extends State<UserAgreementWidget> {
                       if (link.text == "《服务条款》") {
                         await Routers().goThridPartWebView(
                           context,
-                          await MarkdownService().buildMarkdownFileUrl(
+                          await MdService().buildMarkdownFileUrl(
                               context, "assets/users/ua.md"),
                         );
                       } else if (link.text == "《隐私政策》") {
                         await Routers().goThridPartWebView(
                           context,
-                          await MarkdownService().buildMarkdownFileUrl(
+                          await MdService().buildMarkdownFileUrl(
                               context, "assets/users/pp.md"),
                         );
                       }

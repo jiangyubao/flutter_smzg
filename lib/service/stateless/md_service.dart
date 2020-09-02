@@ -4,10 +4,10 @@ import 'package:flutter_common/flutter_common.dart';
 import 'package:markdown/markdown.dart' as md;
 
 ///markdown文件转换为html文件，方便WebView显示。目前用户条款和隐私协议都是使用markdown编写的。
-class MarkdownService {
-  factory MarkdownService() => _instance;
-  MarkdownService._();
-  static MarkdownService _instance = MarkdownService._();
+class MdService {
+  factory MdService() => _instance;
+  MdService._();
+  static MdService _instance = MdService._();
   final Map<String, String> _pathMap = {};
   Future<void> init(BuildContext context) async {}
 

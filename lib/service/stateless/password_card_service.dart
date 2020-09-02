@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_common/flutter_common.dart';
-import 'package:flutter_smzg/service/stateless/database_service.dart';
+import 'package:flutter_smzg/service/stateless/db_service.dart';
 
 ///sqlite数据库服务
 class PasswordCardService {
@@ -17,7 +17,7 @@ class PasswordCardService {
       Logger.info("存在相同名字的记录");
       return false;
     }
-    final int result = await DatabaseService().database.rawUpdate(
+    final int result = await DbService().database.rawUpdate(
         "UPDATE PasswordCard SET name=?,address=?,mobile=?,init=?,current=?,image=?,expiredDate=? WHERE id=?",
         [
           passwordCard.name,
@@ -37,7 +37,7 @@ class PasswordCardService {
     PasswordCard find = await this.findByName(passwordCard.name);
     if (find == null) {
       Logger.info("insert |  name: ${passwordCard.name}");
-      final int id = await DatabaseService().database.rawInsert(
+      final int id = await DbService().database.rawInsert(
           "INSERT INTO PasswordCard(name,address,mobile,init,current,image,expiredDate) VALUES(?,?,?,?,?,?,?)",
           [
             passwordCard.name,
@@ -60,7 +60,7 @@ class PasswordCardService {
 
   Future<bool> delete(int id) async {
     Logger.info("delete | id: $id");
-    final int count = await DatabaseService()
+    final int count = await DbService()
         .database
         .rawDelete('DELETE FROM PasswordCard WHERE id = ?', [id]);
     Logger.info("deletePasswordCard | count: $count");
@@ -70,7 +70,7 @@ class PasswordCardService {
   ///清除
   Future<bool> clear() async {
     Logger.info("clear | ");
-    final int count = await DatabaseService()
+    final int count = await DbService()
         .database
         .rawDelete('DELETE FROM PasswordCard', []);
     Logger.info("deletePasswordCard | count: $count");
@@ -82,7 +82,7 @@ class PasswordCardService {
     final String sql = "SELECT * FROM PasswordCard ORDER BY id ASC " +
         (pageSize != null ? " LIMIT ${pageSize * pageNumber}, $pageSize" : "");
     final List<Map<String, dynamic>> list =
-        await DatabaseService().database.rawQuery(sql);
+        await DbService().database.rawQuery(sql);
     List<PasswordCard> result =
         list.map((m) => PasswordCard.fromJson(m)).toList();
     return result;
@@ -92,7 +92,7 @@ class PasswordCardService {
   Future<PasswordCard> findByName(String name) async {
     final String sql = "SELECT * FROM PasswordCard WHERE name=?";
     final List<Map<String, dynamic>> list =
-        await DatabaseService().database.rawQuery(sql, [name]);
+        await DbService().database.rawQuery(sql, [name]);
     List<PasswordCard> result =
         list.map((m) => PasswordCard.fromJson(m)).toList();
     return result.length > 0 ? result[0] : null;
