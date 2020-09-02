@@ -10,7 +10,6 @@ import 'package:flutter_fordova/generated/l10n.dart' as FordovaL10n;
 import 'package:flutter_fordova/service/stateless/js_function_mapper/permission_mapper.dart';
 import 'package:flutter_hyble/flutter_hyble.dart';
 import 'package:flutter_wechat_plugin/js_function_mapper/wechat_mapper.dart';
-import 'generated/l10n.dart' as L10n;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_scc/flutter_scc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -119,14 +118,12 @@ class MainApp extends StatelessWidget {
                 darkTheme: themeState.themeData(platformDarkMode: true), //暗黑主题
                 locale: const Locale("zh", "CN"),
                 localizationsDelegates: const [
-                  L10n.S.delegate,
                   FordovaL10n.S.delegate,
                   RefreshLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate
                 ],
-                supportedLocales: L10n.S.delegate.supportedLocales,
                 //使用fluro路由框架
                 onGenerateRoute: Routers().router.generator,
                 home: MainPage(configState),
