@@ -46,7 +46,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
               : Scaffold(
                   appBar: AppBar(
                     centerTitle: true,
-                    title: const Text("口袋卡包"),
+                    title: const Text("小密总管"),
                     actions: <Widget>[
                       IconButton(
                           icon: Icon(Icons.add),
@@ -210,7 +210,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                   future: this._buildVersionString(),
                   initialData: "",
                   builder: (context, snapData) {
-                    return Text("口袋卡包  ${snapData.data}版",
+                    return Text("小密总管  ${snapData.data}版",
                         style: TextStyle(
                             fontSize: 32.sp, fontWeight: FontWeight.bold));
                   }),
@@ -316,7 +316,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 await Routers().goThridPartWebView(
                     context,
                     await MdService()
-                        .buildMarkdownFileUrl(context, "assets/users/pp.md"));
+                        .buildMarkdownFileUrl(context, "assets/privacy.md"));
               },
             ),
             Divider(),
@@ -326,7 +326,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 await Routers().goThridPartWebView(
                     context,
                     await MdService()
-                        .buildMarkdownFileUrl(context, "assets/users/ua.md"));
+                        .buildMarkdownFileUrl(context, "assets/agreement.md"));
               },
             ),
             ListTile(

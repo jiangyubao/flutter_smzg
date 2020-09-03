@@ -19,7 +19,7 @@ class UserAgreementWidget extends StatefulWidget {
 
 class _UserAgreementWidgetState extends State<UserAgreementWidget> {
   static const _userAgreement =
-      "    欢迎使用口袋卡包APP！在你使用时，需要连接数据网络或WLAN网络，所产生的流量费用请咨询当地运营商。本APP非常重视你的隐私保护和个人信息。在你使用本APP前，请认真阅读http://《服务条款》 和http://《隐私政策》 全部条款，你同意并接受全部条款后再开始使用本APP。\n    本APP可能会用到以下信息，你可以在设备系统“设置”里进行相关权限信息管理。\n    为了让你更好的体验，我们可能会定期给你推送充值卡有效期相关的通知提醒。为了方便我们进行APP使用统计，本APP会申请读取你的设备状态、设备IDFA、IDFV等标识。当APP需要填充充值卡照片表单时，本APP会申请使用你的相机、相册照片等信息。";
+      "    欢迎使用小密总管APP！在你使用时，需要连接数据网络或WLAN网络，所产生的流量费用请咨询当地运营商。本APP非常重视你的隐私保护和个人信息。在你使用本APP前，请认真阅读http://《服务条款》 和http://《隐私政策》 全部条款，你同意并接受全部条款后再开始使用本APP。\n    本APP可能会用到以下信息，你可以在设备系统“设置”里进行相关权限信息管理。\n    为了让你更好的体验，我们可能会定期给你推送充值卡有效期相关的通知提醒。为了方便我们进行APP使用统计，本APP会申请读取你的设备状态、设备IDFA、IDFV等标识。当APP需要填充充值卡照片表单时，本APP会申请使用你的相机、相册照片等信息。";
   int _counter = 8;
   Timer _timer;
   @override
