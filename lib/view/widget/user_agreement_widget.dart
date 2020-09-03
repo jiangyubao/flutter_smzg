@@ -42,7 +42,7 @@ class _UserAgreementWidgetState extends State<UserAgreementWidget> {
     return Scaffold(
       body: Container(
         color: Colors.grey,
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 180.h),
+        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 110.h),
         child: Card(
           elevation: 8,
           child: Center(
@@ -62,13 +62,13 @@ class _UserAgreementWidgetState extends State<UserAgreementWidget> {
                         await Routers().goThridPartWebView(
                           context,
                           await MdService().buildMarkdownFileUrl(
-                              context, "assets/users/ua.md"),
+                              context, "assets/doc/privacy.md"),
                         );
                       } else if (link.text == "《隐私政策》") {
                         await Routers().goThridPartWebView(
                           context,
                           await MdService().buildMarkdownFileUrl(
-                              context, "assets/users/pp.md"),
+                              context, "assets/doc/agreement.md"),
                         );
                       }
                     },
@@ -83,7 +83,10 @@ class _UserAgreementWidgetState extends State<UserAgreementWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     CupertinoButton(
-                        child: Text("不同意${_counter > 0 ? '（$_counter）' : ''}"),
+                        child: Text(
+                          "不同意${_counter > 0 ? '（$_counter）' : ''}",
+                          style: TextStyle(fontSize: 28.sp),
+                        ),
                         onPressed: _counter > 0
                             ? null
                             : () async {
@@ -93,8 +96,10 @@ class _UserAgreementWidgetState extends State<UserAgreementWidget> {
                               }),
                     CupertinoButton(
                         padding: EdgeInsets.all(28.w),
-                        child:
-                            Text("同意并继续${_counter > 0 ? '（$_counter）' : ''}"),
+                        child: Text(
+                          "同意并继续${_counter > 0 ? '（$_counter）' : ''}",
+                          style: TextStyle(fontSize: 28.sp),
+                        ),
                         color: Theme.of(context).primaryColor,
                         onPressed: _counter > 0
                             ? null
