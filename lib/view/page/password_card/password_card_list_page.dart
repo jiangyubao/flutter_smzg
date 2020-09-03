@@ -21,6 +21,7 @@ class PasswordCardListPage extends StatefulWidget {
 }
 
 class _PasswordCardListPageState extends State<PasswordCardListPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   void _switchDarkMode(BuildContext context, ThemeState themeState) {
     if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
       //showToast("检测到系统为暗黑模式,已为你自动切换", position: ToastPosition.bottom);
@@ -44,12 +45,26 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
           return passwordCardListState.showUserAgreement
               ? UserAgreementWidget()
               : Scaffold(
+                  key: _scaffoldKey,
                   appBar: AppBar(
+                    leading: new IconButton(
+                        icon: new Icon(
+                          Icons.settings,
+                          size: 30.h,
+                        ),
+                        onPressed: () =>
+                            _scaffoldKey.currentState.openDrawer()),
                     centerTitle: true,
-                    title: const Text("小密总管"),
+                    title: Text(
+                      "小密总管",
+                      style: TextStyle(fontSize: 24.sp),
+                    ),
                     actions: <Widget>[
                       IconButton(
-                          icon: Icon(Icons.add),
+                          icon: Icon(
+                            Icons.add,
+                            size: 30.h,
+                          ),
                           onPressed: () async {
                             try {
                               await Routers().goPasswordCardForm(context, -1);
@@ -201,152 +216,182 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
       onTap: () {
         Routers().pop(context);
       },
-      child: Drawer(
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(24.w, 16.h, 0.h, 16.h),
-              child: FutureBuilder(
-                  future: this._buildVersionString(),
-                  initialData: "",
-                  builder: (context, snapData) {
-                    return Text("小密总管  ${snapData.data}版",
-                        style: TextStyle(
-                            fontSize: 32.sp, fontWeight: FontWeight.bold));
-                  }),
-            ),
-            Divider(
-              thickness: 6.h,
-              color: Theme.of(context).primaryColorLight,
-            ),
-            ListTile(
-              title: const Text("数据备份"),
-              onTap: () async {
-                if (await DialogService()
-                    .nativeAlert("备份数据提示", "是否要把本地数据备份到云端")) {
-                  int phoneId = await this._getId();
-                  String token = StorageService()
-                      .sharedPreferences
-                      .getString("auth_token_key");
-                  if (token == null) {
-                    if (await this._jverifyCheck()) {
-                      token = await this._getAuthToken(phoneId);
-                      if (token == null) {
-                        await DialogService().nativeAlert("操作失败", "授权失败");
+      child: Container(
+        width: 325.w,
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(24.w, 16.h, 0.h, 16.h),
+                child: FutureBuilder(
+                    future: this._buildVersionString(),
+                    initialData: "",
+                    builder: (context, snapData) {
+                      return Text("小密总管  ${snapData.data}版",
+                          style: TextStyle(
+                              fontSize: 32.sp, fontWeight: FontWeight.bold));
+                    }),
+              ),
+              Divider(
+                thickness: 6.h,
+                color: Theme.of(context).primaryColorLight,
+              ),
+              ListTile(
+                title: Text(
+                  "数据备份",
+                  style: TextStyle(fontSize: 28.sp),
+                ),
+                onTap: () async {
+                  if (await DialogService()
+                      .nativeAlert("备份数据提示", "是否要把本地数据备份到云端")) {
+                    int phoneId = await this._getId();
+                    String token = StorageService()
+                        .sharedPreferences
+                        .getString("auth_token_key");
+                    if (token == null) {
+                      if (await this._jverifyCheck()) {
+                        token = await this._getAuthToken(phoneId);
+                        if (token == null) {
+                          await DialogService().nativeAlert("操作失败", "授权失败");
+                        } else {
+                          StorageService()
+                              .sharedPreferences
+                              .setString("auth_token_key", token);
+                        }
+                      }
+                    }
+                    if (token != null) {
+                      ProgressHUD.of(context).show();
+                      bool result = await JssService()
+                          .save(token, passwordCardListState.toBase64Json());
+                      ProgressHUD.of(context).dismiss();
+                      if (result) {
+                        await DialogService().nativeAlert("操作成功", "数据备份成功");
                       } else {
-                        StorageService()
-                            .sharedPreferences
-                            .setString("auth_token_key", token);
+                        await DialogService().nativeAlert("操作失败", "数据备份失败");
                       }
                     }
                   }
-                  if (token != null) {
-                    ProgressHUD.of(context).show();
-                    bool result = await JssService()
-                        .save(token, passwordCardListState.toBase64Json());
-                    ProgressHUD.of(context).dismiss();
-                    if (result) {
-                      await DialogService().nativeAlert("操作成功", "数据备份成功");
-                    } else {
-                      await DialogService().nativeAlert("操作失败", "数据备份失败");
+                  Routers().pop(context);
+                },
+                trailing: Icon(
+                  Icons.cloud_upload,
+                  size: 30.h,
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  "数据恢复",
+                  style: TextStyle(fontSize: 28.sp),
+                ),
+                onTap: () async {
+                  if (await DialogService()
+                      .nativeAlert("数据恢复", "是否要把云端数据下载到本地")) {
+                    int phoneId = await this._getId();
+                    String token = StorageService()
+                        .sharedPreferences
+                        .getString("auth_token_key");
+                    if (token == null) {
+                      if (await this._jverifyCheck()) {
+                        token = await this._getAuthToken(phoneId);
+                        if (token == null) {
+                          await DialogService().nativeAlert("操作失败", "授权失败");
+                        } else {
+                          StorageService()
+                              .sharedPreferences
+                              .setString("auth_token_key", token);
+                        }
+                      }
                     }
-                  }
-                }
-                Routers().pop(context);
-              },
-              trailing: Icon(Icons.cloud_upload),
-            ),
-            ListTile(
-              title: const Text("数据恢复"),
-              onTap: () async {
-                if (await DialogService()
-                    .nativeAlert("数据恢复", "是否要把云端数据下载到本地")) {
-                  int phoneId = await this._getId();
-                  String token = StorageService()
-                      .sharedPreferences
-                      .getString("auth_token_key");
-                  if (token == null) {
-                    if (await this._jverifyCheck()) {
-                      token = await this._getAuthToken(phoneId);
-                      if (token == null) {
-                        await DialogService().nativeAlert("操作失败", "授权失败");
+                    if (token != null) {
+                      ProgressHUD.of(context).show();
+                      String body = await JssService().load(token);
+                      ProgressHUD.of(context).dismiss();
+                      if (body != null) {
+                        await passwordCardListState.fromBase64Json(body);
+                        await DialogService().nativeAlert("操作成功", "数据恢复成功");
                       } else {
-                        StorageService()
-                            .sharedPreferences
-                            .setString("auth_token_key", token);
+                        await DialogService().nativeAlert("操作失败", "数据恢复失败");
                       }
                     }
                   }
-                  if (token != null) {
-                    ProgressHUD.of(context).show();
-                    String body = await JssService().load(token);
-                    ProgressHUD.of(context).dismiss();
-                    if (body != null) {
-                      await passwordCardListState.fromBase64Json(body);
-                      await DialogService().nativeAlert("操作成功", "数据恢复成功");
-                    } else {
-                      await DialogService().nativeAlert("操作失败", "数据恢复失败");
-                    }
-                  }
-                }
-                Routers().pop(context);
-              },
-              trailing: Icon(Icons.cloud_download),
-            ),
-            Divider(),
-            ListTile(
-              title: const Text("暗黑模式"),
-              onTap: () {
-                Routers().pop(context);
-                _switchDarkMode(context, themeState);
-              },
-              trailing: CupertinoSwitch(
-                activeColor: Theme.of(context).accentColor,
-                value: Theme.of(context).brightness == Brightness.dark,
-                onChanged: (value) {
+                  Routers().pop(context);
+                },
+                trailing: Icon(
+                  Icons.cloud_download,
+                  size: 30.h,
+                ),
+              ),
+              Divider(),
+              ListTile(
+                title: Text(
+                  "暗黑模式",
+                  style: TextStyle(fontSize: 28.sp),
+                ),
+                onTap: () {
                   Routers().pop(context);
                   _switchDarkMode(context, themeState);
                 },
+                trailing: CupertinoSwitch(
+                  activeColor: Theme.of(context).accentColor,
+                  value: Theme.of(context).brightness == Brightness.dark,
+                  onChanged: (value) {
+                    Routers().pop(context);
+                    _switchDarkMode(context, themeState);
+                  },
+                ),
               ),
-            ),
-            Divider(),
-            ListTile(
-              title: const Text("隐私政策"),
-              onTap: () async {
-                await Routers().goThridPartWebView(
-                    context,
-                    await MdService().buildMarkdownFileUrl(
-                        context, "assets/doc/privacy.md"));
-              },
-            ),
-            Divider(),
-            ListTile(
-              title: const Text("服务条款"),
-              onTap: () async {
-                await Routers().goThridPartWebView(
-                    context,
-                    await MdService().buildMarkdownFileUrl(
-                        context, "assets/doc/agreement.md"));
-              },
-            ),
-            ListTile(
-              title: const Text("反馈建议"),
-              onTap: () async {
-                final String url =
-                    'mailto:3317964980@qq.com?subject=feedback&body=feedback';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  await Future.delayed(Duration(seconds: 1));
-                  launch(
-                      'https://github.com/ishemant/ishemant.github.io/issues',
-                      forceSafariVC: true);
-                }
-              },
-              trailing: Icon(Icons.feedback),
-            ),
-            Divider(),
-          ],
+              Divider(),
+              ListTile(
+                title: Text(
+                  "隐私政策",
+                  style: TextStyle(fontSize: 28.sp),
+                ),
+                onTap: () async {
+                  await Routers().goThridPartWebView(
+                      context,
+                      await MdService().buildMarkdownFileUrl(
+                          context, "assets/doc/privacy.md"));
+                },
+              ),
+              Divider(),
+              ListTile(
+                title: Text(
+                  "服务条款",
+                  style: TextStyle(fontSize: 28.sp),
+                ),
+                onTap: () async {
+                  await Routers().goThridPartWebView(
+                      context,
+                      await MdService().buildMarkdownFileUrl(
+                          context, "assets/doc/agreement.md"));
+                },
+              ),
+              ListTile(
+                title: Text(
+                  "反馈建议",
+                  style: TextStyle(fontSize: 28.sp),
+                ),
+                onTap: () async {
+                  final String url =
+                      'mailto:3317964980@qq.com?subject=feedback&body=feedback';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    await Future.delayed(Duration(seconds: 1));
+                    launch(
+                        'https://github.com/ishemant/ishemant.github.io/issues',
+                        forceSafariVC: true);
+                  }
+                },
+                trailing: Icon(
+                  Icons.feedback,
+                  size: 30.h,
+                ),
+              ),
+              Divider(),
+            ],
+          ),
         ),
       ),
     );
