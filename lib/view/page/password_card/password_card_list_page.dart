@@ -49,7 +49,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                   appBar: AppBar(
                     leading: new IconButton(
                         icon: new Icon(
-                          Icons.settings,
+                          Icons.menu,
                           size: 28.w,
                         ),
                         onPressed: () =>
