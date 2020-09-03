@@ -10,19 +10,18 @@ class DbService {
   factory DbService() => _instance;
   DbService._();
   static DbService _instance = DbService._();
-  static const _databaseName = "card.db";
+  static const _databaseName = "password_card.db";
 
   ///DDL
   static const _ddl = '''
       CREATE TABLE IF NOT EXISTS PasswordCard (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name VARCHAR (16) UNIQUE,
-        address VARCHAR (128),
-        mobile VARCHAR (16),
-        init INTEGER,
-        current INTEGER,
-        image BLOB,
-        expiredDate VARCHAR (16)
+        name VARCHAR (32) UNIQUE,
+        url VARCHAR (256),
+        folder VARCHAR (32),
+        userName VARCHAR (32),
+        sitePassword VARCHAR (32),
+        notes VARCHAR (256)
       );
   ''';
 
