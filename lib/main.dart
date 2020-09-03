@@ -8,10 +8,10 @@ import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_fordova/generated/l10n.dart' as FordovaL10n;
 import 'package:flutter_fordova/service/stateless/js_function_mapper/permission_mapper.dart';
-import 'package:flutter_hyble/flutter_hyble.dart';
+//import 'package:flutter_hyble/flutter_hyble.dart';
 import 'package:flutter_wechat_plugin/js_function_mapper/wechat_mapper.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_scc/flutter_scc.dart';
+//import 'package:flutter_scc/flutter_scc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_umpush/flutter_umpush.dart';
 import 'package:path_provider/path_provider.dart';
@@ -191,11 +191,11 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
         PermissionMapper(),
         WeChatMapper(),
         //以下三个都依赖蓝牙
-        if (widget.configState.config.enableBlue) ...[
-          BlueMapper(),
-          TerminalMapper(),
-          T$ick$etQueueMapper(),
-        ]
+        // if (widget.configState.config.enableBlue) ...[
+        //   BlueMapper(),
+        //   TerminalMapper(),
+        //   T$ick$etQueueMapper(),
+        // ]
       ];
     }
     return keyLength == null
