@@ -36,7 +36,6 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
   final FocusNode _addressFocusNode = FocusNode();
   final FocusNode _expiredDateFocusNode = FocusNode();
   final FocusNode _mobileFocusNode = FocusNode();
-  final FocusNode _initFocusNode = FocusNode();
 
   _PasswordCardFormPageState(this.passwordCard);
   KeyboardActionsConfig _buildKeyboardConfig(BuildContext context) {
