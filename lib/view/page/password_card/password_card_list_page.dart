@@ -113,7 +113,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                                           letterSpacing: 0.5,
                                           fontSize: 32.sp),
                                     ),
-                                    message: "密码卡为空，请创建充值卡",
+                                    message: "密码卡为空，请创建密码卡",
                                     onPressed: () async {
                                       try {
                                         await Routers()

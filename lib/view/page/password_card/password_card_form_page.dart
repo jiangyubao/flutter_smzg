@@ -12,7 +12,7 @@ import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/util/date_util.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
-///充值卡表单
+///密码卡表单
 class PasswordCardFormPage extends StatefulWidget {
   final PasswordCard passwordCard;
   PasswordCardFormPage({Key key, this.passwordCard}) : super(key: key);
@@ -133,8 +133,8 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
           appBar: AppBar(
             centerTitle: true,
             title: passwordCard.id == null
-                ? const Text("新建充值卡")
-                : const Text("修改充值卡"),
+                ? const Text("新建密码卡")
+                : const Text("修改密码卡"),
             actions: <Widget>[
               IconButton(
                   icon: Icon(Icons.check),
@@ -146,7 +146,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                             await passwordCardListState.insert(passwordCard);
                         if (id < 0) {
                           await DialogService()
-                              .nativeAlert("保存失败", "系统已存在相同名字的充值卡", ok: "确定");
+                              .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
                           _nameFocusNode.requestFocus();
                         } else {
                           Routers().pop(context);
@@ -156,7 +156,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                             await passwordCardListState.update(passwordCard);
                         if (!result) {
                           await DialogService()
-                              .nativeAlert("保存失败", "系统已存在相同名字的充值卡", ok: "确定");
+                              .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
                           _nameFocusNode.requestFocus();
                         } else {
                           Routers().pop(context);

@@ -6,7 +6,7 @@ import 'package:flutter_smzg/view/widget/password_card/card_body_widget.dart';
 import 'package:flutter_smzg/view/widget/password_card/card_footer_widget.dart';
 import 'package:flutter_smzg/view/widget/password_card/card_header_widget.dart';
 
-///充值卡控件
+///密码卡控件
 class PasswordCardWidget extends StatelessWidget {
   final PasswordCard passwordCard;
   const PasswordCardWidget({

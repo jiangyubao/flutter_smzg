@@ -1,4 +1,4 @@
-///充值卡
+///密码卡
 class PasswordCard {
   int id = 0;
 
@@ -17,7 +17,7 @@ class PasswordCard {
   ///剩余额度
   String sitePassword;
 
-  ///充值卡过去日期
+  ///密码卡过去日期
   String notes;
 
   ///默认构造函数
@@ -40,7 +40,7 @@ class PasswordCard {
         sitePassword = json['sitePassword'],
         notes = json['notes'];
 
-  ///新建空对象：新建充值卡需要
+  ///新建空对象：新建密码卡需要
   PasswordCard.empty()
       : id = null,
         name = '',
@@ -60,7 +60,7 @@ class PasswordCard {
         sitePassword = passwordCard.sitePassword,
         notes = passwordCard.notes;
 
-  ///拷贝一个对象：更新充值卡成功后需要改写provider状态对象
+  ///拷贝一个对象：更新密码卡成功后需要改写provider状态对象
   void copy(PasswordCard passwordCard) {
     this.name = passwordCard.name;
     this.url = passwordCard.url;

@@ -31,7 +31,7 @@ class PasswordCardService {
     return result == 1;
   }
 
-  ///插入充值卡
+  ///插入密码卡
   Future<int> insert(PasswordCard passwordCard) async {
     PasswordCard find = await this.findByName(passwordCard.name);
     if (find == null) {
@@ -54,7 +54,7 @@ class PasswordCardService {
     return -1;
   }
 
-  ///删除充值卡
+  ///删除密码卡
 
   Future<bool> delete(int id) async {
     Logger.info("delete | id: $id");
@@ -74,7 +74,7 @@ class PasswordCardService {
     return count == 1;
   }
 
-  ///查找充值卡列表
+  ///查找密码卡列表
   Future<List<PasswordCard>> find({int pageNumber = 0, int pageSize}) async {
     final String sql = "SELECT * FROM PasswordCard ORDER BY id ASC " +
         (pageSize != null ? " LIMIT ${pageSize * pageNumber}, $pageSize" : "");
@@ -85,7 +85,7 @@ class PasswordCardService {
     return result;
   }
 
-  ///按名字查找充值卡
+  ///按名字查找密码卡
   Future<PasswordCard> findByName(String name) async {
     final String sql = "SELECT * FROM PasswordCard WHERE name=?";
     final List<Map<String, dynamic>> list =

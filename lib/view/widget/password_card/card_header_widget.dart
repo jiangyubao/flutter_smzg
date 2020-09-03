@@ -23,7 +23,7 @@ class CardHeaderWidget extends StatelessWidget {
             icon: Icon(Icons.delete),
             color: Theme.of(context).primaryColor,
             onPressed: () async {
-              if (await DialogService().nativeAlert("删除充值卡确认", "是否要删除该充值卡") ??
+              if (await DialogService().nativeAlert("删除密码卡确认", "是否要删除该密码卡") ??
                   false) {
                 await locator
                     .get<PasswordCardListState>()
