@@ -50,20 +50,20 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                     leading: new IconButton(
                         icon: new Icon(
                           Icons.settings,
-                          size: 30.h,
+                          size: 28.w,
                         ),
                         onPressed: () =>
                             _scaffoldKey.currentState.openDrawer()),
                     centerTitle: true,
                     title: Text(
                       "小密总管",
-                      style: TextStyle(fontSize: 24.sp),
+                      style: TextStyle(fontSize: 30.sp),
                     ),
                     actions: <Widget>[
                       IconButton(
                           icon: Icon(
                             Icons.add,
-                            size: 30.h,
+                            size: 28.w,
                           ),
                           onPressed: () async {
                             try {
@@ -276,7 +276,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 },
                 trailing: Icon(
                   Icons.cloud_upload,
-                  size: 30.h,
+                  size: 28.w,
                 ),
               ),
               ListTile(
@@ -319,7 +319,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 },
                 trailing: Icon(
                   Icons.cloud_download,
-                  size: 30.h,
+                  size: 28.w,
                 ),
               ),
               Divider(),
@@ -386,7 +386,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 },
                 trailing: Icon(
                   Icons.feedback,
-                  size: 30.h,
+                  size: 28.w,
                 ),
               ),
               Divider(),
