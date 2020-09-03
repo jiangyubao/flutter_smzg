@@ -113,7 +113,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                                           letterSpacing: 0.5,
                                           fontSize: 32.sp),
                                     ),
-                                    message: "卡包为空，请创建充值卡",
+                                    message: "密码卡为空，请创建充值卡",
                                     onPressed: () async {
                                       try {
                                         await Routers()
@@ -339,7 +339,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 } else {
                   await Future.delayed(Duration(seconds: 1));
                   launch(
-                      'https://github.com/wuqi-jack/wuqi-jack.github.io/issues',
+                      'https://github.com/ishemant/ishemant.github.io/issues',
                       forceSafariVC: true);
                 }
               },

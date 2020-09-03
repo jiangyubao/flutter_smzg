@@ -55,6 +55,7 @@ main() async {
     final FL.Locator _locator = FL.Locator();
     await _locator.setup();
     await _locator.init();
+    await locator.get<ThemeState>().init(colorIndex: 3);
     String jverifyAppKey = Platform.isIOS ? jVerifyKeyIOS : jVerifyKeyAndroid;
     Logger.info("jverifyAppKey: $jverifyAppKey");
     await JVerifyService().init(jverifyAppKey, jVerifyChannel);
