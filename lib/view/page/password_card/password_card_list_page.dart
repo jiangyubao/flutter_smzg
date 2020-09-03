@@ -315,8 +315,8 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
               onTap: () async {
                 await Routers().goThridPartWebView(
                     context,
-                    await MdService()
-                        .buildMarkdownFileUrl(context, "assets/privacy.md"));
+                    await MdService().buildMarkdownFileUrl(
+                        context, "assets/doc/privacy.md"));
               },
             ),
             Divider(),
@@ -325,8 +325,8 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
               onTap: () async {
                 await Routers().goThridPartWebView(
                     context,
-                    await MdService()
-                        .buildMarkdownFileUrl(context, "assets/agreement.md"));
+                    await MdService().buildMarkdownFileUrl(
+                        context, "assets/doc/agreement.md"));
               },
             ),
             ListTile(
