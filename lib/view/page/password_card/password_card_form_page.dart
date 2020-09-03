@@ -26,12 +26,11 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
   final GlobalKey<FormState> _key = GlobalKey();
   TextEditingController _nameTextEditingController = TextEditingController();
   TextEditingController _addressTextEditingController = TextEditingController();
-  TextEditingController _expiredDateTextEditingController =
-      TextEditingController(
-          text: DateUtil.formatShortDate(
-              DateTime.now().add(Duration(days: 365))));
-  TextEditingController _mobileTextEditingController = TextEditingController();
-  TextEditingController _initTextEditingController = TextEditingController();
+  TextEditingController _folderTextEditingController = TextEditingController(
+      text: DateUtil.formatShortDate(DateTime.now().add(Duration(days: 365))));
+  TextEditingController _userNameextEditingController = TextEditingController();
+  TextEditingController _sitePasswordTextEditingController =
+      TextEditingController();
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _addressFocusNode = FocusNode();
   final FocusNode _expiredDateFocusNode = FocusNode();
@@ -65,11 +64,9 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
   @override
   void initState() {
     super.initState();
-    _nameTextEditingController.text = passwordCard.name;
+    _nameTextEditingController.text = passwordCard.nickName;
     _addressTextEditingController.text = passwordCard.url;
-    _expiredDateTextEditingController.text = passwordCard.notes;
-    _mobileTextEditingController.text = passwordCard.folder;
-    _initTextEditingController.text = "${passwordCard.userName}";
+    _sitePasswordTextEditingController.text = "${passwordCard.userName}";
   }
 
   Future<PickedFile> _selectImage(double maxWidth, double maxHeight) async {
@@ -186,7 +183,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                         ),
                         keyboardType: TextInputType.text,
                         onChanged: (String val) {
-                          passwordCard.name = val;
+                          passwordCard.nickName = val;
                         },
                         onSaved: (String val) {},
                         validator: (String val) {
@@ -250,7 +247,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                         focusNode: _expiredDateFocusNode,
                         maxLength: 10,
                         maxLengthEnforced: true,
-                        controller: _expiredDateTextEditingController,
+                        controller: _folderTextEditingController,
                         decoration: InputDecoration(
                           labelText: '过期日期：',
                           suffixIcon: IconButton(
@@ -268,19 +265,11 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                                 lastDate: DateTime.now()
                                     .add(Duration(days: 365 * 10)),
                               );
-                              if (dt != null) {
-                                passwordCard.notes =
-                                    DateUtil.formatShortDate(dt);
-                                _expiredDateTextEditingController.text =
-                                    passwordCard.notes;
-                              }
                             },
                           ),
                         ),
                         keyboardType: TextInputType.text,
-                        onChanged: (String val) {
-                          passwordCard.notes = val;
-                        },
+                        onChanged: (String val) {},
                         onSaved: (String val) {},
                         validator: (String val) {
                           if (val.isEmpty) {
@@ -296,14 +285,12 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                         maxLength: 16,
                         maxLengthEnforced: true,
                         focusNode: _mobileFocusNode,
-                        controller: _mobileTextEditingController,
+                        controller: _userNameextEditingController,
                         decoration: const InputDecoration(
                           labelText: '联系电话：',
                         ),
                         keyboardType: TextInputType.phone,
-                        onChanged: (String val) {
-                          passwordCard.folder = val;
-                        },
+                        onChanged: (String val) {},
                         onSaved: (String val) {},
                         validator: (String val) {
                           if (val.isEmpty) {

@@ -16,11 +16,6 @@ class CardFooterWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          '联系电话：${passwordCard.folder}',
-          style: TextStyle(
-              fontWeight: FontWeight.w600, letterSpacing: 0.5, fontSize: 28.sp),
-        ),
         SizedBox(
           height: 16.h,
         ),

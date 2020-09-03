@@ -12,20 +12,18 @@ class PasswordCardService {
 
   ///修改昵称
   Future<bool> update(PasswordCard passwordCard) async {
-    PasswordCard find = await this.findByName(passwordCard.name);
+    PasswordCard find = await this.findByName(passwordCard.nickName);
     if (find != null && find.id != passwordCard.id) {
       Logger.info("存在相同名字的记录");
       return false;
     }
     final int result = await DbService().database.rawUpdate(
-        "UPDATE PasswordCard SET name=?,url=?,folder=?,userName=?,sitePassword=?,notes=? WHERE id=?",
+        "UPDATE PasswordCard SET nickName=?,url=?,userName=?,sitePassword=? WHERE id=?",
         [
-          passwordCard.name,
+          passwordCard.nickName,
           passwordCard.url,
-          passwordCard.folder,
           passwordCard.userName,
           passwordCard.sitePassword,
-          passwordCard.notes,
           passwordCard.id,
         ]);
     return result == 1;
@@ -33,18 +31,16 @@ class PasswordCardService {
 
   ///插入密码卡
   Future<int> insert(PasswordCard passwordCard) async {
-    PasswordCard find = await this.findByName(passwordCard.name);
+    PasswordCard find = await this.findByName(passwordCard.nickName);
     if (find == null) {
-      Logger.info("insert |  name: ${passwordCard.name}");
+      Logger.info("insert |  name: ${passwordCard.nickName}");
       final int id = await DbService().database.rawInsert(
-          "INSERT INTO PasswordCard(name,url,folder,userName,sitePassword,notes) VALUES(?,?,?,?,?,?)",
+          "INSERT INTO PasswordCard(nickName,url,userName,sitePassword) VALUES(?,?,?,?)",
           [
-            passwordCard.name,
+            passwordCard.nickName,
             passwordCard.url,
-            passwordCard.folder,
             passwordCard.userName,
-            passwordCard.sitePassword,
-            passwordCard.notes
+            passwordCard.sitePassword
           ]);
       passwordCard.id = id;
 
@@ -86,10 +82,10 @@ class PasswordCardService {
   }
 
   ///按名字查找密码卡
-  Future<PasswordCard> findByName(String name) async {
-    final String sql = "SELECT * FROM PasswordCard WHERE name=?";
+  Future<PasswordCard> findByName(String nickName) async {
+    final String sql = "SELECT * FROM PasswordCard WHERE nickName=?";
     final List<Map<String, dynamic>> list =
-        await DbService().database.rawQuery(sql, [name]);
+        await DbService().database.rawQuery(sql, [nickName]);
     List<PasswordCard> result =
         list.map((m) => PasswordCard.fromJson(m)).toList();
     return result.length > 0 ? result[0] : null;

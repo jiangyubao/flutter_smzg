@@ -43,13 +43,6 @@ class CardBodyWidget extends StatelessWidget {
               SizedBox(
                 height: 32.h,
               ),
-              Text(
-                '过期时间：${passwordCard.notes.replaceAll('-', '/')}',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.5,
-                    fontSize: 28.sp),
-              ),
             ],
           ),
         ),

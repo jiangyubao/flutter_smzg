@@ -32,7 +32,7 @@ class CardHeaderWidget extends StatelessWidget {
             }),
         Expanded(
           child: Text(
-            '${passwordCard.name}',
+            '${passwordCard.nickName}',
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontWeight: FontWeight.w700,

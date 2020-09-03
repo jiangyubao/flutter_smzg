@@ -175,7 +175,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
 
   Future<int> _getId() async {
     var iosDeviceInfo = await PlatformService().getDeviceInfo();
-    return iosDeviceInfo.name.hashCode;
+    return iosDeviceInfo.nickName.hashCode;
   }
 
   Future<bool> _jverifyCheck() async {

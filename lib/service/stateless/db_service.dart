@@ -16,12 +16,10 @@ class DbService {
   static const _ddl = '''
       CREATE TABLE IF NOT EXISTS PasswordCard (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name VARCHAR (32) UNIQUE,
+        nickName VARCHAR (32) UNIQUE,
         url VARCHAR (256),
-        folder VARCHAR (32),
         userName VARCHAR (32),
-        sitePassword VARCHAR (32),
-        notes VARCHAR (256)
+        sitePassword VARCHAR (32)
       );
   ''';
 
