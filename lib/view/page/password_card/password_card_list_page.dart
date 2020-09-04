@@ -128,9 +128,9 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                                       "我要创建",
                                       style: TextStyle(
                                           color: Theme.of(context).accentColor,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           letterSpacing: 0.5,
-                                          fontSize: 32.sp),
+                                          fontSize: 22.sp),
                                     ),
                                     message: "密码卡为空，请创建密码卡",
                                     onPressed: () async {

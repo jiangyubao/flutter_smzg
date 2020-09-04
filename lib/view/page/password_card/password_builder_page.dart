@@ -245,7 +245,7 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
                           color: Theme.of(context).accentColor,
                           icon: Icon(
                             Icons.refresh,
-                            size: 88.sp,
+                            size: 28.sp,
                           ),
                           onPressed: () {
                             passwordBuilderState.buildPassword();
