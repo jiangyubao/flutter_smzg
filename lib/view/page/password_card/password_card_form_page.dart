@@ -147,12 +147,12 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                         TextFormField(
                           autofocus: true,
                           style: TextStyle(fontSize: 28.sp),
-                          maxLength: 32,
+                          maxLength: 8,
                           maxLengthEnforced: true,
                           focusNode: _nickNameFocusNode,
                           controller: _nickNameTextEditingController,
                           decoration: InputDecoration(
-                            labelText: '卡片别名：',
+                            labelText: '别名：',
                           ),
                           keyboardType: TextInputType.text,
                           onChanged: (String val) {
@@ -163,8 +163,8 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                             if (val.isEmpty) {
                               return "别名不能为空";
                             }
-                            if (val.length > 32 || val.length < 1) {
-                              return "网站地址长度只能是1到32位";
+                            if (val.length > 8 || val.length < 1) {
+                              return "别名长度只能是1到8位";
                             }
                             return null;
                           },
@@ -177,10 +177,10 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                           maxLines: 1,
                           focusNode: _urlFocusNode,
                           controller: _urlTextEditingController,
-                          maxLength: 256,
+                          maxLength: 32,
                           maxLengthEnforced: true,
                           decoration: InputDecoration(
-                            labelText: '网站地址：',
+                            labelText: '网址：',
                           ),
                           keyboardType: TextInputType.text,
                           onChanged: (String val) {
@@ -189,10 +189,10 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                           onSaved: (String val) {},
                           validator: (String val) {
                             if (val.isEmpty) {
-                              return "网站地址不能为空";
+                              return "网址不能为空";
                             }
-                            if (val.length > 256 || val.length < 1) {
-                              return "网站地址长度只能是1到256位";
+                            if (val.length > 32 || val.length < 1) {
+                              return "网址长度只能是1到32位";
                             }
                             return null;
                           },
@@ -203,11 +203,11 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                         TextFormField(
                           style: TextStyle(fontSize: 28.sp),
                           focusNode: _userNameFocusNode,
-                          maxLength: 32,
+                          maxLength: 16,
                           maxLengthEnforced: true,
                           controller: _userNameTextEditingController,
                           decoration: InputDecoration(
-                            labelText: '登录账号：',
+                            labelText: '账号：',
                           ),
                           keyboardType: TextInputType.text,
                           onChanged: (String val) {
@@ -216,10 +216,10 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                           onSaved: (String val) {},
                           validator: (String val) {
                             if (val.isEmpty) {
-                              return "登录账号不能为空";
+                              return "账号不能为空";
                             }
-                            if (val.length > 32 || val.length < 1) {
-                              return "登录账号长度只能1到32位";
+                            if (val.length > 16 || val.length < 1) {
+                              return "账号长度只能1到16位";
                             }
                             return null;
                           },
@@ -227,11 +227,11 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                         TextFormField(
                           style: TextStyle(fontSize: 28.sp),
                           focusNode: _sitePasswordFocusNode,
-                          maxLength: 32,
+                          maxLength: 16,
                           maxLengthEnforced: true,
                           controller: _sitePasswordTextEditingController,
                           decoration: InputDecoration(
-                            labelText: '登录密码：',
+                            labelText: '密码：',
                           ),
                           keyboardType: TextInputType.text,
                           onChanged: (String val) {
@@ -240,10 +240,10 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                           onSaved: (String val) {},
                           validator: (String val) {
                             if (val.isEmpty) {
-                              return "登录密码不能为空";
+                              return "密码不能为空";
                             }
-                            if (val.length > 32 || val.length < 1) {
-                              return "登录密码长度只能1到32位";
+                            if (val.length > 16 || val.length < 1) {
+                              return "密码长度只能1到32位";
                             }
                             return null;
                           },
