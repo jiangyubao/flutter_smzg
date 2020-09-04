@@ -5,7 +5,6 @@ import 'package:flutter_fordova/view/page/scan_page.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/util/convert_util.dart';
-import 'package:flutter_smzg/view/page/password_card/balance_form_page.dart';
 import 'package:flutter_smzg/view/page/password_card/password_card_form_page.dart';
 import 'package:flutter_smzg/view/page/password_card/password_card_list_page.dart';
 
@@ -17,12 +16,6 @@ class Routers {
 
   ///跟路由
   static const _root = "/";
-
-  ///添加或修改表单
-  static const _balanceForm = "/balance_form";
-
-  ///添加或修改表单
-  static const _imageDisplay = "/image_display";
 
   ///添加或修改表单
   static const _passwordCardForm = "/password_card_form";
@@ -105,30 +98,6 @@ class Routers {
             passwordCard: PasswordCard.clone(passwordCard));
       }),
     );
-
-    _router.define(
-      _balanceForm,
-      handler: Handler(handlerFunc:
-          (BuildContext context, Map<String, List<String>> parameters) {
-        //value
-        int value = int.parse(parameters["value"].first);
-        String title = parameters["title"].first;
-        title = ConvertUtil.cnParamsDecode(title);
-        return BalanceFormPage(title: title, value: value);
-      }),
-    );
-  }
-
-  Future goBalanceForm(BuildContext context, String title, int value) {
-    title = ConvertUtil.cnParamsEncode(title);
-    return _router.navigateTo(
-        context, "$_balanceForm?title=$title&value=$value",
-        transition: TransitionType.cupertinoFullScreenDialog);
-  }
-
-  Future goImageDisplay(BuildContext context, int id) {
-    return _router.navigateTo(context, "$_imageDisplay?id=$id",
-        transition: TransitionType.cupertinoFullScreenDialog);
   }
 
   Future goPasswordCardForm(BuildContext context, int id) {
