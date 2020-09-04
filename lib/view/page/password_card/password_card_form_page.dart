@@ -72,167 +72,181 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
   Widget build(BuildContext context) {
     return Consumer2<PasswordCardListState, ConfigState>(
       builder: (context, passwordCardListState, configState, child) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(
-                  Icons.close,
-                  size: 28.sp,
-                ),
-                onPressed: () {
-                  Routers().pop(context);
-                }),
-            centerTitle: true,
-            title: passwordCard.id == null
-                ? Text(
-                    "新建密码卡",
-                    style: TextStyle(fontSize: 30.sp),
-                  )
-                : Text(
-                    "修改密码卡",
-                    style: TextStyle(fontSize: 30.sp),
+        final ThemeData themeData = Theme.of(context);
+        return Theme(
+          data: themeData.copyWith(
+            inputDecorationTheme: themeData.inputDecorationTheme.copyWith(
+              hintStyle: TextStyle(fontSize: 26.sp),
+              errorStyle: TextStyle(fontSize: 26.sp),
+              counterStyle: TextStyle(fontSize: 26.sp),
+              helperStyle: TextStyle(fontSize: 26.sp),
+              suffixStyle: TextStyle(fontSize: 26.sp),
+              labelStyle: TextStyle(fontSize: 26.sp),
+              prefixStyle: TextStyle(fontSize: 26.sp),
+            ),
+          ),
+          child: Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    size: 28.sp,
                   ),
-            actions: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.check, size: 28.sp),
-                  onPressed: () async {
-                    if (_key.currentState.validate()) {
-                      passwordCard.sitePassword = passwordCard.userName;
-                      if (passwordCard.id == null) {
-                        int id =
-                            await passwordCardListState.insert(passwordCard);
-                        if (id < 0) {
-                          await DialogService()
-                              .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
-                          _nickNameFocusNode.requestFocus();
+                  onPressed: () {
+                    Routers().pop(context);
+                  }),
+              centerTitle: true,
+              title: passwordCard.id == null
+                  ? Text(
+                      "新建密码卡",
+                      style: TextStyle(fontSize: 30.sp),
+                    )
+                  : Text(
+                      "修改密码卡",
+                      style: TextStyle(fontSize: 30.sp),
+                    ),
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.check, size: 28.sp),
+                    onPressed: () async {
+                      if (_key.currentState.validate()) {
+                        passwordCard.sitePassword = passwordCard.userName;
+                        if (passwordCard.id == null) {
+                          int id =
+                              await passwordCardListState.insert(passwordCard);
+                          if (id < 0) {
+                            await DialogService()
+                                .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
+                            _nickNameFocusNode.requestFocus();
+                          } else {
+                            Routers().pop(context);
+                          }
                         } else {
-                          Routers().pop(context);
-                        }
-                      } else {
-                        bool result =
-                            await passwordCardListState.update(passwordCard);
-                        if (!result) {
-                          await DialogService()
-                              .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
-                          _nickNameFocusNode.requestFocus();
-                        } else {
-                          Routers().pop(context);
+                          bool result =
+                              await passwordCardListState.update(passwordCard);
+                          if (!result) {
+                            await DialogService()
+                                .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
+                            _nickNameFocusNode.requestFocus();
+                          } else {
+                            Routers().pop(context);
+                          }
                         }
                       }
-                    }
-                  }),
-            ],
-          ),
-          body: Form(
-            key: _key,
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 25.h),
-              child: KeyboardActions(
-                config: this._buildKeyboardConfig(context),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        autofocus: true,
-                        style: TextStyle(fontSize: 28.sp),
-                        maxLength: 32,
-                        maxLengthEnforced: true,
-                        focusNode: _nickNameFocusNode,
-                        controller: _nickNameTextEditingController,
-                        decoration: InputDecoration(
-                          labelText: '卡片别名：',
+                    }),
+              ],
+            ),
+            body: Form(
+              key: _key,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 25.h),
+                child: KeyboardActions(
+                  config: this._buildKeyboardConfig(context),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          autofocus: true,
+                          style: TextStyle(fontSize: 28.sp),
+                          maxLength: 32,
+                          maxLengthEnforced: true,
+                          focusNode: _nickNameFocusNode,
+                          controller: _nickNameTextEditingController,
+                          decoration: InputDecoration(
+                            labelText: '卡片别名：',
+                          ),
+                          keyboardType: TextInputType.text,
+                          onChanged: (String val) {
+                            passwordCard.nickName = val;
+                          },
+                          onSaved: (String val) {},
+                          validator: (String val) {
+                            if (val.isEmpty) {
+                              return "别名不能为空";
+                            }
+                            if (val.length > 32 || val.length < 1) {
+                              return "网站地址长度只能是1到32位";
+                            }
+                            return null;
+                          },
                         ),
-                        keyboardType: TextInputType.text,
-                        onChanged: (String val) {
-                          passwordCard.nickName = val;
-                        },
-                        onSaved: (String val) {},
-                        validator: (String val) {
-                          if (val.isEmpty) {
-                            return "别名不能为空";
-                          }
-                          if (val.length > 32 || val.length < 1) {
-                            return "网站地址长度只能是1到32位";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                      TextFormField(
-                        style: TextStyle(fontSize: 28.sp),
-                        maxLines: 1,
-                        focusNode: _urlFocusNode,
-                        controller: _urlTextEditingController,
-                        maxLength: 256,
-                        maxLengthEnforced: true,
-                        decoration: InputDecoration(
-                          labelText: '网站地址：',
+                        SizedBox(
+                          height: 16.h,
                         ),
-                        keyboardType: TextInputType.text,
-                        onChanged: (String val) {
-                          passwordCard.url = val;
-                        },
-                        onSaved: (String val) {},
-                        validator: (String val) {
-                          if (val.isEmpty) {
-                            return "网站地址不能为空";
-                          }
-                          if (val.length > 256 || val.length < 1) {
-                            return "网站地址长度只能是1到256位";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                      TextFormField(
-                        style: TextStyle(fontSize: 28.sp),
-                        focusNode: _userNameFocusNode,
-                        maxLength: 32,
-                        maxLengthEnforced: true,
-                        controller: _userNameTextEditingController,
-                        decoration: InputDecoration(
-                          labelText: '登录账号：',
+                        TextFormField(
+                          style: TextStyle(fontSize: 28.sp),
+                          maxLines: 1,
+                          focusNode: _urlFocusNode,
+                          controller: _urlTextEditingController,
+                          maxLength: 256,
+                          maxLengthEnforced: true,
+                          decoration: InputDecoration(
+                            labelText: '网站地址：',
+                          ),
+                          keyboardType: TextInputType.text,
+                          onChanged: (String val) {
+                            passwordCard.url = val;
+                          },
+                          onSaved: (String val) {},
+                          validator: (String val) {
+                            if (val.isEmpty) {
+                              return "网站地址不能为空";
+                            }
+                            if (val.length > 256 || val.length < 1) {
+                              return "网站地址长度只能是1到256位";
+                            }
+                            return null;
+                          },
                         ),
-                        keyboardType: TextInputType.text,
-                        onChanged: (String val) {},
-                        onSaved: (String val) {},
-                        validator: (String val) {
-                          if (val.isEmpty) {
-                            return "登录账号不能为空";
-                          }
-                          if (val.length > 32 || val.length < 1) {
-                            return "登录账号长度只能1到32位";
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        style: TextStyle(fontSize: 28.sp),
-                        focusNode: _sitePasswordFocusNode,
-                        maxLength: 32,
-                        maxLengthEnforced: true,
-                        controller: _sitePasswordTextEditingController,
-                        decoration: InputDecoration(
-                          labelText: '登录密码：',
+                        SizedBox(
+                          height: 16.h,
                         ),
-                        keyboardType: TextInputType.text,
-                        onChanged: (String val) {},
-                        onSaved: (String val) {},
-                        validator: (String val) {
-                          if (val.isEmpty) {
-                            return "登录密码不能为空";
-                          }
-                          if (val.length > 32 || val.length < 1) {
-                            return "登录密码长度只能1到32位";
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
+                        TextFormField(
+                          style: TextStyle(fontSize: 28.sp),
+                          focusNode: _userNameFocusNode,
+                          maxLength: 32,
+                          maxLengthEnforced: true,
+                          controller: _userNameTextEditingController,
+                          decoration: InputDecoration(
+                            labelText: '登录账号：',
+                          ),
+                          keyboardType: TextInputType.text,
+                          onChanged: (String val) {},
+                          onSaved: (String val) {},
+                          validator: (String val) {
+                            if (val.isEmpty) {
+                              return "登录账号不能为空";
+                            }
+                            if (val.length > 32 || val.length < 1) {
+                              return "登录账号长度只能1到32位";
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          style: TextStyle(fontSize: 28.sp),
+                          focusNode: _sitePasswordFocusNode,
+                          maxLength: 32,
+                          maxLengthEnforced: true,
+                          controller: _sitePasswordTextEditingController,
+                          decoration: InputDecoration(
+                            labelText: '登录密码：',
+                          ),
+                          keyboardType: TextInputType.text,
+                          onChanged: (String val) {},
+                          onSaved: (String val) {},
+                          validator: (String val) {
+                            if (val.isEmpty) {
+                              return "登录密码不能为空";
+                            }
+                            if (val.length > 32 || val.length < 1) {
+                              return "登录密码长度只能1到32位";
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

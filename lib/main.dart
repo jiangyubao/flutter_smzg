@@ -198,6 +198,8 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
         // ]
       ];
     }
+
+    //使用自适应字体
     return keyLength == null
         ? NetworkErrorWidget(
             onPressed: () async {
