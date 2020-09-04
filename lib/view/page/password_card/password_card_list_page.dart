@@ -67,6 +67,9 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                           ),
                           onPressed: () async {
                             try {
+                              if (!await passwordCardListState.localAuth()) {
+                                return;
+                              }
                               await Routers().goPasswordCardForm(context, -1);
                             } catch (e, s) {
                               Logger.printErrorStack(e, s);
@@ -131,6 +134,10 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                                     message: "密码卡为空，请创建密码卡",
                                     onPressed: () async {
                                       try {
+                                        if (!await passwordCardListState
+                                            .localAuth()) {
+                                          return;
+                                        }
                                         await Routers()
                                             .goPasswordCardForm(context, -1);
                                       } catch (e, s) {
@@ -242,6 +249,9 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                   style: TextStyle(fontSize: 28.sp),
                 ),
                 onTap: () async {
+                  if (!await passwordCardListState.localAuth()) {
+                    return;
+                  }
                   if (await DialogService()
                       .nativeAlert("备份数据提示", "是否要把本地数据备份到云端")) {
                     int phoneId = await this._getId();
@@ -285,6 +295,9 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                   style: TextStyle(fontSize: 28.sp),
                 ),
                 onTap: () async {
+                  if (!await passwordCardListState.localAuth()) {
+                    return;
+                  }
                   if (await DialogService()
                       .nativeAlert("数据恢复", "是否要把云端数据下载到本地")) {
                     int phoneId = await this._getId();

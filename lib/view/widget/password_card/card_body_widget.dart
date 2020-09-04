@@ -65,6 +65,9 @@ class CardBodyWidget extends StatelessWidget {
                   size: 28.sp,
                 ),
                 onPressed: () async {
+                  if (!await locator.get<PasswordCardListState>().localAuth()) {
+                    return;
+                  }
                   locator.get<PasswordCardListState>().updatePasswordShow(
                       passwordCard.id, passwordCard.showPassword);
                 }),
@@ -74,6 +77,9 @@ class CardBodyWidget extends StatelessWidget {
             IconButton(
                 icon: Icon(Icons.content_copy, size: 28.sp),
                 onPressed: () async {
+                  if (!await locator.get<PasswordCardListState>().localAuth()) {
+                    return;
+                  }
                   await Clipboard.setData(
                       ClipboardData(text: passwordCard.sitePassword));
                   await DialogService().nativeAlert("密码已拷贝", "");

@@ -37,6 +37,9 @@ class CardHeaderWidget extends StatelessWidget {
               size: 28.sp,
             ),
             onPressed: () async {
+              if (!await locator.get<PasswordCardListState>().localAuth()) {
+                return;
+              }
               if (await DialogService().nativeConfirm("删除密码卡确认", "是否要删除该密码卡",
                       ok: "是", cancel: "否") ??
                   false) {
@@ -55,6 +58,9 @@ class CardHeaderWidget extends StatelessWidget {
               size: 28.sp,
             ),
             onPressed: () async {
+              if (!await locator.get<PasswordCardListState>().localAuth()) {
+                return;
+              }
               await Routers().goPasswordCardForm(context, passwordCard.id);
             },
           ),
@@ -66,7 +72,11 @@ class CardHeaderWidget extends StatelessWidget {
               Icons.share,
               size: 28.sp,
             ),
-            onPressed: () async {},
+            onPressed: () async {
+              if (!await locator.get<PasswordCardListState>().localAuth()) {
+                return;
+              }
+            },
           ),
           SizedBox(
             width: 16.w,
@@ -76,7 +86,11 @@ class CardHeaderWidget extends StatelessWidget {
               Icons.print,
               size: 28.sp,
             ),
-            onPressed: () async {},
+            onPressed: () async {
+              if (!await locator.get<PasswordCardListState>().localAuth()) {
+                return;
+              }
+            },
           ),
         ],
       ),

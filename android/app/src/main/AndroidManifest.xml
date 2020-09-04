@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
     <application android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:name="com.itou.yun.cordova.koudai.UmengApplication" android:label="口袋好店" android:icon="@mipmap/launcher_icon">
         <activity android:name="com.itou.yun.cordova.koudai.wxapi.WXEntryActivity" android:label="口袋好店" android:exported="true">
             <intent-filter>
