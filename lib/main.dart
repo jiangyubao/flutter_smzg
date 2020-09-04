@@ -172,6 +172,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
       //ignore
     } else if (state == AppLifecycleState.paused) {
       //ignore
+      locator.get<PasswordCardListState>().localAuth = false;
     } else if (state == AppLifecycleState.detached) {
       //ignore
     }

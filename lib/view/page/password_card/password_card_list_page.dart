@@ -67,7 +67,8 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                           ),
                           onPressed: () async {
                             try {
-                              if (!await passwordCardListState.localAuth()) {
+                              if (!await passwordCardListState
+                                  .requestLocalAuth()) {
                                 return;
                               }
                               await Routers().goPasswordCardForm(context, -1);
@@ -135,7 +136,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                                     onPressed: () async {
                                       try {
                                         if (!await passwordCardListState
-                                            .localAuth()) {
+                                            .requestLocalAuth()) {
                                           return;
                                         }
                                         await Routers()
@@ -249,7 +250,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                   style: TextStyle(fontSize: 28.sp),
                 ),
                 onTap: () async {
-                  if (!await passwordCardListState.localAuth()) {
+                  if (!await passwordCardListState.requestLocalAuth()) {
                     return;
                   }
                   if (await DialogService()
@@ -295,7 +296,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                   style: TextStyle(fontSize: 28.sp),
                 ),
                 onTap: () async {
-                  if (!await passwordCardListState.localAuth()) {
+                  if (!await passwordCardListState.requestLocalAuth()) {
                     return;
                   }
                   if (await DialogService()

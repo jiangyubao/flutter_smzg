@@ -65,7 +65,9 @@ class CardBodyWidget extends StatelessWidget {
                   size: 28.sp,
                 ),
                 onPressed: () async {
-                  if (!await locator.get<PasswordCardListState>().localAuth()) {
+                  if (!await locator
+                      .get<PasswordCardListState>()
+                      .requestLocalAuth()) {
                     return;
                   }
                   locator.get<PasswordCardListState>().updatePasswordShow(
@@ -77,7 +79,9 @@ class CardBodyWidget extends StatelessWidget {
             IconButton(
                 icon: Icon(Icons.content_copy, size: 28.sp),
                 onPressed: () async {
-                  if (!await locator.get<PasswordCardListState>().localAuth()) {
+                  if (!await locator
+                      .get<PasswordCardListState>()
+                      .requestLocalAuth()) {
                     return;
                   }
                   await Clipboard.setData(
