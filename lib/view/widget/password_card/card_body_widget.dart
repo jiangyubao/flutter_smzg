@@ -57,7 +57,7 @@ class CardBodyWidget extends StatelessWidget {
               style: _textStyle,
             ),
             SizedBox(
-              width: 8.w,
+              width: 16.w,
             ),
             IconButton(
                 icon: Icon(

@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
+import 'package:flutter_smzg/util/smzg_icon_font.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CardHeaderWidget extends StatelessWidget {
   const CardHeaderWidget({
@@ -31,18 +33,23 @@ class CardHeaderWidget extends StatelessWidget {
           ),
         ),
         IconButton(
-            icon: Icon(
-              Icons.delete,
-              size: 28.sp,
-            ),
-            onPressed: () async {
-              if (await DialogService().nativeAlert("删除密码卡确认", "是否要删除该密码卡") ??
-                  false) {
-                await locator
-                    .get<PasswordCardListState>()
-                    .delete(passwordCard.id);
-              }
-            }),
+          icon: Icon(
+            Icons.delete,
+            size: 28.sp,
+          ),
+          onPressed: () async {
+            if (await DialogService().nativeConfirm("删除密码卡确认", "是否要删除该密码卡",
+                    ok: "是", cancel: "否") ??
+                false) {
+              await locator
+                  .get<PasswordCardListState>()
+                  .delete(passwordCard.id);
+            }
+          },
+        ),
+        SizedBox(
+          width: 16.w,
+        ),
         IconButton(
           icon: Icon(
             Icons.edit,
@@ -52,6 +59,9 @@ class CardHeaderWidget extends StatelessWidget {
             await Routers().goPasswordCardForm(context, passwordCard.id);
           },
         ),
+        SizedBox(
+          width: 16.w,
+        ),
         IconButton(
           icon: Icon(
             Icons.share,
@@ -59,12 +69,32 @@ class CardHeaderWidget extends StatelessWidget {
           ),
           onPressed: () async {},
         ),
+        SizedBox(
+          width: 16.w,
+        ),
         IconButton(
           icon: Icon(
             Icons.print,
             size: 28.sp,
           ),
           onPressed: () async {},
+        ),
+        SizedBox(
+          width: 16.w,
+        ),
+        IconButton(
+          icon: Icon(
+            SmzgIconFont.safari,
+            size: 28.sp,
+          ),
+          onPressed: () async {
+            await launch(
+              passwordCard.url,
+              forceSafariVC: false,
+              enableDomStorage: true,
+              enableJavaScript: true,
+            );
+          },
         ),
       ],
     );
