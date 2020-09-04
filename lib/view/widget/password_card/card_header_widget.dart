@@ -20,7 +20,10 @@ class CardHeaderWidget extends StatelessWidget {
     return Row(
       children: <Widget>[
         IconButton(
-            icon: Icon(Icons.delete),
+            icon: Icon(
+              Icons.delete,
+              size: 28.sp,
+            ),
             color: Theme.of(context).primaryColor,
             onPressed: () async {
               if (await DialogService().nativeAlert("删除密码卡确认", "是否要删除该密码卡") ??
@@ -30,6 +33,9 @@ class CardHeaderWidget extends StatelessWidget {
                     .delete(passwordCard.id);
               }
             }),
+        SizedBox(
+          height: 16.h,
+        ),
         Expanded(
           child: Text(
             '${passwordCard.nickName}',
@@ -38,11 +44,14 @@ class CardHeaderWidget extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.2,
                 color: Theme.of(context).accentColor,
-                fontSize: 42.sp),
+                fontSize: 32.sp),
           ),
         ),
         IconButton(
-            icon: Icon(Icons.edit),
+            icon: Icon(
+              Icons.edit,
+              size: 28.sp,
+            ),
             color: Theme.of(context).primaryColor,
             onPressed: () async {
               await Routers().goPasswordCardForm(context, passwordCard.id);

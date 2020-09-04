@@ -20,7 +20,7 @@ class CardFooterWidget extends StatelessWidget {
           height: 16.h,
         ),
         Text(
-          '联系地址：${passwordCard.url}',
+          '网站地址：${passwordCard.url}',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(

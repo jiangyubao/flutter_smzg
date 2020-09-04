@@ -110,7 +110,6 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                     icon: Icon(Icons.check, size: 28.sp),
                     onPressed: () async {
                       if (_key.currentState.validate()) {
-                        passwordCard.sitePassword = passwordCard.userName;
                         if (passwordCard.id == null) {
                           int id =
                               await passwordCardListState.insert(passwordCard);
@@ -211,7 +210,9 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                             labelText: '登录账号：',
                           ),
                           keyboardType: TextInputType.text,
-                          onChanged: (String val) {},
+                          onChanged: (String val) {
+                            passwordCard.userName = val;
+                          },
                           onSaved: (String val) {},
                           validator: (String val) {
                             if (val.isEmpty) {
@@ -233,7 +234,9 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                             labelText: '登录密码：',
                           ),
                           keyboardType: TextInputType.text,
-                          onChanged: (String val) {},
+                          onChanged: (String val) {
+                            passwordCard.sitePassword = val;
+                          },
                           onSaved: (String val) {},
                           validator: (String val) {
                             if (val.isEmpty) {

@@ -19,13 +19,13 @@ class PasswordCardWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 8.h),
       child: Card(
-        elevation: 30.h,
+        elevation: 16.h,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(28.h),
-            bottomLeft: Radius.circular(28.h),
-            bottomRight: Radius.circular(28.h),
-            topRight: Radius.circular(4 * 28.h),
+            topLeft: Radius.circular(8.w),
+            bottomLeft: Radius.circular(8.w),
+            bottomRight: Radius.circular(8.w),
+            topRight: Radius.circular(8.w),
           ),
         ),
         child: Padding(
@@ -36,7 +36,6 @@ class PasswordCardWidget extends StatelessWidget {
               CardHeaderWidget(passwordCard: passwordCard),
               Divider(),
               CardBodyWidget(passwordCard: passwordCard),
-              Divider(),
               CardFooterWidget(passwordCard: passwordCard)
             ],
           ),
