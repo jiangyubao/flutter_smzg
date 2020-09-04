@@ -26,7 +26,7 @@ class CardBodyWidget extends StatelessWidget {
       children: <Widget>[
         Row(children: [
           Text(
-            '登录账号：',
+            '账号：',
             style: _textStyle,
           ),
           Text(
@@ -48,7 +48,7 @@ class CardBodyWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              '登录密码：',
+              '密码：',
               style: _textStyle,
             ),
             Text(
@@ -69,7 +69,7 @@ class CardBodyWidget extends StatelessWidget {
                       passwordCard.id, passwordCard.showPassword);
                 }),
             SizedBox(
-              width: 16.w,
+              width: 8.w,
             ),
             IconButton(
                 icon: Icon(Icons.content_copy, size: 28.sp),
@@ -86,18 +86,19 @@ class CardBodyWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              '网站地址：',
+              '网址：',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: _textStyle,
             ),
-            Text(
-              passwordCard.url,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: _textStyle,
+            Expanded(
+              child: Text(
+                passwordCard.url,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: _textStyle,
+              ),
             ),
-            Spacer(),
             IconButton(
               color: Theme.of(context).primaryColor,
               icon: Icon(
@@ -114,7 +115,7 @@ class CardBodyWidget extends StatelessWidget {
               },
             ),
             SizedBox(
-              width: 16.w,
+              width: 8.w,
             ),
             IconButton(
               icon: Icon(Icons.content_copy, size: 28.sp),
