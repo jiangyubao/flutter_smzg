@@ -95,7 +95,7 @@ class _UserAgreementWidgetState extends State<UserAgreementWidget> {
                                     ok: "确定");
                               }),
                     CupertinoButton(
-                        padding: EdgeInsets.all(28.w),
+                        padding: EdgeInsets.all(28.sp),
                         child: Text(
                           "同意并继续${_counter > 0 ? '（$_counter）' : ''}",
                           style: TextStyle(fontSize: 28.sp),
