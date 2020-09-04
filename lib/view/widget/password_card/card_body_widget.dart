@@ -57,9 +57,7 @@ class CardBodyWidget extends StatelessWidget {
                   : "********",
               style: _textStyle,
             ),
-            SizedBox(
-              width: 16.w,
-            ),
+            Spacer(),
             IconButton(
                 color: Theme.of(context).primaryColor,
                 icon: Icon(
@@ -70,7 +68,9 @@ class CardBodyWidget extends StatelessWidget {
                   locator.get<PasswordCardListState>().updatePasswordShow(
                       passwordCard.id, passwordCard.showPassword);
                 }),
-            Spacer(),
+            SizedBox(
+              width: 16.w,
+            ),
             IconButton(
                 icon: Icon(Icons.content_copy, size: 28.sp),
                 onPressed: () async {
@@ -97,9 +97,7 @@ class CardBodyWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: _textStyle,
             ),
-            SizedBox(
-              width: 16.w,
-            ),
+            Spacer(),
             IconButton(
               color: Theme.of(context).primaryColor,
               icon: Icon(
@@ -115,7 +113,9 @@ class CardBodyWidget extends StatelessWidget {
                 );
               },
             ),
-            Spacer(),
+            SizedBox(
+              width: 16.w,
+            ),
             IconButton(
               icon: Icon(Icons.content_copy, size: 28.sp),
               onPressed: () async {
