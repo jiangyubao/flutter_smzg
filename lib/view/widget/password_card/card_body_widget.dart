@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/util/smzg_icon_font.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CardBodyWidget extends StatelessWidget {
   const CardBodyWidget({
@@ -60,6 +61,7 @@ class CardBodyWidget extends StatelessWidget {
               width: 16.w,
             ),
             IconButton(
+                color: Theme.of(context).primaryColor,
                 icon: Icon(
                   SmzgIconFont.eye,
                   size: 28.sp,
@@ -95,18 +97,33 @@ class CardBodyWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: _textStyle,
             ),
+            SizedBox(
+              width: 16.w,
+            ),
+            IconButton(
+              color: Theme.of(context).primaryColor,
+              icon: Icon(
+                SmzgIconFont.safari,
+                size: 28.sp,
+              ),
+              onPressed: () async {
+                await launch(
+                  passwordCard.url,
+                  forceSafariVC: false,
+                  enableDomStorage: true,
+                  enableJavaScript: true,
+                );
+              },
+            ),
             Spacer(),
             IconButton(
-                icon: Icon(Icons.content_copy, size: 28.sp),
-                onPressed: () async {
-                  await Clipboard.setData(
-                      ClipboardData(text: passwordCard.url));
-                  await DialogService().nativeAlert("内容已拷贝", "");
-                }),
+              icon: Icon(Icons.content_copy, size: 28.sp),
+              onPressed: () async {
+                await Clipboard.setData(ClipboardData(text: passwordCard.url));
+                await DialogService().nativeAlert("内容已拷贝", "");
+              },
+            ),
           ],
-        ),
-        SizedBox(
-          height: 16.h,
         ),
       ],
     );
