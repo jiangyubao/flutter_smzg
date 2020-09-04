@@ -232,6 +232,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                           controller: _sitePasswordTextEditingController,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
+                                color: Theme.of(context).accentColor,
                                 icon: Icon(
                                   Icons.lock,
                                   size: 28.sp,

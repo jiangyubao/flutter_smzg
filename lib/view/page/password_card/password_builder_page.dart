@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_builder_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 ///壳APP的界面
 class PasswordBuilderPage extends StatefulWidget {
@@ -15,6 +16,31 @@ class PasswordBuilderPage extends StatefulWidget {
 
 class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
   final GlobalKey<FormState> _key = GlobalKey();
+  final FocusNode _focusNode = FocusNode();
+  KeyboardActionsConfig _buildKeyboardConfig(BuildContext context) {
+    return KeyboardActionsConfig(
+      keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+      keyboardBarColor: Colors.grey[200],
+      nextFocus: true,
+      actions: [
+        KeyboardAction(
+          focusNode: _focusNode,
+          toolbarButtons: [
+            (node) {
+              return GestureDetector(
+                onTap: () => node.unfocus(),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("完成"),
+                ),
+              );
+            }
+          ],
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ProviderWidget<PasswordBuilderState>(
@@ -63,160 +89,173 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
             child: Form(
               key: _key,
               child: Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 60, vertical: 50),
-                child: ListView(
-                  children: <Widget>[
-                    TextFormField(
-                      style: TextStyle(fontSize: 28.sp),
-                      maxLength: 8,
-                      initialValue: passwordBuilderState.passwordBuilder.length,
-                      decoration: InputDecoration(
-                        labelText: "长度",
-                      ),
-                      keyboardType: TextInputType.number,
-                      onChanged: (String val) {
-                        passwordBuilderState.passwordBuilder.length = val;
-                        passwordBuilderState.buildPassword();
-                      },
-                      onSaved: (String val) {},
-                      validator: (String val) {
-                        if (val.isEmpty) {
-                          return "长度不能为空";
-                        }
-                        return null;
-                      },
-                    ),
-                    FormField<bool>(
-                      builder: (FormFieldState<bool> state) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                "数字",
-                                style: TextStyle(fontSize: 28.sp),
-                              ),
-                            ),
-                            CupertinoSwitch(
-                              activeColor: Theme.of(context).primaryColor,
-                              value:
-                                  passwordBuilderState.passwordBuilder.number,
-                              onChanged: (bool val) {
-                                passwordBuilderState.passwordBuilder.number =
-                                    val;
-                                passwordBuilderState.buildPassword();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                      onSaved: (bool initialValue) {},
-                    ),
-                    FormField<bool>(
-                      builder: (FormFieldState<bool> state) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                "大写",
-                                style: TextStyle(fontSize: 28.sp),
-                              ),
-                            ),
-                            CupertinoSwitch(
-                              activeColor: Theme.of(context).primaryColor,
-                              value: passwordBuilderState
-                                  .passwordBuilder.alphabetU,
-                              onChanged: (bool val) {
-                                passwordBuilderState.passwordBuilder.alphabetU =
-                                    val;
-                                passwordBuilderState.buildPassword();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                      onSaved: (bool initialValue) {},
-                    ),
-                    FormField<bool>(
-                      builder: (FormFieldState<bool> state) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                "小写",
-                                style: TextStyle(fontSize: 28.sp),
-                              ),
-                            ),
-                            CupertinoSwitch(
-                              activeColor: Theme.of(context).primaryColor,
-                              value: passwordBuilderState
-                                  .passwordBuilder.alphabetL,
-                              onChanged: (bool val) {
-                                passwordBuilderState.passwordBuilder.alphabetL =
-                                    val;
-                                passwordBuilderState.buildPassword();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                      onSaved: (bool initialValue) {},
-                    ),
-                    FormField<bool>(
-                      builder: (FormFieldState<bool> state) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                "符号",
-                                style: TextStyle(fontSize: 28.sp),
-                              ),
-                            ),
-                            CupertinoSwitch(
-                              activeColor: Theme.of(context).primaryColor,
-                              value:
-                                  passwordBuilderState.passwordBuilder.symbol,
-                              onChanged: (bool val) {
-                                passwordBuilderState.passwordBuilder.symbol =
-                                    val;
-                                passwordBuilderState.buildPassword();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                      onSaved: (bool initialValue) {},
-                    ),
-                    SizedBox(
-                      height: 80.h,
-                      width: 20.w,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "${passwordBuilderState.passwordBuilder.password}",
-                          style: TextStyle(fontSize: 28.sp),
+                margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 25.h),
+                child: KeyboardActions(
+                  config: this._buildKeyboardConfig(context),
+                  child: ListView(
+                    children: <Widget>[
+                      TextFormField(
+                        style: TextStyle(fontSize: 28.sp),
+                        maxLength: 8,
+                        initialValue:
+                            passwordBuilderState.passwordBuilder.length,
+                        decoration: InputDecoration(
+                          labelText: "长度",
                         ),
-                      ],
-                    ),
-                  ],
+                        keyboardType: TextInputType.number,
+                        onChanged: (String val) {
+                          passwordBuilderState.passwordBuilder.length = val;
+                          passwordBuilderState.buildPassword();
+                        },
+                        onSaved: (String val) {},
+                        validator: (String val) {
+                          if (val.isEmpty) {
+                            return "长度不能为空";
+                          }
+                          return null;
+                        },
+                      ),
+                      FormField<bool>(
+                        builder: (FormFieldState<bool> state) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  "数字",
+                                  style: TextStyle(fontSize: 28.sp),
+                                ),
+                              ),
+                              CupertinoSwitch(
+                                activeColor: Theme.of(context).primaryColor,
+                                value:
+                                    passwordBuilderState.passwordBuilder.number,
+                                onChanged: (bool val) {
+                                  passwordBuilderState.passwordBuilder.number =
+                                      val;
+                                  passwordBuilderState.buildPassword();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                        onSaved: (bool initialValue) {},
+                      ),
+                      FormField<bool>(
+                        builder: (FormFieldState<bool> state) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  "大写",
+                                  style: TextStyle(fontSize: 28.sp),
+                                ),
+                              ),
+                              CupertinoSwitch(
+                                activeColor: Theme.of(context).primaryColor,
+                                value: passwordBuilderState
+                                    .passwordBuilder.alphabetU,
+                                onChanged: (bool val) {
+                                  passwordBuilderState
+                                      .passwordBuilder.alphabetU = val;
+                                  passwordBuilderState.buildPassword();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                        onSaved: (bool initialValue) {},
+                      ),
+                      FormField<bool>(
+                        builder: (FormFieldState<bool> state) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  "小写",
+                                  style: TextStyle(fontSize: 28.sp),
+                                ),
+                              ),
+                              CupertinoSwitch(
+                                activeColor: Theme.of(context).primaryColor,
+                                value: passwordBuilderState
+                                    .passwordBuilder.alphabetL,
+                                onChanged: (bool val) {
+                                  passwordBuilderState
+                                      .passwordBuilder.alphabetL = val;
+                                  passwordBuilderState.buildPassword();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                        onSaved: (bool initialValue) {},
+                      ),
+                      FormField<bool>(
+                        builder: (FormFieldState<bool> state) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  "符号",
+                                  style: TextStyle(fontSize: 28.sp),
+                                ),
+                              ),
+                              CupertinoSwitch(
+                                activeColor: Theme.of(context).primaryColor,
+                                value:
+                                    passwordBuilderState.passwordBuilder.symbol,
+                                onChanged: (bool val) {
+                                  passwordBuilderState.passwordBuilder.symbol =
+                                      val;
+                                  passwordBuilderState.buildPassword();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                        onSaved: (bool initialValue) {},
+                      ),
+                      SizedBox(
+                        height: 80.h,
+                        width: 20.w,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "${passwordBuilderState.passwordBuilder.password}",
+                            style: TextStyle(
+                              fontSize: 42.sp,
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 4.w,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 80.h,
+                        width: 20.w,
+                      ),
+                      IconButton(
+                          color: Theme.of(context).accentColor,
+                          icon: Icon(
+                            Icons.refresh,
+                            size: 88.sp,
+                          ),
+                          onPressed: () {
+                            passwordBuilderState.buildPassword();
+                          })
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              passwordBuilderState.buildPassword();
-            },
-            child: Icon(Icons.refresh),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
         );
       },
     );
