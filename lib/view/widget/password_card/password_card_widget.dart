@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/view/widget/password_card/card_body_widget.dart';
-import 'package:flutter_smzg/view/widget/password_card/card_footer_widget.dart';
 import 'package:flutter_smzg/view/widget/password_card/card_header_widget.dart';
 
 ///密码卡控件
@@ -36,7 +35,6 @@ class PasswordCardWidget extends StatelessWidget {
               CardHeaderWidget(passwordCard: passwordCard),
               Divider(),
               CardBodyWidget(passwordCard: passwordCard),
-              CardFooterWidget(passwordCard: passwordCard)
             ],
           ),
         ),

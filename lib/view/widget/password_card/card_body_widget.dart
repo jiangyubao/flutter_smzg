@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_common/flutter_common.dart';
+import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
+import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
+import 'package:flutter_smzg/util/smzg_icon_font.dart';
 
 class CardBodyWidget extends StatelessWidget {
   const CardBodyWidget({
@@ -13,21 +18,95 @@ class CardBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle _textStyle = TextStyle(
+        fontWeight: FontWeight.w600, letterSpacing: 0.5, fontSize: 28.sp);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          '登录账号：${passwordCard.userName}',
-          style: TextStyle(
-              fontWeight: FontWeight.w600, letterSpacing: 0.5, fontSize: 28.sp),
+        Row(children: [
+          Text(
+            '登录账号：',
+            style: _textStyle,
+          ),
+          Text(
+            passwordCard.userName,
+            style: _textStyle,
+          ),
+          Spacer(),
+          IconButton(
+              icon: Icon(Icons.content_copy, size: 28.sp),
+              onPressed: () async {
+                await Clipboard.setData(
+                    ClipboardData(text: passwordCard.userName));
+                await DialogService().nativeAlert("内容已拷贝", "");
+              }),
+        ]),
+        SizedBox(
+          height: 16.h,
+        ),
+        Row(
+          children: [
+            Text(
+              '登录密码：',
+              style: _textStyle,
+            ),
+            Text(
+              passwordCard.showPassword
+                  ? passwordCard.sitePassword
+                  : "********",
+              style: _textStyle,
+            ),
+            SizedBox(
+              width: 8.w,
+            ),
+            IconButton(
+                icon: Icon(
+                  SmzgIconFont.eye,
+                  size: 28.sp,
+                ),
+                onPressed: () async {
+                  locator.get<PasswordCardListState>().updatePasswordShow(
+                      passwordCard.id, passwordCard.showPassword);
+                }),
+            Spacer(),
+            IconButton(
+                icon: Icon(Icons.content_copy, size: 28.sp),
+                onPressed: () async {
+                  await Clipboard.setData(
+                      ClipboardData(text: passwordCard.sitePassword));
+                  await DialogService().nativeAlert("内容已拷贝", "");
+                }),
+          ],
         ),
         SizedBox(
           height: 16.h,
         ),
-        Text(
-          '登录密码：${passwordCard.sitePassword}',
-          style: TextStyle(
-              fontWeight: FontWeight.w600, letterSpacing: 0.5, fontSize: 28.sp),
+        Row(
+          children: [
+            Text(
+              '网站地址：',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: _textStyle,
+            ),
+            Text(
+              passwordCard.url,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: _textStyle,
+            ),
+            Spacer(),
+            IconButton(
+                icon: Icon(Icons.content_copy, size: 28.sp),
+                onPressed: () async {
+                  await Clipboard.setData(
+                      ClipboardData(text: passwordCard.url));
+                  await DialogService().nativeAlert("内容已拷贝", "");
+                }),
+          ],
+        ),
+        SizedBox(
+          height: 16.h,
         ),
       ],
     );

@@ -19,12 +19,22 @@ class CardHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
+        Expanded(
+          child: Text(
+            '${passwordCard.nickName}',
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.2,
+                fontSize: 32.sp),
+          ),
+        ),
         IconButton(
             icon: Icon(
               Icons.delete,
               size: 28.sp,
             ),
-            color: Theme.of(context).primaryColor,
             onPressed: () async {
               if (await DialogService().nativeAlert("删除密码卡确认", "是否要删除该密码卡") ??
                   false) {
@@ -33,29 +43,29 @@ class CardHeaderWidget extends StatelessWidget {
                     .delete(passwordCard.id);
               }
             }),
-        SizedBox(
-          height: 16.h,
-        ),
-        Expanded(
-          child: Text(
-            '${passwordCard.nickName}',
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.2,
-                color: Theme.of(context).accentColor,
-                fontSize: 32.sp),
+        IconButton(
+          icon: Icon(
+            Icons.edit,
+            size: 28.sp,
           ),
+          onPressed: () async {
+            await Routers().goPasswordCardForm(context, passwordCard.id);
+          },
         ),
         IconButton(
-            icon: Icon(
-              Icons.edit,
-              size: 28.sp,
-            ),
-            color: Theme.of(context).primaryColor,
-            onPressed: () async {
-              await Routers().goPasswordCardForm(context, passwordCard.id);
-            }),
+          icon: Icon(
+            Icons.share,
+            size: 28.sp,
+          ),
+          onPressed: () async {},
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.print,
+            size: 28.sp,
+          ),
+          onPressed: () async {},
+        ),
       ],
     );
   }

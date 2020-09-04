@@ -71,6 +71,9 @@ flutter:
     - family: iconfont
       fonts:
         - asset: assets/fonts/iconfont.ttf
+    - family: SmzgIconFont
+      fonts:
+        - asset: assets/fonts/smzg_icon_font.ttf
   assets:
     - assets/images/
     - assets/doc/

@@ -39,6 +39,7 @@ class PasswordCardListState extends RefreshListViewState<PasswordCard> {
     await this.initData();
     this.notifyListeners();
   }
+
   ///加载数据
   Future<List<PasswordCard>> loadData({int pageNum}) async {
     return PasswordCardService().find(pageNumber: pageNum, pageSize: 50);
@@ -100,5 +101,11 @@ class PasswordCardListState extends RefreshListViewState<PasswordCard> {
       Logger.printErrorStack(e, s);
       return false;
     }
+  }
+
+  void updatePasswordShow(int id, bool showPassword) {
+    this.list.firstWhere((element) => element.id == id).showPassword =
+        !showPassword;
+    this.notifyListeners();
   }
 }

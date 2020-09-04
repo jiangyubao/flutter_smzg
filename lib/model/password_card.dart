@@ -14,6 +14,9 @@ class PasswordCard {
   ///用户密码
   String sitePassword;
 
+  ///是否显示密码
+  bool showPassword = false;
+
   ///默认构造函数
   PasswordCard({
     this.nickName,
