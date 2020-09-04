@@ -125,6 +125,7 @@ class MainApp extends StatelessWidget {
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate
                 ],
+                supportedLocales: S.delegate.supportedLocales,
                 //使用fluro路由框架
                 onGenerateRoute: Routers().router.generator,
                 home: MainPage(configState),

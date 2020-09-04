@@ -39,7 +39,7 @@ class CardBodyWidget extends StatelessWidget {
               onPressed: () async {
                 await Clipboard.setData(
                     ClipboardData(text: passwordCard.userName));
-                await DialogService().nativeAlert("内容已拷贝", "");
+                await DialogService().nativeAlert("账号已拷贝", "");
               }),
         ]),
         SizedBox(
@@ -76,7 +76,7 @@ class CardBodyWidget extends StatelessWidget {
                 onPressed: () async {
                   await Clipboard.setData(
                       ClipboardData(text: passwordCard.sitePassword));
-                  await DialogService().nativeAlert("内容已拷贝", "");
+                  await DialogService().nativeAlert("密码已拷贝", "");
                 }),
           ],
         ),
@@ -121,7 +121,7 @@ class CardBodyWidget extends StatelessWidget {
               icon: Icon(Icons.content_copy, size: 28.sp),
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(text: passwordCard.url));
-                await DialogService().nativeAlert("内容已拷贝", "");
+                await DialogService().nativeAlert("网址已拷贝", "");
               },
             ),
           ],
