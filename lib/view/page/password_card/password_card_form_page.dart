@@ -231,6 +231,17 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                           maxLengthEnforced: true,
                           controller: _sitePasswordTextEditingController,
                           decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                icon: Icon(
+                                  Icons.lock,
+                                  size: 28.sp,
+                                ),
+                                onPressed: () async {
+                                  String val = await Routers()
+                                      .goPasswordBuilderPage(context);
+                                  passwordCard.sitePassword = val;
+                                  _sitePasswordTextEditingController.text = val;
+                                }),
                             labelText: '密码：',
                           ),
                           keyboardType: TextInputType.text,

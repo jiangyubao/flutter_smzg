@@ -5,6 +5,7 @@ import 'package:flutter_fordova/view/page/scan_page.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/util/convert_util.dart';
+import 'package:flutter_smzg/view/page/password_card/password_builder_page.dart';
 import 'package:flutter_smzg/view/page/password_card/password_card_form_page.dart';
 import 'package:flutter_smzg/view/page/password_card/password_card_list_page.dart';
 
@@ -19,6 +20,7 @@ class Routers {
 
   ///添加或修改表单
   static const _passwordCardForm = "/password_card_form";
+  static const _passwordBuilderPage = "/password_builder_page";
   //fordova必须：webview
   //fordova必须：扫码
   static const _scan = "/scan";
@@ -98,10 +100,22 @@ class Routers {
             passwordCard: PasswordCard.clone(passwordCard));
       }),
     );
+    _router.define(
+      _passwordBuilderPage,
+      handler: Handler(handlerFunc:
+          (BuildContext context, Map<String, List<String>> parameters) {
+        return PasswordBuilderPage();
+      }),
+    );
   }
 
   Future goPasswordCardForm(BuildContext context, int id) {
     return _router.navigateTo(context, "$_passwordCardForm?id=$id",
+        transition: TransitionType.cupertinoFullScreenDialog);
+  }
+
+  Future goPasswordBuilderPage(BuildContext context) {
+    return _router.navigateTo(context, _passwordBuilderPage,
         transition: TransitionType.cupertinoFullScreenDialog);
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter_smzg/routes/routers.dart';
+import 'package:flutter_smzg/service/statefull/password_builder_state.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/service/base_locator.dart';
@@ -10,6 +11,7 @@ class Locator extends BaseLocator {
   Future<void> setup() async {
     await super.setup();
     locator.registerSingleton<PasswordCardListState>(PasswordCardListState());
+    locator.registerSingleton<PasswordBuilderState>(PasswordBuilderState());
   }
 
   ///Ioc容器初始化，执行顺序是被依赖的最先执行
