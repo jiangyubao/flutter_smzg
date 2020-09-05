@@ -13,9 +13,10 @@ class PasswordCardListState extends RefreshListViewState<PasswordCard> {
   bool _showUserAgreement = false;
   bool localAuth = false;
   Future<bool> requestLocalAuth() async {
-    localAuth =
-        !localAuth ? await DialogService().localAuth("需要本地认证以保护密码卡") : true;
-    return localAuth;
+    // localAuth =
+    //     !localAuth ? await DialogService().localAuth("需要本地认证以保护密码卡") : true;
+    // return localAuth;
+    return true;
   }
 
   ///给安卓使用的，为了防止误按返回键程序退出，需要增加点击频率限制

@@ -53,7 +53,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 22.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
@@ -71,7 +71,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 22.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
@@ -89,7 +89,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 22.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
@@ -107,7 +107,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 22.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
