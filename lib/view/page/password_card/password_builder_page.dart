@@ -1,4 +1,3 @@
-import 'package:flutter_fordova/util/provider/provider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_builder_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:provider/provider.dart';
 
 ///壳APP的界面
 class PasswordBuilderPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class PasswordBuilderPage extends StatefulWidget {
 
 class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
   final GlobalKey<FormState> _key = GlobalKey();
-  final FocusNode _focusNode = FocusNode();
+  final FocusNode _lengthFocusNode = FocusNode();
   KeyboardActionsConfig _buildKeyboardConfig(BuildContext context) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
@@ -24,14 +24,18 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
       nextFocus: true,
       actions: [
         KeyboardAction(
-          focusNode: _focusNode,
+          focusNode: _lengthFocusNode,
           toolbarButtons: [
             (node) {
               return GestureDetector(
                 onTap: () => node.unfocus(),
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("完成"),
+                  padding: EdgeInsets.all(16.w),
+                  child: Text(
+                    "完成",
+                    style: TextStyle(
+                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                  ),
                 ),
               );
             }
@@ -43,18 +47,14 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderWidget<PasswordBuilderState>(
-      state: PasswordBuilderState(),
-      onStateReady: (passwordBuilderState) {
-        passwordBuilderState.init();
-      },
+    return Consumer<PasswordBuilderState>(
       builder: (context, passwordBuilderState, child) {
         final ThemeData themeData = Theme.of(context);
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(
-                Icons.close,
+                Icons.arrow_back_ios,
                 size: 28.sp,
               ),
               onPressed: () {
@@ -95,6 +95,7 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
                   child: ListView(
                     children: <Widget>[
                       TextFormField(
+                        focusNode: _lengthFocusNode,
                         style: TextStyle(fontSize: 28.sp),
                         maxLength: 8,
                         initialValue:
@@ -220,8 +221,7 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
                         onSaved: (bool initialValue) {},
                       ),
                       SizedBox(
-                        height: 80.h,
-                        width: 20.w,
+                        height: 28.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -238,18 +238,22 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
                         ],
                       ),
                       SizedBox(
-                        height: 80.h,
-                        width: 20.w,
+                        height: 28.h,
                       ),
-                      IconButton(
-                          color: Theme.of(context).accentColor,
-                          icon: Icon(
-                            Icons.refresh,
-                            size: 28.sp,
-                          ),
-                          onPressed: () {
-                            passwordBuilderState.buildPassword();
-                          })
+                      Hero(
+                        tag: 'refresh-tag',
+                        child: Material(
+                          child: IconButton(
+                              color: Theme.of(context).accentColor,
+                              icon: Icon(
+                                Icons.refresh,
+                                size: 56.sp,
+                              ),
+                              onPressed: () {
+                                passwordBuilderState.buildPassword();
+                              }),
+                        ),
+                      )
                     ],
                   ),
                 ),

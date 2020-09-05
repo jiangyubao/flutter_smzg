@@ -116,7 +116,7 @@ class Routers {
 
   Future goPasswordBuilderPage(BuildContext context) {
     return _router.navigateTo(context, _passwordBuilderPage,
-        transition: TransitionType.cupertinoFullScreenDialog);
+        transition: TransitionType.inFromRight);
   }
 
   Future goScan(BuildContext context, String title) {

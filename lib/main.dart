@@ -8,6 +8,7 @@ import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_fordova/generated/l10n.dart' as FordovaL10n;
 import 'package:flutter_fordova/service/stateless/js_function_mapper/permission_mapper.dart';
+import 'package:flutter_smzg/service/statefull/password_builder_state.dart';
 //import 'package:flutter_hyble/flutter_hyble.dart';
 import 'package:flutter_wechat_plugin/js_function_mapper/wechat_mapper.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -98,19 +99,23 @@ class MainApp extends StatelessWidget {
       providers: [...providers, ...baseProviders],
       child: Consumer2<ThemeState, LocaleState>(
         builder: (context, themeState, localeState, child) {
-          return ProviderWidget2<ConfigState, PasswordCardListState>(
+          return ProviderWidget3<ConfigState, PasswordCardListState,
+              PasswordBuilderState>(
             //ConfigState是单例，方便locator查找
             state1: locator.get<ConfigState>(),
             //PasswordCardListState是单例，方便locator查找
             state2: locator.get<PasswordCardListState>(),
-            onStateReady: (configState, passwordCardListState) {
+            state3: locator.get<PasswordBuilderState>(),
+            onStateReady:
+                (configState, passwordCardListState, passwordBuilderState) {
               if (configState.keyLength != null &&
                   configState.keyLength == 64) {
                 Logger.info("APP onStateReady");
                 passwordCardListState.init();
               }
             },
-            builder: (context, configState, passwordCardListState, child) {
+            builder: (context, configState, passwordCardListState,
+                passwordBuilderState, child) {
               Logger.info("keyLength: ${configState.keyLength}");
               //设置MaterialApp
               return MaterialApp(

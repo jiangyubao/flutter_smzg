@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smzg/service/statefull/password_builder_state.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/routes/routers.dart';
@@ -42,6 +43,60 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
       nextFocus: true,
       actions: [
         KeyboardAction(
+          focusNode: _nickNameFocusNode,
+          toolbarButtons: [
+            (node) {
+              return GestureDetector(
+                onTap: () => node.unfocus(),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "完成",
+                    style: TextStyle(
+                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                  ),
+                ),
+              );
+            }
+          ],
+        ),
+        KeyboardAction(
+          focusNode: _urlFocusNode,
+          toolbarButtons: [
+            (node) {
+              return GestureDetector(
+                onTap: () => node.unfocus(),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "完成",
+                    style: TextStyle(
+                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                  ),
+                ),
+              );
+            }
+          ],
+        ),
+        KeyboardAction(
+          focusNode: _userNameFocusNode,
+          toolbarButtons: [
+            (node) {
+              return GestureDetector(
+                onTap: () => node.unfocus(),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "完成",
+                    style: TextStyle(
+                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                  ),
+                ),
+              );
+            }
+          ],
+        ),
+        KeyboardAction(
           focusNode: _sitePasswordFocusNode,
           toolbarButtons: [
             (node) {
@@ -49,7 +104,11 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                 onTap: () => node.unfocus(),
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("完成"),
+                  child: Text(
+                    "完成",
+                    style: TextStyle(
+                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                  ),
                 ),
               );
             }
@@ -231,18 +290,27 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                           maxLengthEnforced: true,
                           controller: _sitePasswordTextEditingController,
                           decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                color: Theme.of(context).accentColor,
-                                icon: Icon(
-                                  Icons.lock,
-                                  size: 28.sp,
-                                ),
-                                onPressed: () async {
-                                  String val = await Routers()
-                                      .goPasswordBuilderPage(context);
-                                  passwordCard.sitePassword = val;
-                                  _sitePasswordTextEditingController.text = val;
-                                }),
+                            suffixIcon: Hero(
+                              tag: 'refresh-tag',
+                              child: Material(
+                                child: IconButton(
+                                    color: Theme.of(context).accentColor,
+                                    icon: Icon(
+                                      Icons.refresh,
+                                      size: 56.sp,
+                                    ),
+                                    onPressed: () async {
+                                      locator
+                                          .get<PasswordBuilderState>()
+                                          .buildPassword();
+                                      String val = await Routers()
+                                          .goPasswordBuilderPage(context);
+                                      passwordCard.sitePassword = val;
+                                      _sitePasswordTextEditingController.text =
+                                          val;
+                                    }),
+                              ),
+                            ),
                             labelText: '密码：',
                           ),
                           keyboardType: TextInputType.text,
