@@ -52,7 +52,7 @@ class CardHeaderWidget extends StatelessWidget {
             },
           ),
           SizedBox(
-            width: 16.w,
+            width: 8.w,
           ),
           IconButton(
             icon: Icon(
@@ -69,7 +69,7 @@ class CardHeaderWidget extends StatelessWidget {
             },
           ),
           SizedBox(
-            width: 16.w,
+            width: 8.w,
           ),
           IconButton(
             icon: Icon(
@@ -85,7 +85,7 @@ class CardHeaderWidget extends StatelessWidget {
             },
           ),
           SizedBox(
-            width: 16.w,
+            width: 8.w,
           ),
           IconButton(
             icon: Icon(

@@ -33,7 +33,6 @@ class PasswordCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CardHeaderWidget(passwordCard: passwordCard),
-              Divider(),
               CardBodyWidget(passwordCard: passwordCard),
             ],
           ),

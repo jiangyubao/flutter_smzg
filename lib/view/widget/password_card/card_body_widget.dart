@@ -43,7 +43,7 @@ class CardBodyWidget extends StatelessWidget {
               }),
         ]),
         SizedBox(
-          height: 16.h,
+          height: 4.h,
         ),
         Row(
           children: [
@@ -91,7 +91,7 @@ class CardBodyWidget extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 16.h,
+          height: 4.h,
         ),
         Row(
           children: [
