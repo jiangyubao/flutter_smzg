@@ -34,7 +34,7 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
@@ -247,7 +247,7 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
                               color: Theme.of(context).accentColor,
                               icon: Icon(
                                 Icons.refresh,
-                                size: 56.sp,
+                                size: 36.sp,
                               ),
                               onPressed: () {
                                 passwordBuilderState.buildPassword();

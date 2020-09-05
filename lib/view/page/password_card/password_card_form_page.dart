@@ -53,7 +53,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
@@ -71,7 +71,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
@@ -89,7 +89,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
@@ -107,7 +107,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                   child: Text(
                     "完成",
                     style: TextStyle(
-                        fontSize: 28.sp, color: Theme.of(context).primaryColor),
+                        fontSize: 24.sp, color: Theme.of(context).primaryColor),
                   ),
                 ),
               );
@@ -297,7 +297,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                                     color: Theme.of(context).accentColor,
                                     icon: Icon(
                                       Icons.refresh,
-                                      size: 56.sp,
+                                      size: 36.sp,
                                     ),
                                     onPressed: () async {
                                       locator
@@ -305,9 +305,12 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                                           .buildPassword();
                                       String val = await Routers()
                                           .goPasswordBuilderPage(context);
-                                      passwordCard.sitePassword = val;
-                                      _sitePasswordTextEditingController.text =
-                                          val;
+                                      if (val != null && val != '') {
+                                        passwordCard.sitePassword = val;
+                                        _sitePasswordTextEditingController
+                                            .text = val;
+                                        _sitePasswordFocusNode.unfocus();
+                                      }
                                     }),
                               ),
                             ),
