@@ -26,10 +26,11 @@ class CardHeaderWidget extends StatelessWidget {
               '${passwordCard.nickName}',
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 1.2,
-                  fontSize: 32.sp),
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.2,
+                fontSize: 32.sp,
+              ),
             ),
           ),
           IconButton(

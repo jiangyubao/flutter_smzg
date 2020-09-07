@@ -166,32 +166,33 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                     ),
               actions: <Widget>[
                 IconButton(
-                    icon: Icon(Icons.check, size: 36.sp),
-                    onPressed: () async {
-                      if (_key.currentState.validate()) {
-                        if (passwordCard.id == null) {
-                          int id =
-                              await passwordCardListState.insert(passwordCard);
-                          if (id < 0) {
-                            await DialogService()
-                                .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
-                            _nickNameFocusNode.requestFocus();
-                          } else {
-                            Routers().pop(context);
-                          }
+                  icon: Icon(Icons.check, size: 36.sp),
+                  onPressed: () async {
+                    if (_key.currentState.validate()) {
+                      if (passwordCard.id == null) {
+                        int id =
+                            await passwordCardListState.insert(passwordCard);
+                        if (id < 0) {
+                          await DialogService()
+                              .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
+                          _nickNameFocusNode.requestFocus();
                         } else {
-                          bool result =
-                              await passwordCardListState.update(passwordCard);
-                          if (!result) {
-                            await DialogService()
-                                .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
-                            _nickNameFocusNode.requestFocus();
-                          } else {
-                            Routers().pop(context);
-                          }
+                          Routers().pop(context);
+                        }
+                      } else {
+                        bool result =
+                            await passwordCardListState.update(passwordCard);
+                        if (!result) {
+                          await DialogService()
+                              .nativeAlert("保存失败", "系统已存在相同名字的密码卡", ok: "确定");
+                          _nickNameFocusNode.requestFocus();
+                        } else {
+                          Routers().pop(context);
                         }
                       }
-                    }),
+                    }
+                  },
+                ),
               ],
             ),
             body: Form(

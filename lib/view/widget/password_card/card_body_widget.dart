@@ -35,12 +35,13 @@ class CardBodyWidget extends StatelessWidget {
           ),
           Spacer(),
           IconButton(
-              icon: Icon(Icons.content_copy, size: 36.sp),
-              onPressed: () async {
-                await Clipboard.setData(
-                    ClipboardData(text: passwordCard.userName));
-                await DialogService().nativeAlert("账号已拷贝", "");
-              }),
+            icon: Icon(Icons.content_copy, size: 36.sp),
+            onPressed: () async {
+              await Clipboard.setData(
+                  ClipboardData(text: passwordCard.userName));
+              await DialogService().nativeAlert("账号已拷贝", "");
+            },
+          ),
         ]),
         Row(
           children: [
@@ -56,35 +57,37 @@ class CardBodyWidget extends StatelessWidget {
             ),
             Spacer(),
             IconButton(
-                color: Theme.of(context).primaryColor,
-                icon: Icon(
-                  SmzgIconFont.eye,
-                  size: 36.sp,
-                ),
-                onPressed: () async {
-                  if (!await locator
-                      .get<PasswordCardListState>()
-                      .requestLocalAuth()) {
-                    return;
-                  }
-                  locator.get<PasswordCardListState>().updatePasswordShow(
-                      passwordCard.id, passwordCard.showPassword);
-                }),
+              color: Theme.of(context).primaryColor,
+              icon: Icon(
+                SmzgIconFont.eye,
+                size: 36.sp,
+              ),
+              onPressed: () async {
+                if (!await locator
+                    .get<PasswordCardListState>()
+                    .requestLocalAuth()) {
+                  return;
+                }
+                locator.get<PasswordCardListState>().updatePasswordShow(
+                    passwordCard.id, passwordCard.showPassword);
+              },
+            ),
             SizedBox(
               width: 8.w,
             ),
             IconButton(
-                icon: Icon(Icons.content_copy, size: 36.sp),
-                onPressed: () async {
-                  if (!await locator
-                      .get<PasswordCardListState>()
-                      .requestLocalAuth()) {
-                    return;
-                  }
-                  await Clipboard.setData(
-                      ClipboardData(text: passwordCard.sitePassword));
-                  await DialogService().nativeAlert("密码已拷贝", "");
-                }),
+              icon: Icon(Icons.content_copy, size: 36.sp),
+              onPressed: () async {
+                if (!await locator
+                    .get<PasswordCardListState>()
+                    .requestLocalAuth()) {
+                  return;
+                }
+                await Clipboard.setData(
+                    ClipboardData(text: passwordCard.sitePassword));
+                await DialogService().nativeAlert("密码已拷贝", "");
+              },
+            ),
           ],
         ),
         SizedBox(
