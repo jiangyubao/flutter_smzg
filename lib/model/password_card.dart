@@ -57,18 +57,11 @@ class PasswordCard {
     this.sitePassword = passwordCard.sitePassword;
   }
 
-  Map<String, dynamic> toBase64Json() => {
+  Map<String, dynamic> toJson() => {
         'id': id,
         'nickName': nickName,
         'url': url,
         'userName': userName,
         'sitePassword': sitePassword,
       };
-
-  PasswordCard.fromBase64Json(Map<String, dynamic> json)
-      : id = json['id'],
-        nickName = json['nickName'],
-        url = json['url'],
-        userName = json['userName'],
-        sitePassword = json['sitePassword'];
 }

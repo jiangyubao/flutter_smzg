@@ -37,6 +37,8 @@ dependencies:
   pie_chart: 3.1.1
   font_awesome_flutter: 8.8.0
   get_it: 4.0.0
+  qr_flutter: 3.2.0
+  qr: ^1.2.0
   flutter_svprogresshud:
      git: https://github.com/flutter-beijing/flutter_svprogresshud.git
   date_format: 1.0.8
@@ -73,7 +75,7 @@ flutter:
         - asset: assets/fonts/iconfont.ttf
     - family: SmzgIconFont
       fonts:
-        - asset: assets/fonts/smzg_icon_font.ttf
+        - asset: assets/fonts/smzg_iconfont.ttf
   assets:
     - assets/images/
     - assets/doc/

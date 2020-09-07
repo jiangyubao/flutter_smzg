@@ -87,8 +87,7 @@ class PasswordCardListState extends RefreshListViewState<PasswordCard> {
 
   ///转换为json，其中图片要转换为base64
   String toBase64Json() {
-    String array =
-        list.map((e) => jsonEncode(e.toBase64Json())).toList().join(',');
+    String array = list.map((e) => jsonEncode(e.toJson())).toList().join(',');
     return '[$array]';
   }
 
@@ -99,7 +98,7 @@ class PasswordCardListState extends RefreshListViewState<PasswordCard> {
       this.list.clear();
       List<dynamic> array = jsonDecode(json);
       array.forEach((element) {
-        PasswordCard passwordCard = PasswordCard.fromBase64Json(element);
+        PasswordCard passwordCard = PasswordCard.fromJson(element);
         this.insert(passwordCard);
       });
       this.notifyListeners();

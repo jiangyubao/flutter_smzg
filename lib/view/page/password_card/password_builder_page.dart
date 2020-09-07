@@ -55,7 +55,7 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                size: 28.sp,
+                size: 36.sp,
               ),
               onPressed: () {
                 Routers().pop(context);
@@ -63,7 +63,7 @@ class _PasswordBuilderPageState extends State<PasswordBuilderPage> {
             ),
             actions: [
               IconButton(
-                  icon: Icon(Icons.done, size: 28.sp),
+                  icon: Icon(Icons.done, size: 36.sp),
                   onPressed: () {
                     Routers().pop(
                         context, passwordBuilderState.passwordBuilder.password);

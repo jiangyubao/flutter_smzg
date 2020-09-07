@@ -35,16 +35,13 @@ class CardBodyWidget extends StatelessWidget {
           ),
           Spacer(),
           IconButton(
-              icon: Icon(Icons.content_copy, size: 28.sp),
+              icon: Icon(Icons.content_copy, size: 36.sp),
               onPressed: () async {
                 await Clipboard.setData(
                     ClipboardData(text: passwordCard.userName));
                 await DialogService().nativeAlert("账号已拷贝", "");
               }),
         ]),
-        SizedBox(
-          height: 4.h,
-        ),
         Row(
           children: [
             Text(
@@ -62,7 +59,7 @@ class CardBodyWidget extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
                 icon: Icon(
                   SmzgIconFont.eye,
-                  size: 28.sp,
+                  size: 36.sp,
                 ),
                 onPressed: () async {
                   if (!await locator
@@ -77,7 +74,7 @@ class CardBodyWidget extends StatelessWidget {
               width: 8.w,
             ),
             IconButton(
-                icon: Icon(Icons.content_copy, size: 28.sp),
+                icon: Icon(Icons.content_copy, size: 36.sp),
                 onPressed: () async {
                   if (!await locator
                       .get<PasswordCardListState>()
@@ -113,7 +110,7 @@ class CardBodyWidget extends StatelessWidget {
               color: Theme.of(context).primaryColor,
               icon: Icon(
                 SmzgIconFont.safari,
-                size: 28.sp,
+                size: 36.sp,
               ),
               onPressed: () async {
                 await launch(
@@ -128,7 +125,7 @@ class CardBodyWidget extends StatelessWidget {
               width: 8.w,
             ),
             IconButton(
-              icon: Icon(Icons.content_copy, size: 28.sp),
+              icon: Icon(Icons.content_copy, size: 36.sp),
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(text: passwordCard.url));
                 await DialogService().nativeAlert("网址已拷贝", "");

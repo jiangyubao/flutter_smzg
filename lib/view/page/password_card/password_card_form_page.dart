@@ -149,7 +149,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
               leading: IconButton(
                   icon: Icon(
                     Icons.close,
-                    size: 28.sp,
+                    size: 36.sp,
                   ),
                   onPressed: () {
                     Routers().pop(context);
@@ -166,7 +166,7 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                     ),
               actions: <Widget>[
                 IconButton(
-                    icon: Icon(Icons.check, size: 28.sp),
+                    icon: Icon(Icons.check, size: 36.sp),
                     onPressed: () async {
                       if (_key.currentState.validate()) {
                         if (passwordCard.id == null) {

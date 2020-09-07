@@ -31,74 +31,88 @@ class CardHeaderWidget extends StatelessWidget {
                   fontSize: 32.sp),
             ),
           ),
-          IconButton(
-            icon: Icon(
-              Icons.delete,
-              size: 28.sp,
-            ),
-            onPressed: () async {
-              if (!await locator
-                  .get<PasswordCardListState>()
-                  .requestLocalAuth()) {
-                return;
-              }
-              if (await DialogService().nativeConfirm("删除密码卡确认", "是否要删除该密码卡",
-                      ok: "是", cancel: "否") ??
-                  false) {
-                await locator
-                    .get<PasswordCardListState>()
-                    .delete(passwordCard.id);
-              }
-            },
-          ),
-          SizedBox(
-            width: 8.w,
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.edit,
-              size: 28.sp,
-            ),
-            onPressed: () async {
-              if (!await locator
-                  .get<PasswordCardListState>()
-                  .requestLocalAuth()) {
-                return;
-              }
-              await Routers().goPasswordCardForm(context, passwordCard.id);
-            },
-          ),
-          SizedBox(
-            width: 8.w,
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.share,
-              size: 28.sp,
-            ),
-            onPressed: () async {
-              if (!await locator
-                  .get<PasswordCardListState>()
-                  .requestLocalAuth()) {
-                return;
-              }
-            },
-          ),
-          SizedBox(
-            width: 8.w,
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.print,
-              size: 28.sp,
-            ),
-            onPressed: () async {
-              if (!await locator
-                  .get<PasswordCardListState>()
-                  .requestLocalAuth()) {
-                return;
+          new PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert),
+            onSelected: (String value) async {
+              switch (value) {
+                case '修改':
+                  {
+                    if (!await locator
+                        .get<PasswordCardListState>()
+                        .requestLocalAuth()) {
+                      return;
+                    }
+                    await Routers()
+                        .goPasswordCardForm(context, passwordCard.id);
+                  }
+                  break;
+                case '分享':
+                  {
+                    if (!await locator
+                        .get<PasswordCardListState>()
+                        .requestLocalAuth()) {
+                      return;
+                    }
+                  }
+                  break;
+                case '打印':
+                  {
+                    if (!await locator
+                        .get<PasswordCardListState>()
+                        .requestLocalAuth()) {
+                      return;
+                    }
+                  }
+                  break;
+                case '删除':
+                  {
+                    if (!await locator
+                        .get<PasswordCardListState>()
+                        .requestLocalAuth()) {
+                      return;
+                    }
+                    if (await DialogService().nativeConfirm(
+                            "删除密码卡确认", "是否要删除该密码卡",
+                            ok: "是", cancel: "否") ??
+                        false) {
+                      await locator
+                          .get<PasswordCardListState>()
+                          .delete(passwordCard.id);
+                    }
+                  }
+                  break;
               }
             },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              PopupMenuItem(
+                child: Icon(
+                  Icons.edit,
+                  size: 36.sp,
+                ),
+                value: '修改',
+              ),
+              PopupMenuItem(
+                child: Icon(
+                  Icons.share,
+                  size: 36.sp,
+                ),
+                value: '分享',
+              ),
+              PopupMenuItem(
+                child: Icon(
+                  Icons.print,
+                  size: 36.sp,
+                ),
+                value: '打印',
+              ),
+              PopupMenuItem(
+                child: Icon(
+                  Icons.delete,
+                  size: 36.sp,
+                ),
+                value: '删除',
+              ),
+            ],
           ),
         ],
       ),
