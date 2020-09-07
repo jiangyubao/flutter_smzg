@@ -7,6 +7,7 @@ import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/util/convert_util.dart';
 import 'package:flutter_smzg/view/page/password_card/password_builder_page.dart';
 import 'package:flutter_smzg/view/page/password_card/password_card_form_page.dart';
+import 'package:flutter_smzg/view/page/password_card/password_card_image_page.dart';
 import 'package:flutter_smzg/view/page/password_card/password_card_list_page.dart';
 
 ///路由定义
@@ -20,6 +21,10 @@ class Routers {
 
   ///添加或修改表单
   static const _passwordCardForm = "/password_card_form";
+
+  ///密码卡图片
+  static const _passwordCardImage = "/password_card_image";
+
   static const _passwordBuilderPage = "/password_builder_page";
   //fordova必须：webview
   //fordova必须：扫码
@@ -101,6 +106,21 @@ class Routers {
       }),
     );
     _router.define(
+      _passwordCardImage,
+      handler: Handler(handlerFunc:
+          (BuildContext context, Map<String, List<String>> parameters) {
+        //id
+        int id = int.parse(parameters["id"].first);
+        PasswordCard passwordCard = id == -1
+            ? PasswordCard.empty()
+            : locator
+                .get<PasswordCardListState>()
+                .list
+                .firstWhere((element) => element.id == id);
+        return PasswordCardImagePage(passwordCard: passwordCard);
+      }),
+    );
+    _router.define(
       _passwordBuilderPage,
       handler: Handler(handlerFunc:
           (BuildContext context, Map<String, List<String>> parameters) {
@@ -123,6 +143,11 @@ class Routers {
     title = ConvertUtil.cnParamsEncode(title);
     return _router.navigateTo(context, "$_scan?title=$title",
         transition: TransitionType.inFromRight);
+  }
+
+  Future goPasswordCardImage(BuildContext context, int id) {
+    return _router.navigateTo(context, "$_passwordCardImage?id=$id",
+        transition: TransitionType.cupertinoFullScreenDialog);
   }
 
   Future goThridPartWebView(BuildContext context, String initialUrl,

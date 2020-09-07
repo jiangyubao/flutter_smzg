@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_common/flutter_common.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
+import 'package:flutter_smzg/util/smzg_icon_font.dart';
 
 class CardHeaderWidget extends StatelessWidget {
   const CardHeaderWidget({
@@ -46,22 +48,15 @@ class CardHeaderWidget extends StatelessWidget {
                         .goPasswordCardForm(context, passwordCard.id);
                   }
                   break;
-                case '分享':
+                case '二维码':
                   {
                     if (!await locator
                         .get<PasswordCardListState>()
                         .requestLocalAuth()) {
                       return;
                     }
-                  }
-                  break;
-                case '打印':
-                  {
-                    if (!await locator
-                        .get<PasswordCardListState>()
-                        .requestLocalAuth()) {
-                      return;
-                    }
+                    await Routers()
+                        .goPasswordCardImage(context, passwordCard.id);
                   }
                   break;
                 case '删除':
@@ -93,17 +88,10 @@ class CardHeaderWidget extends StatelessWidget {
               ),
               PopupMenuItem(
                 child: Icon(
-                  Icons.share,
+                  SmzgIconFont.qrcode,
                   size: 36.sp,
                 ),
-                value: '分享',
-              ),
-              PopupMenuItem(
-                child: Icon(
-                  Icons.print,
-                  size: 36.sp,
-                ),
-                value: '打印',
+                value: '二维码',
               ),
               PopupMenuItem(
                 child: Icon(
