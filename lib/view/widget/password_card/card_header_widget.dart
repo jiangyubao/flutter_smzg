@@ -32,74 +32,53 @@ class CardHeaderWidget extends StatelessWidget {
                   fontSize: 32.sp),
             ),
           ),
-          new PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert),
-            onSelected: (String value) async {
-              switch (value) {
-                case '修改':
-                  {
-                    if (!await locator
-                        .get<PasswordCardListState>()
-                        .requestLocalAuth()) {
-                      return;
-                    }
-                    await Routers()
-                        .goPasswordCardForm(context, passwordCard.id);
-                  }
-                  break;
-                case '二维码':
-                  {
-                    if (!await locator
-                        .get<PasswordCardListState>()
-                        .requestLocalAuth()) {
-                      return;
-                    }
-                    await Routers()
-                        .goPasswordCardImage(context, passwordCard.id);
-                  }
-                  break;
-                case '删除':
-                  {
-                    if (!await locator
-                        .get<PasswordCardListState>()
-                        .requestLocalAuth()) {
-                      return;
-                    }
-                    if (await DialogService().nativeConfirm(
-                            "删除密码卡确认", "是否要删除该密码卡",
-                            ok: "是", cancel: "否") ??
-                        false) {
-                      await locator
-                          .get<PasswordCardListState>()
-                          .delete(passwordCard.id);
-                    }
-                  }
-                  break;
+          IconButton(
+            icon: Icon(
+              Icons.edit,
+              size: 36.sp,
+            ),
+            onPressed: () async {
+              if (!await locator
+                  .get<PasswordCardListState>()
+                  .requestLocalAuth()) {
+                return;
+              }
+              await Routers().goPasswordCardForm(context, passwordCard.id);
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              SmzgIconFont.qrcode,
+              size: 36.sp,
+            ),
+            onPressed: () async {
+              if (!await locator
+                  .get<PasswordCardListState>()
+                  .requestLocalAuth()) {
+                return;
+              }
+              await Routers().goPasswordCardImage(context, passwordCard.id);
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.delete,
+              size: 36.sp,
+            ),
+            onPressed: () async {
+              if (!await locator
+                  .get<PasswordCardListState>()
+                  .requestLocalAuth()) {
+                return;
+              }
+              if (await DialogService().nativeConfirm("删除密码卡确认", "是否要删除该密码卡",
+                      ok: "是", cancel: "否") ??
+                  false) {
+                await locator
+                    .get<PasswordCardListState>()
+                    .delete(passwordCard.id);
               }
             },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              PopupMenuItem(
-                child: Icon(
-                  Icons.edit,
-                  size: 36.sp,
-                ),
-                value: '修改',
-              ),
-              PopupMenuItem(
-                child: Icon(
-                  SmzgIconFont.qrcode,
-                  size: 36.sp,
-                ),
-                value: '二维码',
-              ),
-              PopupMenuItem(
-                child: Icon(
-                  Icons.delete,
-                  size: 36.sp,
-                ),
-                value: '删除',
-              ),
-            ],
           ),
         ],
       ),

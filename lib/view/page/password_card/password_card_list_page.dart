@@ -88,8 +88,8 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                           size: 36.sp,
                         ),
                         onPressed: () async {
-                          String json = await QrManager()
-                              .scanQrCode(context, "请扫描密码卡");
+                          String json =
+                              await QrManager().scanQrCode(context, "请扫描密码卡");
                           if (json != null) {
                             if (json == '') {
                               return;
