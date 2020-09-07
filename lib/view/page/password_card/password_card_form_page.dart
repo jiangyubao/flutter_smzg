@@ -283,54 +283,65 @@ class _PasswordCardFormPageState extends State<PasswordCardFormPage> {
                             return null;
                           },
                         ),
-                        TextFormField(
-                          style: TextStyle(fontSize: 28.sp),
-                          focusNode: _sitePasswordFocusNode,
-                          maxLength: 16,
-                          maxLengthEnforced: true,
-                          controller: _sitePasswordTextEditingController,
-                          decoration: InputDecoration(
-                            suffixIcon: Hero(
+                        SizedBox(
+                          width: 16.h,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                style: TextStyle(fontSize: 28.sp),
+                                focusNode: _sitePasswordFocusNode,
+                                maxLength: 16,
+                                maxLengthEnforced: true,
+                                controller: _sitePasswordTextEditingController,
+                                decoration: InputDecoration(
+                                  labelText: '密码：',
+                                ),
+                                keyboardType: TextInputType.text,
+                                onChanged: (String val) {
+                                  passwordCard.sitePassword = val;
+                                },
+                                onSaved: (String val) {},
+                                validator: (String val) {
+                                  if (val.isEmpty) {
+                                    return "密码不能为空";
+                                  }
+                                  if (val.length > 16 || val.length < 1) {
+                                    return "密码长度只能1到32位";
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            Hero(
                               tag: 'refresh-tag',
                               child: Material(
                                 child: IconButton(
-                                    color: Theme.of(context).accentColor,
-                                    icon: Icon(
-                                      Icons.refresh,
-                                      size: 36.sp,
-                                    ),
-                                    onPressed: () async {
-                                      locator
-                                          .get<PasswordBuilderState>()
-                                          .buildPassword();
-                                      String val = await Routers()
-                                          .goPasswordBuilderPage(context);
-                                      if (val != null && val != '') {
-                                        passwordCard.sitePassword = val;
-                                        _sitePasswordTextEditingController
-                                            .text = val;
-                                        _sitePasswordFocusNode.unfocus();
-                                      }
-                                    }),
+                                  color: Theme.of(context).accentColor,
+                                  icon: Icon(
+                                    Icons.refresh,
+                                    size: 36.sp,
+                                  ),
+                                  onPressed: () async {
+                                    _sitePasswordFocusNode.unfocus();
+                                    locator
+                                        .get<PasswordBuilderState>()
+                                        .buildPassword();
+                                    String val = await Routers()
+                                        .goPasswordBuilderPage(context);
+                                    if (val != null && val != '') {
+                                      passwordCard.sitePassword = val;
+                                      _sitePasswordTextEditingController.text =
+                                          val;
+                                      _sitePasswordFocusNode.unfocus();
+                                    }
+                                  },
+                                ),
                               ),
-                            ),
-                            labelText: '密码：',
-                          ),
-                          keyboardType: TextInputType.text,
-                          onChanged: (String val) {
-                            passwordCard.sitePassword = val;
-                          },
-                          onSaved: (String val) {},
-                          validator: (String val) {
-                            if (val.isEmpty) {
-                              return "密码不能为空";
-                            }
-                            if (val.length > 16 || val.length < 1) {
-                              return "密码长度只能1到32位";
-                            }
-                            return null;
-                          },
-                        ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),
