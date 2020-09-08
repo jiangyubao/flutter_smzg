@@ -20,30 +20,44 @@ class PasswordCardImagePage extends StatelessWidget {
   final PasswordCard passwordCard;
   PasswordCardImagePage({this.passwordCard});
   //根据路径打印图片
-  Future<void> _print(String path) async {
+  Future<bool> _print(PasswordCard passwordCard) async {
+    FlutterHyblePlugin flutterHyblePlugin = FlutterHyblePlugin();
     try {
-      FlutterHyblePlugin flutterHyblePlugin = FlutterHyblePlugin();
+      final QrCodePainter qrCodePainter = QrCodePainter()
+        ..nickName = passwordCard.nickName
+        ..image = await QrManager()
+            .buildQrCodeImage(jsonEncode(passwordCard.toJson()), size: 300)
+        ..paintBar = false
+        ..doStart();
+      final Uint8List image =
+          await QrManager().buildPainterImage(qrCodePainter);
+      final String path = await QrManager().saveImageData(image);
+
       await flutterHyblePlugin.ensureOnAndPermission();
       if (await flutterHyblePlugin.state != 2) {
         await DialogService().nativeAlert("", "未获得足够权限");
-        return;
+        return false;
       }
       List<Printer> list =
           await flutterHyblePlugin.startScan(name: "IT-", mac: "", count: 1);
       if (list.length == 0) {
         await DialogService().nativeAlert("", "未发现ESC蓝牙打印机");
-        return;
+        return false;
       }
       CommonResponse response = await flutterHyblePlugin.connect(
           mac: list[0].mac, timeOut: Duration(seconds: 20));
       if (response.code != "200") {
         await DialogService().nativeAlert("蓝牙连接失败", response.msg);
-        return;
+        return false;
       }
       await flutterHyblePlugin.printImage(
           filePath: path, timeOut: Duration(seconds: 30));
+      return true;
     } catch (e, s) {
       Logger.printErrorStack(e, s);
+      return false;
+    } finally {
+      await flutterHyblePlugin.disconnect();
     }
   }
 
@@ -133,18 +147,7 @@ class PasswordCardImagePage extends StatelessWidget {
                       onPressed: () async {
                         if (await PermissionService()
                             .requireStoragePermission()) {
-                          final QrCodePainter qrCodePainter = QrCodePainter()
-                            ..nickName = passwordCard.nickName
-                            ..image = await QrManager().buildQrCodeImage(
-                                jsonEncode(passwordCard.toJson()),
-                                size: 300)
-                            ..paintBar = false
-                            ..doStart();
-                          final Uint8List image = await QrManager()
-                              .buildPainterImage(qrCodePainter);
-                          final String filePath =
-                              await QrManager().saveImageData(image);
-                          await this._print(filePath);
+                          await this._print(passwordCard);
                         } else {
                           if (await DialogService().nativeConfirm(
                               "需要存储权限", "是否手工设置存储权限？",
