@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_common/flutter_common.dart';
+import 'package:flutter_scc/painter/base_painter.dart';
 import 'package:flutter_smzg/routes/routers.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:r_scan/r_scan.dart';
@@ -20,7 +21,7 @@ class QrManager {
   static const QrManager _instance = QrManager._();
 
   ///生成图片路径
-  Future<String> saveImage(Uint8List imageData) async {
+  Future<String> saveImageData(Uint8List imageData) async {
     Directory temporaryDirectory = await getTemporaryDirectory();
     String dir = temporaryDirectory.path;
     String fileUrl = '$dir/${DateTime.now().millisecondsSinceEpoch}.bmp';
@@ -30,6 +31,15 @@ class QrManager {
     }
     file.writeAsBytesSync(imageData);
     return file.path;
+  }
+
+  ///生成图片
+  Future<Uint8List> buildPainterImage(BasePainter basePainter) async {
+    final ui.Image image = await basePainter.toImage(
+        basePainter.getWidth(), basePainter.getHeight());
+    final ByteData byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
+    return byteData.buffer.asUint8List();
   }
 
   ///生成qrcode

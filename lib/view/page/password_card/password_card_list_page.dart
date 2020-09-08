@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
+import 'package:flutter_hyble/ble/flutter_hyble_plugin.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/util/smzg_icon_font.dart';
-import 'package:flutter_smzg/view/widget/qr_manager.dart';
+import 'package:flutter_smzg/service/stateless/qr_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_smzg/routes/routers.dart';
@@ -25,6 +26,12 @@ class PasswordCardListPage extends StatefulWidget {
 }
 
 class _PasswordCardListPageState extends State<PasswordCardListPage> {
+  @override
+  void initState() {
+    super.initState();
+    FlutterHyblePlugin().init();
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   void _switchDarkMode(BuildContext context, ThemeState themeState) {
     if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
