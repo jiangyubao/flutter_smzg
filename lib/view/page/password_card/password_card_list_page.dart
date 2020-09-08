@@ -88,23 +88,31 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                           size: 36.sp,
                         ),
                         onPressed: () async {
-                          String json =
-                              await QrManager().scanQrCode(context, "请扫描密码卡");
-                          if (json != null) {
-                            if (json == '') {
-                              return;
-                            }
-                            PasswordCard passwordCard =
-                                PasswordCard.fromJson(jsonDecode(json));
-                            if (passwordCardListState.list.firstWhere((e) =>
-                                    e.nickName == passwordCard.nickName) !=
-                                null) {
-                              DialogService().nativeAlert("扫码失败", "存在相同别名的密码卡");
+                          try {
+                            String json =
+                                await QrManager().scanQrCode(context, "请扫描密码卡");
+                            if (json != null) {
+                              if (json == '') {
+                                return;
+                              }
+                              PasswordCard passwordCard =
+                                  PasswordCard.fromJson(jsonDecode(json));
+                              if (passwordCardListState.list.firstWhere(
+                                      (e) =>
+                                          e.nickName == passwordCard.nickName,
+                                      orElse: () => null) !=
+                                  null) {
+                                DialogService()
+                                    .nativeAlert("扫码失败", "存在相同别名的密码卡");
+                              } else {
+                                await passwordCardListState
+                                    .insert(passwordCard);
+                              }
                             } else {
-                              await passwordCardListState.insert(passwordCard);
+                              DialogService().nativeAlert("扫码失败", "无法识别");
                             }
-                          } else {
-                            DialogService().nativeAlert("扫码失败", "无法识别");
+                          } catch (e, s) {
+                            Logger.printErrorStack(e, s);
                           }
                         },
                       )
