@@ -63,6 +63,7 @@ class PasswordCardImagePage extends StatelessWidget {
                               "png",
                               await QrManager().buildQrCodeImageData(
                                   jsonEncode(passwordCard.toJson())));
+                          await DialogService().nativeAlert("", "保存成功");
                         }
                       },
                     ),
