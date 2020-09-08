@@ -137,7 +137,8 @@ class PasswordCardImagePage extends StatelessWidget {
                             ..nickName = passwordCard.nickName
                             ..image = await QrManager().buildQrCodeImage(
                                 jsonEncode(passwordCard.toJson()),
-                                size: 360)
+                                size: 300)
+                            ..paintBar = false
                             ..doStart();
                           final Uint8List image = await QrManager()
                               .buildPainterImage(qrCodePainter);

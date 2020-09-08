@@ -23,6 +23,6 @@ class QrCodePainter extends BasePainter {
     this.drawString(canvas, size, nickName, leftBarWidth * 1.5,
         leftBarHeight * (offset + 1.5), 24);
     canvas.drawImage(image,
-        Offset(leftBarWidth * 3.5, leftBarHeight * (offset + 7.5)), fgPaint);
+        Offset(leftBarWidth * 3.5, leftBarHeight * (offset + 3.5)), fgPaint);
   }
 }
