@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:ui' as ui;
@@ -5,7 +6,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_smzg/routes/routers.dart';
-import 'package:flutter_smzg/util/base_painter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:r_scan/r_scan.dart';
 import 'dart:io';
@@ -22,24 +22,15 @@ class QrManager {
 
   ///生成图片路径
   Future<String> saveImage(Uint8List imageData) async {
-    int s2 = DateTime.now().millisecondsSinceEpoch;
     Directory temporaryDirectory = await getTemporaryDirectory();
     String dir = temporaryDirectory.path;
-    String fileUrl = '$dir/$s2.bmp';
+    String fileUrl = '$dir/${DateTime.now().millisecondsSinceEpoch}.bmp';
     File file = File(fileUrl);
     if (!file.parent.existsSync()) {
       file.parent.createSync(recursive: true);
     }
     file.writeAsBytesSync(imageData);
     return file.path;
-  }
-
-  Future<Uint8List> buildPainterImage(
-      BasePainter basePainter, double width, double height) async {
-    final ui.Image image = await basePainter.toImage(width, height);
-    final ByteData byteData =
-        await image.toByteData(format: ui.ImageByteFormat.png);
-    return byteData.buffer.asUint8List();
   }
 
   ///生成qrcode
@@ -60,7 +51,7 @@ class QrManager {
   Future<Uint8List> buildQrCodeImageData(String text,
       {double size = 600}) async {
     try {
-      final ui.Image image = await buildQrCodeImage(text, size: size);
+      final ui.Image image = await this.buildQrCodeImage(text, size: size);
       final ByteData byteData =
           await image.toByteData(format: ImageByteFormat.png);
       Logger.info("生成二维码成功");

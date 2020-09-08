@@ -6,4 +6,5 @@ class SmzgIconFont {
   static const IconData chooser = IconData(0xe660, fontFamily: 'SmzgIconFont');
   static const IconData scan = IconData(0xe633, fontFamily: 'SmzgIconFont');
   static const IconData qrcode = IconData(0xe69a, fontFamily: 'SmzgIconFont');
+  static const IconData save = IconData(0xe6c0, fontFamily: 'SmzgIconFont');
 }
