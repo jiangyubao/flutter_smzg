@@ -17,6 +17,7 @@ import 'package:share_extend/share_extend.dart';
 class PasswordCardImagePage extends StatelessWidget {
   final PasswordCard passwordCard;
   PasswordCardImagePage({this.passwordCard});
+  //根据路径打印图片
   Future<void> _print(String path) async {
     FlutterHyblePlugin flutterHyblePlugin = FlutterHyblePlugin();
     await flutterHyblePlugin.ensureOnAndPermission();
@@ -26,7 +27,7 @@ class PasswordCardImagePage extends StatelessWidget {
     }
     List<Printer> list = await flutterHyblePlugin.startScan(count: 1);
     if (list.length == 0) {
-      await DialogService().nativeAlert("", "没找到ESC蓝牙打印机");
+      await DialogService().nativeAlert("", "未发现ESC蓝牙打印机");
       return;
     }
     CommonResponse response = await flutterHyblePlugin.connect(
