@@ -8,6 +8,8 @@ import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_fordova/generated/l10n.dart' as FordovaL10n;
 import 'package:flutter_fordova/service/stateless/js_function_mapper/permission_mapper.dart';
+import 'package:flutter_hyble/flutter_hyble.dart';
+import 'package:flutter_scc/flutter_scc.dart';
 import 'package:flutter_smzg/service/statefull/password_builder_state.dart';
 //import 'package:flutter_hyble/flutter_hyble.dart';
 import 'package:flutter_wechat_plugin/js_function_mapper/wechat_mapper.dart';
@@ -198,11 +200,11 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
         PermissionMapper(),
         WeChatMapper(),
         //以下三个都依赖蓝牙
-        // if (widget.configState.config.enableBlue) ...[
-        //   BlueMapper(),
-        //   TerminalMapper(),
-        //   T$ick$etQueueMapper(),
-        // ]
+        if (widget.configState.config.enableBlue) ...[
+          BlueMapper(),
+          TerminalMapper(),
+          T$ick$etQueueMapper(),
+        ]
       ];
     }
 

@@ -26,10 +26,10 @@ dependencies:
       path: ../flutter_umpush
   flutter_wechat_plugin:
       path: ../flutter_wechat_plugin
-  # flutter_hyble: 
-  #     path: ../flutter_hyble
-  # flutter_scc: 
-  #     path: ../flutter_scc
+  flutter_hyble: 
+      path: ../flutter_hyble
+  flutter_scc: 
+      path: ../flutter_scc
   cupertino_icons: ^0.1.3
   flutter_progress_hud: 1.0.2
   keyboard_actions: 3.2.1+1
