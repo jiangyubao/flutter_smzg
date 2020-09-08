@@ -47,20 +47,7 @@ class CardHeaderWidget extends StatelessWidget {
               await Routers().goPasswordCardForm(context, passwordCard.id);
             },
           ),
-          IconButton(
-            icon: Icon(
-              SmzgIconFont.qrcode,
-              size: 36.sp,
-            ),
-            onPressed: () async {
-              if (!await locator
-                  .get<PasswordCardListState>()
-                  .requestLocalAuth()) {
-                return;
-              }
-              await Routers().goPasswordCardImage(context, passwordCard.id);
-            },
-          ),
+          
           IconButton(
             icon: Icon(
               Icons.delete,

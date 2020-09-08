@@ -5,6 +5,7 @@ import 'package:flutter_common/flutter_common.dart';
 import 'package:flutter_fordova/flutter_fordova.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
+import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/util/smzg_icon_font.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,38 +25,59 @@ class CardBodyWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(children: [
-          Text(
-            '账号：',
-            style: _textStyle,
-          ),
-          Text(
-            passwordCard.userName,
-            style: _textStyle,
-          ),
-          Spacer(),
-          IconButton(
-            icon: Icon(Icons.content_copy, size: 36.sp),
-            onPressed: () async {
-              await Clipboard.setData(
-                  ClipboardData(text: passwordCard.userName));
-              await DialogService().nativeAlert("账号已拷贝", "");
-            },
-          ),
-        ]),
+        Row(
+          children: [
+            Text(
+              '账号：',
+              style: _textStyle,
+            ),
+            Expanded(
+              child: Text(
+                passwordCard.userName,
+                style: _textStyle,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                SmzgIconFont.qrcode,
+                size: 36.sp,
+              ),
+              onPressed: () async {
+                if (!await locator
+                    .get<PasswordCardListState>()
+                    .requestLocalAuth()) {
+                  return;
+                }
+                await Routers().goPasswordCardImage(context, passwordCard.id);
+              },
+            ),
+            SizedBox(
+              width: 8.w,
+            ),
+            IconButton(
+              icon: Icon(Icons.content_copy, size: 36.sp),
+              onPressed: () async {
+                await Clipboard.setData(
+                    ClipboardData(text: passwordCard.userName));
+                await DialogService().nativeAlert("账号已拷贝", "");
+              },
+            ),
+          ],
+        ),
         Row(
           children: [
             Text(
               '密码：',
               style: _textStyle,
             ),
-            Text(
-              passwordCard.showPassword
-                  ? passwordCard.sitePassword
-                  : "********",
-              style: _textStyle,
+            Expanded(
+              child: Text(
+                passwordCard.showPassword
+                    ? passwordCard.sitePassword
+                    : "********",
+                style: _textStyle,
+              ),
             ),
-            Spacer(),
             IconButton(
               color: Theme.of(context).primaryColor,
               icon: Icon(
