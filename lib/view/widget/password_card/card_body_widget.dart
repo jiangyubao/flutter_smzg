@@ -38,7 +38,6 @@ class CardBodyWidget extends StatelessWidget {
               ),
             ),
             IconButton(
-              color: Theme.of(context).primaryColor,
               icon: Icon(
                 SmzgIconFont.qrcode,
               ),
@@ -79,7 +78,6 @@ class CardBodyWidget extends StatelessWidget {
               ),
             ),
             IconButton(
-              color: Theme.of(context).primaryColor,
               icon: Icon(
                 SmzgIconFont.eye,
               ),
@@ -131,7 +129,6 @@ class CardBodyWidget extends StatelessWidget {
               ),
             ),
             IconButton(
-              color: Theme.of(context).primaryColor,
               icon: Icon(
                 SmzgIconFont.safari,
               ),
