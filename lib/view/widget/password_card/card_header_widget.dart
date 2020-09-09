@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smzg/model/password_card.dart';
 import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
-import 'package:flutter_smzg/util/smzg_icon_font.dart';
 
 class CardHeaderWidget extends StatelessWidget {
   const CardHeaderWidget({
@@ -36,7 +35,6 @@ class CardHeaderWidget extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.edit,
-              size: 36.sp,
             ),
             onPressed: () async {
               if (!await locator
@@ -47,11 +45,9 @@ class CardHeaderWidget extends StatelessWidget {
               await Routers().goPasswordCardForm(context, passwordCard.id);
             },
           ),
-          
           IconButton(
             icon: Icon(
               Icons.delete,
-              size: 36.sp,
             ),
             onPressed: () async {
               if (!await locator

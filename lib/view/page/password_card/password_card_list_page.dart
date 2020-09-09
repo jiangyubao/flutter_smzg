@@ -70,7 +70,6 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                     },
                     child: Icon(
                       Icons.add,
-                      size: 36.sp,
                     ),
                   ),
                   floatingActionButtonLocation:
@@ -79,7 +78,6 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                     leading: new IconButton(
                       icon: new Icon(
                         Icons.menu,
-                        size: 36.sp,
                       ),
                       onPressed: () => _scaffoldKey.currentState.openDrawer(),
                     ),
@@ -92,7 +90,6 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                       IconButton(
                         icon: Icon(
                           SmzgIconFont.scan,
-                          size: 36.sp,
                         ),
                         onPressed: () async {
                           try {
@@ -326,7 +323,6 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 },
                 trailing: Icon(
                   Icons.cloud_upload,
-                  size: 36.sp,
                 ),
               ),
               ListTile(
@@ -372,7 +368,6 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 },
                 trailing: Icon(
                   Icons.cloud_download,
-                  size: 36.sp,
                 ),
               ),
               Divider(),
@@ -439,7 +434,6 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                 },
                 trailing: Icon(
                   Icons.feedback,
-                  size: 36.sp,
                 ),
               ),
               Divider(),
