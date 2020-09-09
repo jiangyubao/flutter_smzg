@@ -16,7 +16,7 @@ import 'package:flutter_smzg/routes/routers.dart';
 import 'package:flutter_smzg/service/statefull/password_card_list_state.dart';
 import 'package:flutter_smzg/service/stateless/md_service.dart';
 import 'package:flutter_smzg/view/widget/password_card/password_card_widget.dart';
-import 'package:flutter_smzg/view/widget/user_agreement_widget.dart';
+import 'package:flutter_smzg/view/widget/ua_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PasswordCardListPage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
       child: Consumer2<PasswordCardListState, ThemeState>(
         builder: (context, passwordCardListState, themeState, child) {
           return passwordCardListState.showUserAgreement
-              ? UserAgreementWidget()
+              ? UaWidget()
               : Scaffold(
                   key: _scaffoldKey,
                   floatingActionButton: FloatingActionButton(

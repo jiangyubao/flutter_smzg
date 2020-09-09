@@ -94,7 +94,6 @@ class PasswordCardImagePage extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         SmzgIconFont.save,
-                        size: 48.sp,
                       ),
                       onPressed: () async {
                         if (!await PermissionService()
@@ -118,7 +117,6 @@ class PasswordCardImagePage extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         Icons.share,
-                        size: 48.sp,
                       ),
                       onPressed: () async {
                         if (await PermissionService()
@@ -142,7 +140,6 @@ class PasswordCardImagePage extends StatelessWidget {
                     IconButton(
                       icon: Icon(
                         Icons.print,
-                        size: 48.sp,
                       ),
                       onPressed: () async {
                         if (await PermissionService()
