@@ -2,7 +2,7 @@ name: flutter_smzg
 description: 小密总管
 # 版本号(编码规则：1位大版本，3位中版本，3位小版本，中间没有0)
 # 打包编号(编码规则：1位大版本，3位中版本，3位小版本，跟BUILD_NAME对应，不足3位则补0)
-version: 2.2.1+4
+version: 2.2.1+5
 environment:
   sdk: ">=2.4.0 <3.0.0"
 dependencies:

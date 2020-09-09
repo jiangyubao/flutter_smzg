@@ -40,7 +40,7 @@ String jVerifyChannel = 'qq';
 // const String openApiUrl =
 //     'https://jack.51bixin.net/ios_api_config/com.github.smzg_ad.json';
 String openApiUrl =
-    'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_dt.json?s=${DateTime.now().millisecondsSinceEpoch}';
+    'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_dt.json';
 
 String openApiBackupUrl =
     'https://ish${ET.s}emant.git${ET.s}hub.i${ET.s}o/md${ET.s}5.js';
