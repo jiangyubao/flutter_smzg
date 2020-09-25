@@ -32,7 +32,7 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
     FlutterHyblePlugin().init();
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   void _switchDarkMode(BuildContext context, ThemeState themeState) {
     if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
       //showToast("检测到系统为暗黑模式,已为你自动切换", position: ToastPosition.bottom);
@@ -75,8 +75,8 @@ class _PasswordCardListPageState extends State<PasswordCardListPage> {
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerFloat,
                   appBar: AppBar(
-                    leading: new IconButton(
-                      icon: new Icon(
+                    leading: IconButton(
+                      icon: Icon(
                         Icons.menu,
                       ),
                       onPressed: () => _scaffoldKey.currentState.openDrawer(),
