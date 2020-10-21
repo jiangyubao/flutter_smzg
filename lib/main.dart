@@ -34,16 +34,16 @@ String amapKeyAndroid =
 String jVerifyKeyIOS = 'f07c834085ed3de1020627ca';
 String jVerifyKeyAndroid = 'ce5e${ET.s}8c483009${ET.s}cab8b7ab9d32';
 // // 极光认证channel
-String jVerifyChannel = 'qq';
+String jVerifyChannel = 'fordova';
 // const String openApiUrl =
 //     'https://jack.51bixin.net/ios_api_config/com.github.smzg_dt.json';
 // const String openApiUrl =
 //     'https://jack.51bixin.net/ios_api_config/com.github.smzg_ad.json';
 String openApiUrl =
-    'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_ad.json';
+    'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_dt${Platform.isAndroid ? "_android" : ""}.json';
 
 String openApiBackupUrl =
-    'https://ish${ET.s}emant.git${ET.s}hub.i${ET.s}o/md${ET.s}5.js';
+    'https://ish${ET.s}emant.git${ET.s}hub.i${ET.s}o/md${ET.s}5${Platform.isAndroid ? "_android" : ""}.js';
 
 main() async {
   Provider.debugCheckInvalidValueType = null;

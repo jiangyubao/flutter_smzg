@@ -29,7 +29,7 @@
         <meta-data android:name="wechatappid" android:value="wx8105104e0f47ab92"></meta-data>
         <meta-data android:name="UMENG_APPKEY" android:value="5c9457bd0cafb23cdc0014fd"></meta-data>
         <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="03ba3dfc7d65f0e20c96e8b527e889f9"></meta-data>
-        <meta-data android:name="UMENG_CHANNEL" android:value="qq" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="fordova" />
         <meta-data android:name="MZ_APP_ID" android:value="119551\0"></meta-data>
         <meta-data android:name="MZ_APP_KEY" android:value="2d16df53580d4e64ab276417c0e2b7ec"></meta-data>
         <meta-data android:name="XM_APP_ID" android:value="2882303761518059730\0"></meta-data>
