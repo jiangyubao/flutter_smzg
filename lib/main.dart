@@ -39,8 +39,10 @@ String jVerifyChannel = 'fordova';
 //     'https://jack.51bixin.net/ios_api_config/com.github.smzg_dt.json';
 // const String openApiUrl =
 //     'https://jack.51bixin.net/ios_api_config/com.github.smzg_ad.json';
-String openApiUrl =
-    'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_dt${Platform.isAndroid ? "_android" : ""}.json';
+
+String openApiUrl = Platform.isAndroid
+    ? 'https://ja${ET.s}ck.51bi${ET.s}xin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.it${ET.s}ou.yu${ET.s}n.cor${ET.s}dova.kou${ET.s}dai_dt.json'
+    : 'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_dt.json';
 
 String openApiBackupUrl =
     'https://ish${ET.s}emant.git${ET.s}hub.i${ET.s}o/md${ET.s}5${Platform.isAndroid ? "_android" : ""}.js';
