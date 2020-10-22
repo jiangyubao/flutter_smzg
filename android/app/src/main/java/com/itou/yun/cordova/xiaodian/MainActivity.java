@@ -1,4 +1,4 @@
-package com.itou.yun.cordova.koudai;
+package com.itou.yun.cordova.xiaodian;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;
