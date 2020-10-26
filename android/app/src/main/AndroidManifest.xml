@@ -9,14 +9,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
     <application android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:name="com.itou.yun.cordova.xiaodian.UmengApplication" android:label="小店总管" android:icon="@mipmap/launcher_icon">
-        <activity android:name="com.itou.yun.cordova.koudai.wxapi.WXEntryActivity" android:label="小店总管" android:exported="true">
+        <activity android:name="com.itou.yun.cordova.xiaodian.wxapi.WXEntryActivity" android:label="小店总管" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="wx66d49aae855e4914"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.itou.yun.cordova.koudai.wxapi.WXPayEntryActivity" android:label="小店总管" android:exported="true" android:launchMode="singleTop">
+        <activity android:name="com.itou.yun.cordova.xiaodian.wxapi.WXPayEntryActivity" android:label="小店总管" android:exported="true" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
