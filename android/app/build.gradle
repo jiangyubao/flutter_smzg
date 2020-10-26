@@ -42,16 +42,16 @@ android {
         }
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "ce5e8c483009cab8b7ab9d32", 
+                JPUSH_APPKEY : "b2f5b4b5453d63307f5fdacb", 
                 JPUSH_CHANNEL : "fordova", 
         ]
     }
  
     signingConfigs {
         release {
-            keyAlias "aitouc"
-            keyPassword "aitouc20190322"
-            storeFile file("/Users/jiangyb/Documents/cordova_workspace/koudai_trunk/workspace/iTouTemplate/stores/koudai.store")
+            keyAlias "aitoub"
+            keyPassword "aitoub20190322"
+            storeFile file("/Users/jiangyb/Documents/cordova_workspace/xiaodian_trunk/workspace/iTouTemplate/stores/koudai.store")
             storePassword "aitou20190322"
         }
     }
