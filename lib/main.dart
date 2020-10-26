@@ -32,7 +32,7 @@ String amapKeyAndroid =
     'de5b3${ET.s}658922c${ET.s}4c187da2${ET.s}fc32708b${ET.s}1b9f';
 // 极光认证key：a3deecd520245cd723a3b4ee
 String jVerifyKeyIOS = 'f07c834085ed3de1020627ca';
-String jVerifyKeyAndroid = 'b2f5${ET.s}b4b5453d6330${ET.s}7f5fdacb';
+String jVerifyKeyAndroid = '04cdada8308cc80cb6a037be';
 // // 极光认证channel
 String jVerifyChannel = 'fordova';
 // const String openApiUrl =
@@ -41,7 +41,7 @@ String jVerifyChannel = 'fordova';
 //     'https://jack.51bixin.net/ios_api_config/com.github.smzg_ad.json';
 
 String openApiUrl = Platform.isAndroid
-    ? 'https://ja${ET.s}ck.51bi${ET.s}xin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.it${ET.s}ou.yu${ET.s}n.cor${ET.s}dova.xiao${ET.s}dian_dt.json'
+    ? 'https://ja${ET.s}ck.51bi${ET.s}xin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.it${ET.s}ou.yu${ET.s}n.cor${ET.s}dova.xiao${ET.s}dian_ad.json'
     : 'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_dt.json';
 
 String openApiBackupUrl =
@@ -55,7 +55,8 @@ main() async {
     WidgetsFlutterBinding.ensureInitialized();
 
     final Directory tmpDir = await getTemporaryDirectory();
-    Logger.init(writeFile: true, logFilePath: "${tmpDir.path}/xiaod${ET.s}ian.log");
+    Logger.init(
+        writeFile: true, logFilePath: "${tmpDir.path}/xiaod${ET.s}ian.log");
     Logger.info("程序开始启动");
     final FL.Locator _locator = FL.Locator();
     await _locator.setup();

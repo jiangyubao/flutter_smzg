@@ -42,7 +42,7 @@ android {
         }
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "b2f5b4b5453d63307f5fdacb", 
+                JPUSH_APPKEY : "04cdada8308cc80cb6a037be", 
                 JPUSH_CHANNEL : "fordova", 
         ]
     }
