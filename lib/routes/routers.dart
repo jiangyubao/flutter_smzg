@@ -33,8 +33,8 @@ class Routers {
   static const _thirdPartWebView = "/third_part_web_view";
 
   ///单例
-  Router _router = Router();
-  Router get router => _router;
+  FluroRouter _router = FluroRouter();
+  FluroRouter get router => _router;
 
   ///路由pop
   void pop<T extends Object>(BuildContext context, [T result]) {

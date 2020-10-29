@@ -126,7 +126,5 @@
 	<string>5f4eff2556942d10ceb55029</string>
 	<key>UPUSH_Channel</key>
 	<string>qq</string>
-	<key>io.flutter.embedded_views_preview</key>
-	<true/>
 </dict>
 </plist>
