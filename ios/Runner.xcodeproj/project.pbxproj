@@ -566,7 +566,7 @@
 				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.smzg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = com.github.smzg_dist_20200902;
+				PROVISIONING_PROFILE_SPECIFIER = com.github.smzg_adhoc_20210316;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
