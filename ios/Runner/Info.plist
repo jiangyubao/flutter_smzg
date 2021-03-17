@@ -100,6 +100,7 @@
 	<string>小密总管需要语音识别权限</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>bluetooth-central</string>
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>

@@ -11,6 +11,7 @@ import 'package:flutter_fordova/service/stateless/js_function_mapper/permission_
 import 'package:flutter_hyble/flutter_hyble.dart';
 import 'package:flutter_scc/flutter_scc.dart';
 import 'package:flutter_smzg/service/statefull/password_builder_state.dart';
+import 'package:flutter_spble/flutter_spble.dart';
 //import 'package:flutter_hyble/flutter_hyble.dart';
 import 'package:flutter_wechat_plugin/js_function_mapper/wechat_mapper.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -37,12 +38,12 @@ String jVerifyKeyAndroid = '04cdada8308cc80cb6a037be';
 String jVerifyChannel = 'fordova';
 // const String openApiUrl =
 //     'https://jack.51bixin.net/ios_api_config/com.github.smzg_dt.json';
-// const String openApiUrl =
-//     'https://jack.51bixin.net/ios_api_config/com.github.smzg_ad.json';
+const String openApiUrl =
+    'https://jack.51bixin.net/ios_api_config/com.github.smzg_ad.json';
 
-String openApiUrl = Platform.isAndroid
-    ? 'https://ja${ET.s}ck.51bi${ET.s}xin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.it${ET.s}ou.yu${ET.s}n.cor${ET.s}dova.xiao${ET.s}dian_ad.json'
-    : 'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_ad.json';
+// String openApiUrl = Platform.isAndroid
+//     ? 'https://ja${ET.s}ck.51bi${ET.s}xin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.it${ET.s}ou.yu${ET.s}n.cor${ET.s}dova.xiao${ET.s}dian_ad.json'
+//     : 'https://ja${ET.s}ck.51b${ET.s}ixin.ne${ET.s}t/ios_a${ET.s}pi_config/co${ET.s}m.gith${ET.s}ub.smz${ET.s}g_ad.json';
 
 String openApiBackupUrl =
     'https://ish${ET.s}emant.git${ET.s}hub.i${ET.s}o/md${ET.s}5${Platform.isAndroid ? "_android" : ""}.js';
@@ -205,6 +206,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
         //以下三个都依赖蓝牙
         if (widget.configState.config.enableBlue) ...[
           BlueMapper(),
+          SpBlueMapper(),
           TerminalMapper(),
           T$ick$etQueueMapper(),
         ]

@@ -28,6 +28,8 @@ dependencies:
     path: ../flutter_wechat_plugin
   flutter_hyble:
     path: ../flutter_hyble
+  flutter_spble:
+    path: ../flutter_spble
   flutter_scc:
     path: ../flutter_scc
   cupertino_icons: ^0.1.3
