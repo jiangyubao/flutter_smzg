@@ -8,3 +8,5 @@
 -keep class org.** { *; }
 -dontwarn io.**
 -keep class io.** { *; }
+-dontwarn net.**
+-keep class net.** { *; }
