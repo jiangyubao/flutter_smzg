@@ -17,7 +17,9 @@ dependencies:
   dash_chat:
     git: https://github.com/jiangyubao/dash_chat.git
   pointycastle:
-    git: https://github.com/bcgit/pc-dart.git
+    git:
+      url: https://github.com/bcgit/pc-dart.git
+      ref: v2.0.1
   flutter_fordova:
     path: ../flutter_fordova
   flutter_common:

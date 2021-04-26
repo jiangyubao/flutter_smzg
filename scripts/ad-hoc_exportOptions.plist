@@ -3,22 +3,23 @@
 <plist version="1.0">
 	<dict>
 		<key>compileBitcode</key>
-		<true/>
+		<true />
 		<key>method</key>
 		<string>ad-hoc</string>
+		<!-- 
 		<key>provisioningProfiles</key>
 		<dict>
 			<key>com.github.smzg</key>
-			<string>com.github.smzg_adhoc_20210316</string>
-		</dict>
+			<string>com.github.smzg_adhoc_20210322</string>
+		</dict> -->
 		<key>signingCertificate</key>
 		<string>iPhone Distribution</string>
 		<key>signingStyle</key>
-		<string>manual</string>
+		<string>automatic</string>
 		<key>stripSwiftSymbols</key>
-		<true/>
-		<key>teamID</key>
-		<string>V3LX54WFDD</string>
+		<true />
+		<!-- <key>teamID</key>
+		<string>B8C2B43753</string> -->
 		<key>thinning</key>
 		<string>&lt;none&gt;</string>
 	</dict>
